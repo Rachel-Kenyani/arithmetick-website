@@ -1,0 +1,97 @@
+---
+const year = new Date().getFullYear();
+const columns = [
+  { title: "Product", links: [ { label: "For Families", href: "/" }, { label: "How It Works", href: "/how-it-works" } ] },
+  { title: "Help", links: [ { label: "Contact", href: "/contact" }, { label: "Delete Your Account", href: "/delete-account" } ] },
+  { title: "Legal", links: [ { label: "Privacy Policy", href: "/privacy" }, { label: "Terms of Use", href: "/terms" } ] },
+];
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="grid">
+      <div class="brand">
+        <img src="/images/figma/logo-footer.svg" width="174" height="75" alt="ArithmeTick" />
+        <p>Maths we learn together, for Grades 1 to 3.</p>
+      </div>
+      {
+        columns.map((c) => (
+          <div class="col">
+            <h2>{c.title}</h2>
+            <ul>
+              {c.links.map((l) => (
+                <li>
+                  <a href={l.href}>{l.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+    <p class="legal">© {year} Rachel Kenyani. ArithmeTick is made in Nairobi, Kenya.</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--footer);
+    color: var(--white);
+    padding: 40px 0 calc(32px + env(safe-area-inset-bottom, 0px));
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr 1fr;
+    gap: 32px;
+  }
+  .brand {
+    display: grid;
+    gap: 12px;
+    align-content: start;
+  }
+  .brand img {
+    width: 174px;
+    height: auto;
+  }
+  .brand p {
+    font-size: 14px;
+    font-weight: 700;
+    max-width: 22ch;
+  }
+  h2 {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0;
+    margin-bottom: 14px;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+  }
+  .col a {
+    color: var(--white);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .col a:hover {
+    text-decoration: underline;
+  }
+  .legal {
+    margin-top: 32px;
+    padding-top: 13px;
+    border-top: 1px solid rgba(136, 77, 207, 0.5);
+    font-size: 12px;
+  }
+  @media (max-width: 760px) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .brand {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

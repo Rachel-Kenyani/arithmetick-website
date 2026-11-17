@@ -1,0 +1,50 @@
+---
+import Doc from "../layouts/Doc.astro";
+const EMAIL = "rachelkenyani@gmail.com";
+const toc = [
+  { id: "about", label: "About these terms" },
+  { id: "use", label: "Using ArithmeTick" },
+  { id: "accounts", label: "Accounts" },
+  { id: "beta", label: "The beta" },
+  { id: "content", label: "Our content" },
+  { id: "liability", label: "Our responsibility" },
+  { id: "ending", label: "Ending your use" },
+  { id: "law", label: "Kenyan law" },
+];
+---
+
+<Doc
+  title="Terms of Use"
+  description="The terms for using the ArithmeTick app and website."
+  intro="The rules for using ArithmeTick, written as plainly as we can."
+  updated="18 November 2026"
+  toc={toc}
+>
+  <h2 id="about">About these terms</h2>
+  <p>These terms are between you and Rachel Kenyani, the developer of ArithmeTick in Nairobi, Kenya. By creating an account or using the app, you agree to them. Our <a href="/privacy">Privacy Policy</a> explains how we handle information.</p>
+
+  <h2 id="use">Using ArithmeTick</h2>
+  <ul>
+    <li>ArithmeTick is for children in Grades 1 to 3, playing with a parent or guardian.</li>
+    <li>A grown-up (18 or older) creates the account and is responsible for the children who use it.</li>
+    <li>Please don't misuse the app: no attempts to break it, copy it, or get into other people's accounts.</li>
+  </ul>
+
+  <h2 id="accounts">Accounts</h2>
+  <p>Keep your password safe and don't share your account outside your family. You can delete your account at any time, in the app or by email: see <a href="/delete-account">how to delete your account</a>.</p>
+
+  <h2 id="beta">The beta</h2>
+  <p>ArithmeTick is free during the beta. Features may change, and things may sometimes go wrong. If we ever plan to charge for anything, we will tell you first, and nothing will be charged without your clear agreement.</p>
+
+  <h2 id="content">Our content</h2>
+  <p>The app's art, stories, characters (including Brijo), recordings and code belong to Rachel Kenyani. You may use them only through the app, for your family's learning.</p>
+
+  <h2 id="liability">Our responsibility</h2>
+  <p>We work hard to make ArithmeTick accurate and safe, but we provide it "as is" during the beta. As far as Kenyan law allows, we are not responsible for losses from using it, such as lost progress. Nothing in these terms limits rights you have under Kenyan consumer law.</p>
+
+  <h2 id="ending">Ending your use</h2>
+  <p>You can stop using ArithmeTick and delete your account at any time. We may suspend accounts that break these terms, and will tell you why.</p>
+
+  <h2 id="law">Kenyan law</h2>
+  <p>These terms are governed by the laws of Kenya. If something goes wrong, please email <a href={`mailto:${EMAIL}`}>{EMAIL}</a> first, and we will try to put it right.</p>
+</Doc>

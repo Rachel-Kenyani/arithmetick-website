@@ -1,0 +1,323 @@
+---
+import Base from "../layouts/Base.astro";
+import CtaBand from "../components/CtaBand.astro";
+import levels from "../data/levels.json";
+
+const F = "/images/figma/";
+const SKILL_NAMES: Record<string, string> = {
+  makingTen: "Making 10",
+  takingAway: "Taking away",
+  placeValue: "Place value",
+  addingOn: "Adding on",
+  countingInSteps: "Counting in steps",
+  groups: "Equal groups",
+  sharing: "Sharing equally",
+  time: "Telling the time",
+};
+const GRADE_NAMES: Record<string, string> = { "1": "Counting Fun", "2": "Tens and Ones", "3": "Array Grids" };
+const skills = [
+  { name: "Making 10", text: "Fill ten-frames with bottle tops, shells and feathers, and see how 5 and more make 10." },
+  { name: "Taking away", text: "Brijo takes some away, and the child counts what's left: from 7 − 2 up to 352 − 125." },
+  { name: "Place value", text: "Pack tomatoes into crates of ten and boxes of a hundred to build numbers like 34 and 243." },
+  { name: "Adding on", text: "Add by counting on, then add in columns, carrying a ten when the ones fill up." },
+  { name: "Counting in steps", text: "Fill gaps on a number track, counting back from 50 and on in tens from 130." },
+  { name: "Equal groups", text: "Plant seeds in equal holes and build arrays of rows, the first steps to multiplying." },
+  { name: "Sharing equally", text: "Share tomatoes between monkeys and cut a chapati into equal pieces." },
+  { name: "Telling the time", text: "Set the clock to o'clock in Grade 2, and to half past in Grade 3." },
+];
+---
+
+<Base
+  title="How It Works"
+  description="Every ArithmeTick level, grade by grade, and the eight maths skills children practise."
+  current="how"
+>
+  <section class="hero">
+    <div class="container">
+      <div class="head">
+        <h1 class="display">Maths for Grades 1 to 3, One Small Level at a Time.</h1>
+        <p class="lede">Each grade is a jungle map of short levels. Children count, group and share real things, Brijo reads every instruction aloud, and a grown-up joins in for Move & Play.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#levels">See Every Level</a>
+          <a class="btn btn-outline" href="/contact#beta">
+            <img src={F + "play-circle.svg"} width="24" height="24" alt="" />
+            Join the Free Beta
+          </a>
+        </div>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="icon sun"><img src={F + "graduation.svg"} width="36" height="36" alt="" /></div>
+          <h2 class="heading-sm">Things Children Know</h2>
+          <p class="body-xl">Bottle tops, mangoes, chapati, seeds and shillings. The maths lives in a Kenyan home and market.</p>
+        </article>
+        <article class="card">
+          <div class="icon sun"><img src={F + "puzzle.svg"} width="36" height="36" alt="" /></div>
+          <h2 class="heading-sm">Brijo Reads It All</h2>
+          <p class="body-xl">Many children are still learning to read, so Brijo says every instruction and the words light up as she speaks.</p>
+        </article>
+        <article class="card">
+          <div class="icon sun"><img src={F + "chart.svg"} width="36" height="36" alt="" /></div>
+          <h2 class="heading-sm">Help When It's Hard</h2>
+          <p class="body-xl">After a few wrong answers, gentle help steps in. After a hard level, the map suggests a quick warm-up first.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="matrix" id="levels">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="heading-lg">Every Level, Grade by Grade</h2>
+        <p class="lede">Choose a grade to see its levels. Move & Play activities happen away from the screen, with a grown-up.</p>
+      </div>
+      <div class="tabs">
+        {
+          levels.map((g, i) => (
+            <input type="radio" name="grade" id={`g${g.grade}`} checked={i === 0} class="visually-hidden" />
+          ))
+        }
+        <div class="tab-row" role="presentation">
+          {levels.map((g) => <label for={`g${g.grade}`}>Grade {g.grade}</label>)}
+        </div>
+        {
+          levels.map((g) => (
+            <div class={`panel p${g.grade}`}>
+              <p class="grade-name">{GRADE_NAMES[g.grade]}</p>
+              <ol class="level-list">
+                {g.levels.map((l) => (
+                  <li class={l.quest ? "quest" : ""}>
+                    <span class="num">{l.n}</span>
+                    <span class="what">
+                      <strong>{l.title}</strong>
+                      <span>{l.quest ? `Move & Play · ${l.eq}` : `${SKILL_NAMES[l.skill ?? ""]} · ${l.eq}`}</span>
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="skills">
+    <div class="pattern skills-pattern" aria-hidden="true"></div>
+    <div class="container">
+      <h2 class="heading-lg">Eight Skills, Practised Again and Again</h2>
+      <div class="skill-grid">
+        {
+          skills.map((s, i) => (
+            <article class={`skill t${i % 4}`}>
+              <h3 class="heading-sm">{s.name}</h3>
+              <p>{s.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Try It With Your Family."
+    text="ArithmeTick is free during the beta. Join, play a few levels together, and tell us what you think."
+    action="Join the Free Beta"
+    href="/contact#beta"
+  />
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, #fbf6dc 0%, #fffdf3 55%, var(--white) 100%);
+    padding: 72px 0 80px;
+  }
+  .head {
+    position: relative;
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+  .cards {
+    position: relative;
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 32px;
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    box-shadow: var(--shadow-card);
+  }
+  .icon {
+    align-self: flex-start;
+    display: flex;
+    padding: 20px;
+    border-radius: var(--radius-md);
+  }
+  .icon.sun {
+    background: #fff4cc;
+  }
+  .section-head {
+    max-width: 700px;
+    margin: 0 auto 32px;
+    text-align: center;
+    display: grid;
+    gap: 12px;
+  }
+  .matrix {
+    padding: 80px 0;
+    scroll-margin-top: 80px;
+  }
+  .tab-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1px solid var(--line);
+    border-bottom: 0;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    overflow: hidden;
+  }
+  .tab-row label {
+    padding: 16px;
+    text-align: center;
+    font-weight: 700;
+    color: var(--teal);
+    cursor: pointer;
+    border-bottom: 2px solid var(--line);
+  }
+  #g1:checked ~ .tab-row label[for="g1"],
+  #g2:checked ~ .tab-row label[for="g2"],
+  #g3:checked ~ .tab-row label[for="g3"] {
+    background: #fff4cc;
+    border-bottom-color: var(--teal);
+    color: var(--teal-deep);
+  }
+  #g1:focus-visible ~ .tab-row label[for="g1"],
+  #g2:focus-visible ~ .tab-row label[for="g2"],
+  #g3:focus-visible ~ .tab-row label[for="g3"] {
+    outline: 3px solid var(--purple-nav);
+    outline-offset: -3px;
+  }
+  .panel {
+    display: none;
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-top: 0;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+  }
+  #g1:checked ~ .p1,
+  #g2:checked ~ .p2,
+  #g3:checked ~ .p3 {
+    display: block;
+  }
+  .grade-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--teal);
+    margin-bottom: 16px;
+  }
+  .level-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .level-list li {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    padding: 12px 14px;
+    border-radius: var(--radius-md);
+    background: var(--mint);
+  }
+  .level-list li.quest {
+    background: #f6efff;
+  }
+  .num {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--teal);
+    color: var(--white);
+    font-weight: 700;
+  }
+  .quest .num {
+    background: var(--purple);
+  }
+  .what {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    font-size: 15px;
+    color: var(--ink-2);
+  }
+  .what strong {
+    font-size: 17px;
+    color: var(--ink);
+  }
+  .skills {
+    position: relative;
+    overflow: hidden;
+    background: #6f6327;
+    background: linear-gradient(180deg, #6b6024 0%, #4e461a 100%);
+    padding: 80px 0;
+  }
+  .skills-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.12;
+  }
+  .skills .container {
+    position: relative;
+    display: grid;
+    gap: 32px;
+  }
+  .skills h2 {
+    color: var(--white);
+  }
+  .skill-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .skill {
+    display: grid;
+    gap: 10px;
+    padding: 28px;
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    font-size: 17px;
+    color: var(--ink-2);
+  }
+  .skill h3 {
+    color: var(--ink);
+  }
+  @media (max-width: 900px) {
+    .cards,
+    .skill-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

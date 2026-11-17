@@ -1,0 +1,45 @@
+---
+import Doc from "../layouts/Doc.astro";
+const EMAIL = "rachelkenyani@gmail.com";
+const toc = [
+  { id: "app", label: "Delete in the app" },
+  { id: "email", label: "Delete by email" },
+  { id: "what", label: "What is deleted" },
+];
+---
+
+<Doc
+  title="Delete Your Account"
+  description="How to delete an ArithmeTick account and everything in it, in the app or by email."
+  intro="You can delete your ArithmeTick account and every child's progress at any time."
+  updated="18 November 2026"
+  toc={toc}
+>
+  <h2 id="app">Delete in the app</h2>
+  <ol class="steps">
+    <li>Open ArithmeTick and log in. On the <strong>"Who is playing today?"</strong> screen, hold the <strong>gear</strong> in the top corner for 2 seconds.</li>
+    <li>On the Grown-ups page, tap <strong>Delete account</strong>.</li>
+    <li>Check what will be deleted, then hold <strong>Delete everything</strong> for 2 seconds.</li>
+  </ol>
+  <p>The account is deleted straight away, and the app returns to the welcome screen.</p>
+
+  <h2 id="email">Delete by email</h2>
+  <p>If you can't open the app, email <a href={`mailto:${EMAIL}?subject=Delete%20my%20ArithmeTick%20account`}>{EMAIL}</a> from the email address you use for ArithmeTick, with the subject "Delete my account". We will delete it within 30 days and reply to confirm.</p>
+
+  <h2 id="what">What is deleted</h2>
+  <ul>
+    <li>Your account and sign-in (email, password, or Google sign-in).</li>
+    <li>Every child's name, animal, stars, badges and progress on that phone.</li>
+    <li>Any weekly report summaries kept for email reports.</li>
+  </ul>
+  <p>Copies in our providers' backups are removed when those backups expire, usually within 30 days. Nothing is kept after that. Uninstalling the app also removes the children's information from the phone, but does not delete your account.</p>
+</Doc>
+
+<style>
+  .steps {
+    margin: 0;
+    padding-left: 24px;
+    display: grid;
+    gap: 10px;
+  }
+</style>

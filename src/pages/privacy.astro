@@ -1,0 +1,110 @@
+---
+import Doc from "../layouts/Doc.astro";
+const EMAIL = "rachelkenyani@gmail.com";
+const toc = [
+  { id: "short", label: "The short version" },
+  { id: "who", label: "Who we are" },
+  { id: "collect", label: "What we collect" },
+  { id: "reports", label: "Weekly email reports" },
+  { id: "children", label: "Children" },
+  { id: "others", label: "Who else handles it" },
+  { id: "outside", label: "Stored outside Kenya" },
+  { id: "keep", label: "How long we keep it" },
+  { id: "rights", label: "Your rights" },
+  { id: "safe", label: "Keeping it safe" },
+  { id: "website", label: "This website and cookies" },
+  { id: "changes", label: "Changes" },
+];
+---
+
+<Doc
+  title="Privacy Policy"
+  description="What ArithmeTick collects, where it is kept, and how to delete your account."
+  intro="How we look after your family's information, in the app and on this website."
+  updated="18 November 2026"
+  toc={toc}
+  current="privacy"
+>
+  <div class="callout" id="short">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#006f68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.5 3.2 8.4 7.5 9.5 4.3-1.1 7.5-5 7.5-9.5V6z"></path><path d="m9 12 2 2 4-4"></path></svg>
+    <div>
+      <strong>The short version</strong>
+      <ul>
+        <li>A grown-up creates the account. We keep their email address so they can log in.</li>
+        <li>Children's names, animals, stars, badges and progress stay on the phone, unless a grown-up turns on weekly email reports.</li>
+        <li>No ads, no tracking, no selling or sharing data for marketing. The app never uses the camera, microphone or location.</li>
+        <li>You can delete the account and everything in it from inside the app at any time.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 id="who">Who we are</h2>
+  <p>ArithmeTick is a maths app for children in Grades 1 to 3, made in Nairobi, Kenya by Rachel Kenyani, an independent developer. In this policy, "we" means the ArithmeTick developer. For any privacy question or request, email <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.</p>
+
+  <h2 id="collect">What we collect and why</h2>
+  <div class="table">
+    <table>
+      <thead><tr><th>Information</th><th>Where it is kept</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>The grown-up's email address</td><td>Our sign-in service (Supabase)</td><td>To create the account, log in, and send verification and password-reset codes</td></tr>
+        <tr><td>A password</td><td>Supabase, stored only in scrambled (hashed) form</td><td>To log in. We can never see it.</td></tr>
+        <tr><td>Name and email from Google, if you choose Continue with Google</td><td>Supabase</td><td>To log in without a password</td></tr>
+        <tr><td>Each child's first name or nickname, chosen animal and grade</td><td>Only on the phone</td><td>To show each child their own map</td></tr>
+        <tr><td>Stars, badges, levels finished and answers given in games</td><td>Only on the phone</td><td>To unlock levels, award badges and suggest what to play next</td></tr>
+        <tr><td>Only with weekly reports on: each child's first name, grade, levels finished, stars, a one-line summary of their skills and one game to try at home</td><td>Supabase, until reports are turned off or the account is deleted</td><td>To email the grown-up a weekly report and an end-of-grade report</td></tr>
+        <tr><td>Sound and screen-time settings</td><td>Only on the phone</td><td>To remember the grown-up's choices</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>We do not collect children's photos, voices, locations, contacts, school records or any information from other apps. We do not use advertising or analytics tools.</p>
+
+  <h2 id="reports">Weekly email reports</h2>
+  <p>Reports are off until a grown-up turns them on with the "Weekly reports" switch on the Grown-ups page, which only opens after a 2-second hold. They can be turned off there, or with the link in any report, and what we kept for them is deleted straight away. Children's individual answers, animals and badges are never sent.</p>
+
+  <h2 id="children">Children</h2>
+  <p>ArithmeTick is designed to be used by a child together with a parent or guardian. Only a grown-up can create the account, add a child, log out or delete the account, behind a 2-second hold so a young child cannot do it by accident.</p>
+  <p>We ask only for a first name or nickname for each child. If you believe a child has given us personal information without a grown-up, email us and we will delete it.</p>
+
+  <h2 id="others">Who else handles the information</h2>
+  <p>We use a small number of service providers, only to run the app. They may use the information only to provide their service to us.</p>
+  <ul>
+    <li><strong>Supabase</strong> runs our sign-in service. Its servers are in the European Union (Ireland).</li>
+    <li><strong>Resend</strong> sends emails with codes, and weekly reports for families who turn them on. It receives the email address and the email's contents.</li>
+    <li><strong>Google</strong>, if you choose Continue with Google, confirms who you are under Google's own privacy policy.</li>
+    <li><strong>Cloudflare</strong> hosts this website.</li>
+  </ul>
+  <p>We never sell personal information or share it for advertising. We would share it with authorities only if Kenyan law required us to.</p>
+
+  <h2 id="outside">Information stored outside Kenya</h2>
+  <p>Account details are stored on Supabase servers in the European Union. The EU has strong data protection laws, and we rely on our providers' safeguards for these transfers, as the Kenya Data Protection Act, 2019 allows.</p>
+
+  <h2 id="keep">How long we keep it</h2>
+  <ul>
+    <li>Account details are kept until you delete the account.</li>
+    <li>When you delete the account, it is removed from our sign-in service straight away. Copies in our providers' backups are removed when those backups expire, usually within 30 days.</li>
+    <li>Children's information stays on the phone until you delete the account in the app or uninstall the app.</li>
+    <li>Report summaries are deleted as soon as reports are turned off, or with the account.</li>
+  </ul>
+
+  <h2 id="rights">Your rights and how to delete the account</h2>
+  <p>Under the Kenya Data Protection Act, 2019 you can ask to see, correct or delete the personal information we hold, and object to how we use it.</p>
+  <ul>
+    <li><strong>Delete in the app:</strong> see <a href="/delete-account">how to delete your account</a>.</li>
+    <li><strong>Delete by email:</strong> write to <a href={`mailto:${EMAIL}`}>{EMAIL}</a> from the account's email address. We will delete it within 30 days and confirm.</li>
+    <li>You can also complain to the Office of the Data Protection Commissioner of Kenya (odpc.go.ke).</li>
+  </ul>
+
+  <h2 id="safe">Keeping information safe</h2>
+  <p>Information sent between the app and our sign-in service is encrypted. Passwords are stored only in hashed form. Codes expire quickly. No system is perfectly secure, so if we ever learn of a breach that affects you, we will tell you and the Data Protection Commissioner as the law requires.</p>
+
+  <h2 id="website">This website and cookies</h2>
+  <p>This website sets no cookies and uses no analytics or tracking. Our host, Cloudflare, keeps basic technical logs (such as IP addresses) for a short time to keep the site running and secure. The page fonts are loaded from Google Fonts.</p>
+
+  <h2 id="changes">Changes to this policy</h2>
+  <p>If we change how we handle information, we will update this page and the date at the top. For important changes, we will also tell grown-ups in the app before they take effect.</p>
+
+  <div class="contact-card">
+    <h2>Questions about your data?</h2>
+    <p>Email <a href={`mailto:${EMAIL}`}>{EMAIL}</a>. We reply within a few days.</p>
+  </div>
+</Doc>

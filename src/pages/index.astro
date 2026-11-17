@@ -1,0 +1,546 @@
+---
+import Base from "../layouts/Base.astro";
+import FeatureCard from "../components/FeatureCard.astro";
+import CtaBand from "../components/CtaBand.astro";
+
+const F = "/images/figma/";
+const moveAndPlay = [
+  {
+    grade: "Grade 1",
+    title: "Find It",
+    text: "Find six things at home that are the same, line them up and count them together.",
+  },
+  {
+    grade: "Grade 2",
+    title: "Market Day",
+    text: "Play shop with real shillings: pay for a cup of maize and count up to work out the change.",
+  },
+  {
+    grade: "Grade 3",
+    title: "Treasure Walk",
+    text: "Hide a treasure and guide a grown-up to it with directions: forward 3 steps, turn left.",
+  },
+];
+---
+
+<Base
+  title="ArithmeTick"
+  description="Playful Grade 1 to 3 maths for Kenyan families. Brijo the owl reads every instruction aloud, children count real things, and grown-ups join in."
+  current="home"
+>
+  <section class="hero">
+    <div class="pattern hero-pattern" aria-hidden="true"></div>
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <h1 class="display">Turn Screen Time Into Maths Confidence at Home.</h1>
+        <p class="lede">
+          Short, playful maths levels for Grades 1 to 3. Brijo the owl reads every instruction aloud, children count real
+          things like bottle tops and mangoes, and a grown-up joins in for Move & Play.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="/contact#beta">Join the Free Beta</a>
+          <a class="btn btn-outline" href="/how-it-works">
+            <img src={F + "play-circle.svg"} width="24" height="24" alt="" />
+            See How It Works
+          </a>
+        </div>
+      </div>
+      <div class="hero-art" aria-label="Screens from the ArithmeTick app">
+        <div class="glow" aria-hidden="true"></div>
+        <figure class="phone back">
+          <img src="/images/app/level.jpg" width="390" height="844" alt="A level: Brijo asks the child to collect 7 feathers" />
+        </figure>
+        <figure class="phone front">
+          <img src="/images/app/map.jpg" width="390" height="844" alt="The jungle map of Grade 1 levels" />
+        </figure>
+        <img class="pal fox" src={F + "fox.png"} width="64" height="64" alt="" />
+        <img class="pal cheetah" src={F + "cheetah.png"} width="64" height="64" alt="" />
+      </div>
+    </div>
+
+    <div class="container pillars">
+      <div class="section-head">
+        <h2 class="heading-lg">Maths Doesn't Have to be a Chore</h2>
+        <p class="lede">Every level is real Grade 1 to 3 maths, built to feel like a game a child wants to play again.</p>
+      </div>
+      <div class="cards">
+        <FeatureCard icon={F + "phone.svg"} title="Screen Time You Can Feel Good About">
+          Each level practises a skill from the Grade 1 to 3 syllabus, and a daily 15-minute limit keeps play short.
+        </FeatureCard>
+        <FeatureCard icon={F + "puzzle.svg"} title="Low-Anxiety, Playful Learning">
+          Brijo guides children through mistakes with gentle hints. A wrong answer never costs stars.
+        </FeatureCard>
+        <FeatureCard icon={F + "chart.svg"} title="See How They're Doing">
+          Turn on a weekly email: levels, stars, what they're strong at, and one game to try at home.
+        </FeatureCard>
+      </div>
+    </div>
+  </section>
+
+  <section class="split">
+    <div class="container split-grid">
+      <div class="row">
+        <div class="mock kids-mock">
+          <div class="tilt teal" aria-hidden="true"></div>
+          <div class="mock-panel mint">
+            <div class="tiles">
+              <div class="tile"><img src={F + "fox.png"} width="64" height="64" alt="" /><span>Count to 7</span></div>
+              <div class="tile"><img src={F + "cheetah.png"} width="64" height="64" alt="" /><span>Take away 2</span></div>
+            </div>
+            <div class="mission">
+              <div class="mission-top">
+                <span>Grade 1 · Level 2</span>
+                <span class="stars">+3 stars</span>
+              </div>
+              <div class="bar"><span></span></div>
+              <p>"The wind blew away seven feathers. Help Brijo collect them!"</p>
+            </div>
+          </div>
+        </div>
+        <div class="copy">
+          <p class="kicker teal-text heading-lg">For Kids</p>
+          <h2 class="heading-sm">A Learning Adventure They Actually Ask to Play</h2>
+          <ul class="ticks">
+            <li><img src={F + "route.svg"} width="24" height="24" alt="" />A jungle map of short levels, one small step at a time.</li>
+            <li><img src={F + "award.svg"} width="24" height="24" alt="" />Stars, badges and a family star goal to win together.</li>
+            <li><img src={F + "calculator.svg"} width="24" height="24" alt="" />Count, group and share real things: bottle tops, mangoes, seeds and chapati.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row reverse">
+        <div class="copy">
+          <p class="kicker purple-text heading-lg">For Parents</p>
+          <h2 class="heading-sm">Stay Connected Without the Hovering</h2>
+          <ul class="ticks">
+            <li><img src={F + "user-plus.svg"} width="24" height="24" alt="" />Separate profiles for up to 4 children, each with their own progress.</li>
+            <li><img src={F + "chart-purple.svg"} width="24" height="24" alt="" />An optional weekly email report, and another when a grade is finished.</li>
+            <li><img src={F + "graduation.svg"} width="24" height="24" alt="" />Grown-up settings sit behind a 2-second hold, so children can't change them.</li>
+          </ul>
+        </div>
+        <div class="mock parents-mock">
+          <div class="tilt purple" aria-hidden="true"></div>
+          <div class="mock-panel lilac">
+            <p class="mock-title">Your weekly report <span>(example)</span></p>
+            <div class="child">
+              <span class="avatar l">J</span>
+              <div><strong>Jabali · Grade 1</strong><span>Making 10 is strong</span></div>
+              <b>+9 ★</b>
+            </div>
+            <div class="child">
+              <span class="avatar s">T</span>
+              <div><strong>Tessa · Grade 2</strong><span>Equal groups is still growing</span></div>
+              <b>+6 ★</b>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="move">
+    <div class="pattern move-pattern" aria-hidden="true"></div>
+    <div class="container">
+      <div class="section-head">
+        <h2 class="heading-lg">Maths Away From the Screen</h2>
+        <p class="lede">Every few levels, a Move & Play activity takes the maths into the home, with a grown-up.</p>
+      </div>
+      <div class="move-cards">
+        {
+          moveAndPlay.map((m, i) => (
+            <article class={`move-card c${i}`}>
+              <span class="tag">{m.grade}</span>
+              <h3 class="heading-sm">{m.title}</h3>
+              <p>{m.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Give Your Child the Gift of Maths Confidence."
+    text="ArithmeTick is free during the beta. Join, try it with your family, and help shape what comes next."
+    action="Join the Free Beta"
+    href="/contact#beta"
+  />
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, #c9efe9 0%, var(--mint) 45%, var(--white) 100%);
+    padding: 80px 0;
+  }
+  .hero-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+  }
+  .hero-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 40px;
+    align-items: center;
+  }
+  .hero-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .actions .btn {
+    flex: 1 1 200px;
+  }
+  .hero-art {
+    position: relative;
+    height: 500px;
+  }
+  .glow {
+    position: absolute;
+    inset: 40px 20px;
+    border-radius: 9999px;
+    background: var(--mint-glow);
+    opacity: 0.3;
+    filter: blur(50px);
+  }
+  .phone {
+    position: absolute;
+    margin: 0;
+    width: 220px;
+    border-radius: 32px;
+    overflow: hidden;
+    border: 6px solid var(--ink);
+    background: var(--ink);
+    box-shadow: 0 8px 24px rgba(0, 107, 98, 0.18);
+  }
+  .phone img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 26px;
+  }
+  .phone.front {
+    left: 8%;
+    top: 30px;
+    rotate: -5deg;
+    z-index: 2;
+  }
+  .phone.back {
+    right: 6%;
+    top: 0;
+    rotate: 5deg;
+  }
+  .pal {
+    position: absolute;
+    z-index: 3;
+    width: 64px;
+    height: 64px;
+    border-radius: 9999px;
+    padding: 6px;
+    background: var(--white);
+    box-shadow: var(--shadow-card);
+  }
+  .pal.fox {
+    right: 0;
+    bottom: 40px;
+  }
+  .pal.cheetah {
+    left: 0;
+    top: 8px;
+  }
+
+  .pillars {
+    position: relative;
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .section-head {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .split {
+    padding: 80px 0;
+    overflow-x: clip;
+  }
+  .split-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 40px;
+    align-items: center;
+  }
+  .copy {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .kicker {
+    margin-bottom: -8px;
+  }
+  .teal-text {
+    color: var(--teal);
+  }
+  .purple-text {
+    color: var(--purple);
+  }
+  .ticks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 14px;
+  }
+  .ticks li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: clamp(17px, 1.9vw, 20px);
+  }
+  .ticks img {
+    flex: none;
+    margin-top: 2px;
+  }
+  .mock {
+    position: relative;
+    padding: 24px;
+  }
+  .tilt {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-xl);
+  }
+  .tilt.teal {
+    background: rgba(0, 178, 169, 0.25);
+    rotate: -6deg;
+  }
+  .tilt.purple {
+    background: rgba(136, 77, 207, 0.25);
+    rotate: 6deg;
+  }
+  .mock-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 32px;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+  }
+  .mint {
+    background: var(--mint);
+  }
+  .lilac {
+    background: var(--lilac);
+  }
+  .tiles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+    border-radius: var(--radius-md);
+    background: var(--white);
+    box-shadow: 0 4px 10px rgba(0, 107, 98, 0.08);
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .mission {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    border-radius: var(--radius-md);
+    background: var(--white);
+    box-shadow: 0 4px 10px rgba(0, 107, 98, 0.08);
+    font-size: 16px;
+  }
+  .mission-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+  }
+  .stars {
+    padding: 4px 12px;
+    border-radius: 9999px;
+    background: #9ff2e6;
+    color: #00514a;
+    font-weight: 600;
+  }
+  .bar {
+    height: 16px;
+    border-radius: 9999px;
+    background: #e5e8ef;
+    overflow: hidden;
+  }
+  .bar span {
+    display: block;
+    width: 75%;
+    height: 100%;
+    background: var(--teal-bright);
+  }
+  .mission p {
+    font-style: italic;
+  }
+  .mock-title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .mock-title span {
+    color: var(--ink-2);
+    font-weight: 500;
+  }
+  .child {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border-radius: var(--radius-md);
+    background: #f5f2fb;
+    font-size: 16px;
+  }
+  .child div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .child div span {
+    opacity: 0.75;
+  }
+  .child b {
+    color: var(--teal-bright);
+  }
+  .avatar {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 9999px;
+    font-weight: 700;
+  }
+  .avatar.l {
+    background: #deb7ff;
+    color: #71508f;
+  }
+  .avatar.s {
+    background: #9ff2e6;
+    color: #00514a;
+  }
+
+  .move {
+    position: relative;
+    overflow: hidden;
+    background: var(--lilac);
+    padding: 80px 0;
+  }
+  .move-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.45;
+  }
+  .move .container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .move-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .move-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 28px;
+    border-radius: var(--radius-lg);
+    border: 2px solid transparent;
+    box-shadow: var(--shadow-card);
+    font-size: 17px;
+  }
+  .move-card.c0 {
+    background: #ebfaf8;
+    border-color: #b8e7e1;
+  }
+  .move-card.c1 {
+    background: #fff7d6;
+    border-color: #f6dd8a;
+  }
+  .move-card.c2 {
+    background: #f6efff;
+    border-color: #d7c2f3;
+  }
+  .tag {
+    align-self: flex-start;
+    padding: 2px 12px;
+    border-radius: 9999px;
+    background: var(--white);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--teal-deep);
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid,
+    .row {
+      grid-template-columns: 1fr;
+    }
+    .row.reverse .copy {
+      order: -1;
+    }
+    .hero-art {
+      height: 440px;
+      max-width: 460px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .cards,
+    .move-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 480px) {
+    .phone {
+      width: 180px;
+    }
+    .hero-art {
+      height: 380px;
+    }
+    .mock-panel {
+      padding: 20px;
+    }
+  }
+</style>

@@ -1,0 +1,221 @@
+---
+import Base from "./Base.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  intro: string;
+  updated: string;
+  /** Table of contents: each section's id and heading. */
+  toc: { id: string; label: string }[];
+  current?: "privacy";
+}
+const { title, description, intro, updated, toc, current } = Astro.props;
+---
+
+<Base title={title} description={description} current={current}>
+  <section class="doc-hero">
+    <div class="pattern doc-pattern" aria-hidden="true"></div>
+    <div class="container">
+      <div class="doc-head">
+        <h1 class="display">{title}</h1>
+        <p class="intro">{intro}</p>
+        <hr />
+        <p class="updated">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>
+          Last updated: {updated}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="container doc-grid">
+    <aside class="toc" aria-label="On this page">
+      <p class="toc-title">On this page</p>
+      <ol>
+        {
+          toc.map((t) => (
+            <li>
+              <a href={`#${t.id}`}>{t.label}</a>
+            </li>
+          ))
+        }
+      </ol>
+    </aside>
+    <article class="doc">
+      <slot />
+    </article>
+  </div>
+</Base>
+
+<style>
+  .doc-hero {
+    position: relative;
+    overflow: hidden;
+    background: var(--mint);
+    padding: 64px 0 48px;
+  }
+  .doc-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.6;
+  }
+  .doc-head {
+    position: relative;
+    max-width: 768px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .doc-head h1 {
+    color: var(--teal);
+  }
+  .intro {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  hr {
+    width: 100%;
+    border: 0;
+    border-top: 1px solid rgba(0, 143, 136, 0.35);
+    margin: 8px 0 0;
+  }
+  .updated {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: var(--ink-2);
+  }
+  .doc-grid {
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr);
+    gap: 40px;
+    padding-top: 48px;
+    padding-bottom: 80px;
+    align-items: start;
+  }
+  .toc {
+    position: sticky;
+    top: 100px;
+  }
+  .toc-title {
+    margin-bottom: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .toc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+  }
+  .toc a {
+    display: block;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    background: var(--mint);
+    color: var(--teal);
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .toc a:hover {
+    background: var(--teal-deep);
+    color: var(--white);
+  }
+  .doc {
+    min-width: 0;
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-size: 17px;
+  }
+  .doc :global(h2) {
+    margin-top: 16px;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: -0.4px;
+    scroll-margin-top: 100px;
+  }
+  .doc :global(ul) {
+    margin: 0;
+    padding-left: 22px;
+    display: grid;
+    gap: 8px;
+  }
+  .doc :global(.callout) {
+    display: flex;
+    gap: 14px;
+    padding: 18px 20px;
+    border: 1px solid #b8e7e1;
+    border-radius: var(--radius-md);
+    background: var(--mint);
+  }
+  .doc :global(.callout strong) {
+    display: block;
+    color: var(--teal);
+  }
+  .doc :global(.table) {
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--line);
+  }
+  .doc :global(table) {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+  .doc :global(th),
+  .doc :global(td) {
+    padding: 12px 14px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--line);
+  }
+  .doc :global(th) {
+    background: var(--mint);
+    color: var(--teal);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .doc :global(tr:last-child td) {
+    border-bottom: 0;
+  }
+  .doc :global(.contact-card) {
+    margin-top: 16px;
+    padding: 32px;
+    border-radius: var(--radius-lg);
+    background: var(--teal-deep);
+    color: var(--white);
+    display: grid;
+    gap: 12px;
+  }
+  .doc :global(.contact-card h2) {
+    margin: 0;
+    color: var(--white);
+  }
+  .doc :global(.contact-card a) {
+    color: var(--sun);
+    font-weight: 700;
+  }
+  @media (max-width: 900px) {
+    .doc-grid {
+      grid-template-columns: 1fr;
+    }
+    .toc {
+      position: static;
+    }
+  }
+</style>

@@ -1,0 +1,24 @@
+---
+import Base from "../layouts/Base.astro";
+import Owl from "../components/Owl.astro";
+---
+
+<Base title="Page not found" description="This page doesn't exist.">
+  <section class="container lost">
+    <Owl size={140} />
+    <h1 class="display">Brijo Can't Find That Page</h1>
+    <p class="lede">It may have moved. Try the home page instead.</p>
+    <a class="btn btn-primary" href="/">Go to the Home Page</a>
+  </section>
+</Base>
+
+<style>
+  .lost {
+    display: grid;
+    justify-items: center;
+    gap: 20px;
+    padding-top: 80px;
+    padding-bottom: 96px;
+    text-align: center;
+  }
+</style>

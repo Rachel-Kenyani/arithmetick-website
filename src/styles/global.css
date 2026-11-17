@@ -1,0 +1,206 @@
+/*
+ * ArithmeTick website tokens, taken from the Figma "Website" wireframes and matched to the app's brand
+ * (teal brand, purple second voice, sun yellow for the main action). Quicksand throughout, as in the wireframes.
+ */
+:root {
+  --teal: #006f68;
+  --teal-deep: #004f4a;
+  --teal-bright: #009088;
+  --mint: #ebf9f7;
+  --mint-glow: #83d5ca;
+  --purple: #6d41a3;
+  --purple-nav: #884dcf;
+  --lilac: #ecdefe;
+  --sun: #ffd147;
+  --ink: #090000;
+  --ink-2: #414246;
+  --nav-bg: #f7f9ff;
+  --line: #cfe8e4;
+  --white: #ffffff;
+  --footer: #090000;
+
+  --font: "Quicksand", "Segoe UI", system-ui, sans-serif;
+  --shadow-card: 0 4px 20px rgba(0, 107, 98, 0.08);
+  --shadow-crisp: 0 2px 0 rgba(26, 26, 26, 0.12);
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 40px;
+
+  --pad-x: 80px;
+  --max: 1040px;
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--white);
+  color: var(--ink);
+  font-family: var(--font);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: var(--teal);
+}
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+label:focus-visible {
+  outline: 3px solid var(--purple-nav);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  letter-spacing: -0.96px;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: calc(var(--max) + 2 * var(--pad-x));
+  margin: 0 auto;
+  padding-left: max(var(--pad-x), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--pad-x), env(safe-area-inset-right, 0px));
+}
+
+@media (max-width: 900px) {
+  :root {
+    --pad-x: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --pad-x: 16px;
+  }
+  body {
+    font-size: 17px;
+  }
+}
+
+/* Type scale from the wireframes: Display Hero 48, Heading Lg 32, Heading Sm 24, Body Xl 20. */
+.display {
+  font-size: clamp(34px, 5vw, 48px);
+  font-weight: 700;
+}
+.heading-lg {
+  font-size: clamp(26px, 3.4vw, 32px);
+  font-weight: 700;
+}
+.heading-sm {
+  font-size: clamp(20px, 2.4vw, 24px);
+  font-weight: 600;
+}
+.lede {
+  font-size: clamp(19px, 2.2vw, 24px);
+  font-weight: 600;
+  color: var(--ink-2);
+  letter-spacing: -0.4px;
+  line-height: 1.4;
+}
+.body-xl {
+  font-size: clamp(17px, 1.9vw, 20px);
+  font-weight: 500;
+  color: var(--ink-2);
+}
+
+/* Buttons: teal primary with a crisp drop, outlined secondary, sun accent for the main call to action. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn-primary {
+  background: var(--teal);
+  color: var(--white);
+  border: 2px solid var(--teal);
+  box-shadow: var(--shadow-crisp);
+}
+.btn-primary:hover {
+  background: var(--teal-deep);
+  border-color: var(--teal-deep);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--teal-deep);
+  border: 2px solid var(--teal-deep);
+  box-shadow: var(--shadow-crisp);
+}
+.btn-outline:hover {
+  background: rgba(0, 111, 104, 0.06);
+}
+.btn-sun {
+  background: var(--sun);
+  color: var(--ink);
+  border-radius: 12px;
+  padding: 18px 48px;
+  font-size: clamp(19px, 2.2vw, 24px);
+  box-shadow: var(--shadow-crisp);
+}
+.btn-sun:hover {
+  background: #ffc61f;
+}
+
+/* The triangle pattern from the wireframes, repeated in rows over a background colour. */
+.pattern {
+  background-image: url("/images/figma/pattern-row.svg");
+  background-size: 1789px 88.5px;
+  background-repeat: repeat;
+  background-position: center top;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

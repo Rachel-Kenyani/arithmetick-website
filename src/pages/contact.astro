@@ -1,0 +1,164 @@
+---
+import Base from "../layouts/Base.astro";
+const EMAIL = "rachelkenyani@gmail.com";
+const beta = `mailto:${EMAIL}?subject=${encodeURIComponent("Join the ArithmeTick beta")}`;
+---
+
+<Base title="Contact" description="Join the ArithmeTick beta, or get in touch with a question." current="contact">
+  <section class="hero">
+    <div class="pattern hero-pattern" aria-hidden="true"></div>
+    <div class="container head">
+      <h1 class="display">Get in Touch</h1>
+      <p class="lede">Join the beta, ask a question, or tell us what your child thinks of Brijo.</p>
+    </div>
+  </section>
+
+  <section class="container grid">
+    <article class="card beta" id="beta">
+      <p class="tag">Free during the beta</p>
+      <h2 class="heading-lg">Join the Beta</h2>
+      <p class="body-xl">ArithmeTick is being tested on Android phones through Google Play. To join, send an email with:</p>
+      <ol>
+        <li>The <strong>Google account email</strong> you use on your Android phone. Google Play needs it to let you install the beta.</li>
+        <li>How many children will play, and their grades (1, 2 or 3). No names needed.</li>
+      </ol>
+      <p class="body-xl">We'll reply with a link to install it from Google Play.</p>
+      <a class="btn btn-primary" href={beta}>Email to Join the Beta</a>
+    </article>
+
+    <article class="card">
+      <h2 class="heading-lg">Questions and Help</h2>
+      <p class="body-xl">For questions, problems in the app, or anything about your family's data, email:</p>
+      <p class="email">
+        <span id="email-text">{EMAIL}</span>
+        <button type="button" class="copy" data-copy={EMAIL}>Copy</button>
+      </p>
+      <p class="body-xl">We reply within a few days.</p>
+      <ul class="links">
+        <li><a href="/delete-account">How to delete your account</a></li>
+        <li><a href="/privacy">Privacy Policy</a></li>
+      </ul>
+    </article>
+  </section>
+</Base>
+
+<script>
+  for (const button of document.querySelectorAll<HTMLButtonElement>("button[data-copy]")) {
+    button.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(button.dataset.copy ?? "");
+        button.textContent = "Copied";
+      } catch {
+        const range = document.createRange();
+        const text = document.getElementById("email-text");
+        if (text) {
+          range.selectNodeContents(text);
+          getSelection()?.removeAllRanges();
+          getSelection()?.addRange(range);
+        }
+        button.textContent = "Selected";
+      }
+      setTimeout(() => (button.textContent = "Copy"), 2000);
+    });
+  }
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, #c9efe9 0%, var(--mint) 100%);
+    padding: 64px 0;
+  }
+  .hero-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+  }
+  .head {
+    position: relative;
+    display: grid;
+    gap: 16px;
+    text-align: center;
+    justify-items: center;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    padding-top: 48px;
+    padding-bottom: 80px;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+    padding: 40px;
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    box-shadow: var(--shadow-card);
+    scroll-margin-top: 100px;
+  }
+  .card.beta {
+    border: 2px solid #b8e7e1;
+  }
+  .card h2 {
+    color: var(--teal);
+  }
+  .tag {
+    align-self: flex-start;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    background: #fff4cc;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  ol {
+    margin: 0;
+    padding-left: 22px;
+    display: grid;
+    gap: 10px;
+    color: var(--ink-2);
+  }
+  .card .btn {
+    align-self: flex-start;
+    margin-top: 8px;
+  }
+  .email {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    background: var(--mint);
+    font-weight: 700;
+    color: var(--teal-deep);
+    word-break: break-all;
+  }
+  .copy {
+    font: inherit;
+    font-size: 15px;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    border: 2px solid var(--teal);
+    background: var(--white);
+    color: var(--teal);
+    cursor: pointer;
+  }
+  .links {
+    margin: 0;
+    padding-left: 20px;
+    display: grid;
+    gap: 6px;
+  }
+  @media (max-width: 800px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    .card {
+      padding: 28px;
+    }
+  }
+</style>

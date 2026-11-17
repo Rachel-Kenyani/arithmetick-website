@@ -1,0 +1,56 @@
+---
+interface Props {
+  icon: string;
+  title: string;
+}
+const { icon, title } = Astro.props;
+---
+
+<article class="card">
+  <img class="glow" src="/images/figma/card-bg.svg" width="320" height="320" alt="" />
+  <div class="icon"><img src={icon} width="36" height="36" alt="" /></div>
+  <h3 class="heading-sm">{title}</h3>
+  <p class="body-xl"><slot /></p>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+    padding: 40px;
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    box-shadow: var(--shadow-card);
+  }
+  .glow {
+    position: absolute;
+    left: 297px;
+    top: -120px;
+    pointer-events: none;
+  }
+  .icon {
+    position: relative;
+    display: flex;
+    align-self: flex-start;
+    padding: 24px;
+    border-radius: var(--radius-md);
+    background: var(--mint);
+  }
+  h3 {
+    position: relative;
+    padding-top: 12px;
+    margin-bottom: -8px;
+  }
+  p {
+    position: relative;
+  }
+  @media (max-width: 600px) {
+    .card {
+      padding: 28px;
+    }
+  }
+</style>

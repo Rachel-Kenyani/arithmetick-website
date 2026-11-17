@@ -1,0 +1,95 @@
+---
+import Owl from "./Owl.astro";
+
+interface Props {
+  title: string;
+  text: string;
+  action: string;
+  href: string;
+}
+const { title, text, action, href } = Astro.props;
+---
+
+<section class="cta-section">
+  <div class="container">
+    <div class="wrap">
+      <Owl size={180} class="owl" />
+      <div class="band">
+        <img class="strip top" src="/images/figma/cta-strip-top.svg" alt="" />
+        <img class="strip bottom" src="/images/figma/cta-strip-bottom.svg" alt="" />
+        <div class="content">
+          <h2 class="display">{title}</h2>
+          <p class="lede">{text}</p>
+          <a class="btn btn-sun" href={href}>{action}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-section {
+    background: var(--mint);
+    padding: 40px 0 80px;
+  }
+  .wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .wrap :global(.owl) {
+    margin-bottom: -8px;
+    z-index: 1;
+  }
+  .band {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: var(--teal-deep);
+    box-shadow: 5px 5px 15.8px rgba(26, 26, 26, 0.18);
+    padding: 80px var(--pad-x);
+  }
+  .strip {
+    position: absolute;
+    left: 50%;
+    width: 184%;
+    max-width: none;
+    height: auto;
+    translate: -50% 0;
+    pointer-events: none;
+  }
+  .strip.top {
+    top: -4%;
+    transform: rotate(180deg) scaleX(-1);
+  }
+  .strip.bottom {
+    bottom: -4%;
+  }
+  .content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    max-width: 768px;
+    margin: 0 auto;
+    text-align: center;
+    color: var(--white);
+  }
+  .content .lede {
+    color: var(--white);
+    max-width: 576px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 600px) {
+    .band {
+      padding: 56px 20px;
+    }
+    .btn-sun {
+      width: 100%;
+      padding: 18px 20px;
+    }
+  }
+</style>
