@@ -12,14 +12,15 @@ npm run dev      # http://localhost:4321
 npm run build    # static site in dist/
 ```
 
-## Deploy (Cloudflare Pages)
+## Deploy (Cloudflare Workers)
 
-1. Push this folder to its own GitHub repository.
-2. In Cloudflare: Workers & Pages → Create → Pages → Connect to Git, and pick the repository.
-3. Framework preset **Astro**; build command `npm run build`; output directory `dist`.
-4. Under the project's **Custom domains**, add `arithmetick.rachelkenyani.com`. Cloudflare shows the DNS record to add where `rachelkenyani.com` is managed.
+`wrangler.jsonc` tells Cloudflare to serve the built `dist/` folder as static files.
 
-Every push to `main` then redeploys the site.
+1. In Cloudflare: Workers & Pages → Create → Import a repository, and pick this repository.
+2. Build command `npm run build`; deploy command `npx wrangler deploy`. Leave the path as `/` and add no variables.
+3. Under the Worker's **Settings → Domains & Routes**, add the custom domain `arithmetick.rachelkenyani.com`.
+
+Every push to `main` then rebuilds and redeploys the site.
 
 ## Content notes
 
