@@ -30,12 +30,17 @@ export const FAQ: { question: string; answer: string }[] = [
   {
     question: "What happens to my child's data?",
     answer:
-      "Children's names, stars and progress stay on the phone. We keep only the grown-up's email to log in. There are no ads, no tracking and no selling of data. Weekly email reports are off until a grown-up turns them on.",
+      "We keep the grown-up's email to log in, and each child's progress so it is safe with your account. There are no ads, and we never sell or share your family's data. Weekly email reports are off until a grown-up turns them on. The Privacy Policy lists exactly what we keep.",
+  },
+  {
+    question: "Does it follow the CBC curriculum?",
+    answer:
+      "Yes. Every level is built on the maths in Kenya's Competency-Based Curriculum (CBC) for Grades 1 to 3, using things children see at home and at the market.",
   },
   {
     question: "What maths does it cover?",
     answer:
-      "Eight skills from the Grade 1 to 3 syllabus: making 10, taking away, place value, adding on, counting in steps, equal groups, sharing equally and telling the time.",
+      "Eight skills from Kenya's CBC maths curriculum for Grades 1 to 3: making 10, taking away, place value, adding on, counting in steps, equal groups, sharing equally and telling the time.",
   },
 ];
 
@@ -62,6 +67,6 @@ export const HELP_FAQ: { question: string; answer: string }[] = [
   {
     question: "Can I move to a new phone?",
     answer:
-      "Your account moves with you: sign in on the new phone with the same email. Children's stars and progress are kept on the old phone, so they start their maps again.",
+      "Yes. Install ArithmeTick on the new phone and sign in with the same email. Each child's progress is saved with your account, so their maps, stars and badges come with them.",
   },
 ];

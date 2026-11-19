@@ -15,19 +15,19 @@ export const GET: APIRoute = ({ site }) => {
     .join("\n\n");
   const body = `# ArithmeTick
 
-> A maths app for Kenyan children in Grades 1 to 3 (ages 6 to 9) on Android. Brijo the owl reads every instruction aloud, children count real things like bottle tops and mangoes, and a grown-up joins in for Move & Play activities. Free during the beta, no ads, made in Nairobi, Kenya.
+> Turn screen time into maths confidence. A maths app for Kenyan children in Grades 1 to 3 (ages 6 to 9) on Android, built on Kenya's CBC curriculum. Brijo the owl reads every instruction aloud, children count real things like bottle tops and mangoes, and a grown-up joins in for Move & Play activities. Free during the beta, no ads, made in Nairobi, Kenya.
 
 - Install: [Google Play](${PLAY_STORE_URL})
 - Support: ${SUPPORT_EMAIL}
 
 ## Pages
 
-- [For Families](${origin}/): what the app is and who it is for
-- [How It Works](${origin}/how-it-works): every level, grade by grade, and the eight skills
+- [For families](${origin}/): what the app is and who it is for
+- [How it works](${origin}/how-it-works): every level, grade by grade, and the eight skills
 - [Contact](${origin}/contact): install link and support email
-- [Privacy Policy](${origin}/privacy): what is collected (only a grown-up's email; children's data stays on the phone)
+- [Privacy Policy](${origin}/privacy): what is collected and why
 - [Terms of Use](${origin}/terms)
-- [Delete Your Account](${origin}/delete-account)
+- [Delete your account](${origin}/delete-account)
 
 ## Questions parents ask
 

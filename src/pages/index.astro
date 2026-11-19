@@ -25,6 +25,7 @@ const schema = [
     offers: { "@type": "Offer", price: "0", priceCurrency: "KES" },
     audience: { "@type": "EducationalAudience", educationalRole: "student", audienceType: "Children in Grades 1 to 3, ages 6 to 9" },
     educationalLevel: "Grades 1 to 3",
+    educationalAlignment: { "@type": "AlignmentObject", alignmentType: "educationalSubject", educationalFramework: "Kenya Competency-Based Curriculum (CBC)", targetName: "Mathematics, Grades 1 to 3" },
     teaches: FAQ.at(-1)?.answer,
     inLanguage: "en",
     author: { "@type": "Person", name: "Rachel Kenyani" },
@@ -64,7 +65,7 @@ const moveAndPlay = [
     <div class="pattern hero-pattern" aria-hidden="true"></div>
     <div class="container hero-grid">
       <div class="hero-copy">
-        <h1 class="display">Turn Screen Time Into Maths Confidence at Home.</h1>
+        <h1 class="display">Turn screen time into maths confidence.</h1>
         <p class="lede">
           Short maths games for Grades 1 to 3. Brijo the owl reads every instruction aloud, so children can play before
           they can read.
@@ -73,10 +74,11 @@ const moveAndPlay = [
           <PlayButton />
           <a class="btn btn-outline" href={hasTour ? "#tour" : "/how-it-works"}>
             <img src={F + "play-circle.svg"} width="24" height="24" alt="" />
-            {hasTour ? "Watch the Tour" : "See How It Works"}
+            {hasTour ? "Watch the tour" : "See how it works"}
           </a>
         </div>
         <ul class="facts" aria-label="At a glance">
+          <li>CBC Grades 1 to 3</li>
           <li>Ages 6 to 9</li>
           <li>Android</li>
           <li>Free during the beta</li>
@@ -84,7 +86,7 @@ const moveAndPlay = [
         </ul>
         <p class="trust">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.5 3.2 8.4 7.5 9.5 4.3-1.1 7.5-5 7.5-9.5V6z"></path><path d="m9 12 2 2 4-4"></path></svg>
-          <span>No ads, no tracking. Progress is saved with your account, for your eyes only. <a href="/privacy">Privacy</a></span>
+          <span>No ads, and we never sell your family's data. Progress is saved with your account, for your eyes only. <a href="/privacy">Privacy</a></span>
         </p>
       </div>
       <div class="hero-art" aria-label="Screens from the ArithmeTick app">
@@ -102,17 +104,17 @@ const moveAndPlay = [
 
     <div class="container pillars">
       <div class="section-head">
-        <h2 class="heading-lg">Maths Doesn't Have to be a Chore</h2>
+        <h2 class="heading-lg">Maths doesn't have to be a chore</h2>
         <p class="lede">Every level is real Grade 1 to 3 maths, built to feel like a game a child wants to play again.</p>
       </div>
       <div class="cards">
-        <FeatureCard icon={F + "phone.svg"} title="Screen Time You Can Feel Good About">
-          Each level practises a skill from the Grade 1 to 3 syllabus, and a daily 15-minute limit keeps play short.
+        <FeatureCard icon={F + "phone.svg"} title="Screen time you can feel good about">
+          Each level practises a skill from Kenya's CBC maths curriculum for Grades 1 to 3, and a daily 15-minute limit keeps play short.
         </FeatureCard>
-        <FeatureCard icon={F + "puzzle.svg"} title="Low-Anxiety, Playful Learning">
+        <FeatureCard icon={F + "puzzle.svg"} title="Low-anxiety, playful learning">
           Brijo guides children through mistakes with gentle hints. A wrong answer never costs stars.
         </FeatureCard>
-        <FeatureCard icon={F + "chart.svg"} title="See How They're Doing">
+        <FeatureCard icon={F + "chart.svg"} title="See how they're doing">
           Turn on a weekly email: levels, stars, what they're strong at, and one game to try at home.
         </FeatureCard>
       </div>
@@ -120,7 +122,7 @@ const moveAndPlay = [
   </section>
 
   <ProductVideo
-    title="One Level, Start to Finish"
+    title="One level, start to finish"
     text="A minute of real play: Brijo sets the task, the child counts, and the stars come in."
     points={[
       "Brijo reads the instruction aloud and the words light up.",
@@ -139,8 +141,8 @@ const moveAndPlay = [
           </figure>
         </div>
         <div class="copy">
-          <p class="kicker teal-text heading-lg">For Kids</p>
-          <h2 class="heading-sm">A Learning Adventure They Actually Ask to Play</h2>
+          <p class="kicker teal-text heading-lg">For kids</p>
+          <h2 class="heading-sm">A learning adventure they actually ask to play</h2>
           <ul class="ticks">
             <li><img src={F + "route.svg"} width="24" height="24" alt="" />A jungle map of short levels, one small step at a time.</li>
             <li><img src={F + "award.svg"} width="24" height="24" alt="" />Stars, badges and a family star goal to win together.</li>
@@ -151,8 +153,8 @@ const moveAndPlay = [
 
       <div class="row reverse">
         <div class="copy">
-          <p class="kicker purple-text heading-lg">For Parents</p>
-          <h2 class="heading-sm">Stay Connected Without the Hovering</h2>
+          <p class="kicker purple-text heading-lg">For parents</p>
+          <h2 class="heading-sm">Stay connected without hovering</h2>
           <ul class="ticks">
             <li><img src={F + "user-plus.svg"} width="24" height="24" alt="" />Separate profiles for up to 4 children, each with their own progress.</li>
             <li><img src={F + "chart-purple.svg"} width="24" height="24" alt="" />An optional weekly email report, and another when a grade is finished.</li>
@@ -175,7 +177,7 @@ const moveAndPlay = [
     <div class="pattern move-pattern" aria-hidden="true"></div>
     <div class="container">
       <div class="section-head">
-        <h2 class="heading-lg">Maths Away From the Screen</h2>
+        <h2 class="heading-lg">Maths away from the screen</h2>
         <p class="lede">Every few levels, a Move & Play activity takes the maths into the home, with a grown-up.</p>
       </div>
       <div class="move-cards">
@@ -195,7 +197,7 @@ const moveAndPlay = [
   <Faq items={FAQ} />
 
   <CtaBand
-    title="Give Your Child the Gift of Maths Confidence."
+    title="Give your child the gift of maths confidence."
     text="ArithmeTick is free during the beta. Install it from Google Play and try it with your family tonight."
   />
 </Base>
