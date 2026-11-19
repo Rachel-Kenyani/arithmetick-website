@@ -36,6 +36,26 @@ const schema = [
     ),
   },
 ];
+const steps = [
+  {
+    image: "/images/app/map.jpg",
+    alt: "The Grade 1 jungle map, with level 2 ready to play",
+    title: "Choose the next stop on the map",
+    text: "Levels unlock one at a time. After a hard level, the map suggests a quick warm-up first.",
+  },
+  {
+    image: "/images/app/level.jpg",
+    alt: "Brijo asks: the wind blew away seven feathers, help Brijo collect them",
+    title: "Brijo tells the story, aloud",
+    text: "Every level starts with a short story. Brijo reads it to your child, and the words light up as she speaks.",
+  },
+  {
+    image: "/images/app/badges.jpg",
+    alt: "Jabali's badges: one won, Feather Finder next",
+    title: "Play, get help, win stars",
+    text: "Children count, group and share bottle tops, mangoes and seeds. After a few wrong answers, gentle help steps in. Stars never go down.",
+  },
+];
 const skills = [
   { name: "Making 10", text: "Fill ten-frames with bottle tops, shells and feathers, and see how 5 and more make 10." },
   { name: "Taking away", text: "Brijo takes some away, and the child counts what's left: from 7 − 2 up to 352 − 125." },
@@ -49,7 +69,7 @@ const skills = [
 ---
 
 <Base
-  title="How It Works"
+  title="How it works"
   description="Every ArithmeTick level, grade by grade, and the eight maths skills children practise."
   current="how"
   schema={schema}
@@ -57,37 +77,36 @@ const skills = [
   <section class="hero">
     <div class="container">
       <div class="head">
-        <h1 class="display">Maths for Grades 1 to 3, One Small Level at a Time.</h1>
-        <p class="lede">Each grade is a jungle map of short levels. Children count, group and share real things, Brijo reads every instruction aloud, and a grown-up joins in for Move & Play.</p>
+        <h1 class="display">One small level at a time.</h1>
+        <p class="lede">Each grade is a jungle map of short levels built on Kenya's CBC maths curriculum. Here's what happens in one.</p>
         <div class="actions">
           <PlayButton />
-          <a class="btn btn-outline" href="#levels">See Every Level</a>
+          <a class="btn btn-outline" href="#levels">See every level</a>
         </div>
       </div>
-      <div class="cards">
-        <article class="card">
-          <div class="icon sun"><img src={F + "graduation.svg"} width="36" height="36" alt="" /></div>
-          <h2 class="heading-sm">Things Children Know</h2>
-          <p class="body-xl">Bottle tops, mangoes, chapati, seeds and shillings. The maths lives in a Kenyan home and market.</p>
-        </article>
-        <article class="card">
-          <div class="icon sun"><img src={F + "puzzle.svg"} width="36" height="36" alt="" /></div>
-          <h2 class="heading-sm">Brijo Reads It All</h2>
-          <p class="body-xl">Many children are still learning to read, so Brijo says every instruction and the words light up as she speaks.</p>
-        </article>
-        <article class="card">
-          <div class="icon sun"><img src={F + "chart.svg"} width="36" height="36" alt="" /></div>
-          <h2 class="heading-sm">Help When It's Hard</h2>
-          <p class="body-xl">After a few wrong answers, gentle help steps in. After a hard level, the map suggests a quick warm-up first.</p>
-        </article>
-      </div>
+      <ol class="steps">
+        {
+          steps.map((step, i) => (
+            <li class="step">
+              <figure class="shot">
+                <img src={step.image} width="390" height="844" loading={i === 0 ? "eager" : "lazy"} alt={step.alt} />
+              </figure>
+              <div class="step-copy">
+                <span class="step-n">Step {i + 1}</span>
+                <h2 class="heading-sm">{step.title}</h2>
+                <p class="body-xl">{step.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
     </div>
   </section>
 
   <section class="matrix" id="levels">
     <div class="container">
       <div class="section-head">
-        <h2 class="heading-lg">Every Level, Grade by Grade</h2>
+        <h2 class="heading-lg">Every level, grade by grade</h2>
         <p class="lede">Choose a grade to see its levels. Move & Play activities happen away from the screen, with a grown-up.</p>
       </div>
       <div class="tabs">
@@ -124,7 +143,7 @@ const skills = [
   <section class="skills">
     <div class="pattern skills-pattern" aria-hidden="true"></div>
     <div class="container">
-      <h2 class="heading-lg">Eight Skills, Practised Again and Again</h2>
+      <h2 class="heading-lg">Eight skills, practised again and again</h2>
       <div class="skill-grid">
         {
           skills.map((s, i) => (
@@ -139,7 +158,7 @@ const skills = [
   </section>
 
   <CtaBand
-    title="Try It With Your Family."
+    title="Try it with your family."
     text="ArithmeTick is free during the beta. Install it from Google Play and play a few levels together."
   />
 </Base>
@@ -167,30 +186,48 @@ const skills = [
     justify-content: center;
     gap: 12px;
   }
-  .cards {
+  .steps {
     position: relative;
-    margin-top: 48px;
+    margin: var(--space-12) 0 0;
+    padding: 0;
+    list-style: none;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
+    gap: var(--space-8);
   }
-  .card {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 32px;
-    border-radius: var(--radius-lg);
-    background: var(--white);
+  .step {
+    display: grid;
+    gap: var(--space-5);
+    align-content: start;
+  }
+  .shot {
+    justify-self: center;
+    width: min(220px, 70vw);
+    margin: 0;
+    padding: 6px;
+    border-radius: 32px;
+    background: var(--outline);
     box-shadow: var(--shadow-card);
   }
-  .icon {
-    align-self: flex-start;
-    display: flex;
-    padding: 20px;
-    border-radius: var(--radius-md);
+  .shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 26px;
   }
-  .icon.sun {
+  .step-copy {
+    display: grid;
+    gap: var(--space-2);
+    text-align: center;
+  }
+  .step-n {
+    justify-self: center;
+    padding: 2px 12px;
+    border-radius: var(--radius-pill);
     background: var(--sun-50);
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 700;
   }
   .section-head {
     max-width: 700px;
@@ -331,7 +368,7 @@ const skills = [
     color: var(--text);
   }
   @media (max-width: 900px) {
-    .cards,
+    .steps,
     .skill-grid {
       grid-template-columns: 1fr;
     }
