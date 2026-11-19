@@ -1,4 +1,5 @@
 ---
+import { GA_MEASUREMENT_ID } from "../data/site";
 import Doc from "../layouts/Doc.astro";
 const EMAIL = "rachelkenyani@gmail.com";
 const toc = [
@@ -98,7 +99,18 @@ const toc = [
   <p>Information sent between the app and our sign-in service is encrypted. Passwords are stored only in hashed form. Codes expire quickly. No system is perfectly secure, so if we ever learn of a breach that affects you, we will tell you and the Data Protection Commissioner as the law requires.</p>
 
   <h2 id="website">This website and cookies</h2>
-  <p>This website sets no cookies and uses no analytics or tracking. Our host, Cloudflare, keeps basic technical logs (such as IP addresses) for a short time to keep the site running and secure. The page fonts are loaded from Google Fonts.</p>
+  {
+    GA_MEASUREMENT_ID ? (
+      <p>
+        If you accept, this website uses Google Analytics cookies to count visits and see which pages help families find the app, including
+        clicks on the Google Play button. Google receives your IP address and browser details. If you choose "No thanks", no analytics
+        cookies are set. You can change your choice with "Cookie settings" at the bottom of any page. The app itself has no analytics.
+      </p>
+    ) : (
+      <p>This website sets no cookies and uses no analytics.</p>
+    )
+  }
+  <p>Our host, Cloudflare, keeps basic technical logs (such as IP addresses) for a short time to keep the site running and secure. The fonts are served from this website, not from Google.</p>
 
   <h2 id="changes">Changes to this policy</h2>
   <p>If we change how we handle information, we will update this page and the date at the top. For important changes, we will also tell grown-ups in the app before they take effect.</p>
