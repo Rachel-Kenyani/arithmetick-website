@@ -2,8 +2,39 @@
 import Base from "../layouts/Base.astro";
 import FeatureCard from "../components/FeatureCard.astro";
 import CtaBand from "../components/CtaBand.astro";
+import PlayButton from "../components/PlayButton.astro";
+import ProductVideo from "../components/ProductVideo.astro";
+import fs from "node:fs";
+import { FAQ } from "../data/faq";
+import Faq from "../components/Faq.astro";
+import { PLAY_STORE_URL, ANDROID_PACKAGE } from "../data/site";
 
 const F = "/images/figma/";
+const hasTour = fs.existsSync(`${process.cwd()}/public/video/arithmetick-tour.mp4`);
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    name: "ArithmeTick",
+    operatingSystem: "Android",
+    applicationCategory: "EducationalApplication",
+    identifier: ANDROID_PACKAGE,
+    installUrl: PLAY_STORE_URL,
+    description: "Maths games for Grades 1 to 3. Brijo the owl reads every instruction aloud, so children can play before they can read.",
+    screenshot: ["/images/app/map.jpg", "/images/app/level.jpg", "/images/app/badges.jpg"].map((p) => new URL(p, Astro.site).href),
+    offers: { "@type": "Offer", price: "0", priceCurrency: "KES" },
+    audience: { "@type": "EducationalAudience", educationalRole: "student", audienceType: "Children in Grades 1 to 3, ages 6 to 9" },
+    educationalLevel: "Grades 1 to 3",
+    teaches: FAQ.at(-1)?.answer,
+    inLanguage: "en",
+    author: { "@type": "Person", name: "Rachel Kenyani" },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQ.map((f) => ({ "@type": "Question", name: f.question, acceptedAnswer: { "@type": "Answer", text: f.answer } })),
+  },
+];
 const moveAndPlay = [
   {
     grade: "Grade 1",
@@ -27,6 +58,7 @@ const moveAndPlay = [
   title="ArithmeTick"
   description="Playful Grade 1 to 3 maths for Kenyan families. Brijo the owl reads every instruction aloud, children count real things, and grown-ups join in."
   current="home"
+  schema={schema}
 >
   <section class="hero">
     <div class="pattern hero-pattern" aria-hidden="true"></div>
@@ -34,16 +66,26 @@ const moveAndPlay = [
       <div class="hero-copy">
         <h1 class="display">Turn Screen Time Into Maths Confidence at Home.</h1>
         <p class="lede">
-          Short, playful maths levels for Grades 1 to 3. Brijo the owl reads every instruction aloud, children count real
-          things like bottle tops and mangoes, and a grown-up joins in for Move & Play.
+          Short maths games for Grades 1 to 3. Brijo the owl reads every instruction aloud, so children can play before
+          they can read.
         </p>
         <div class="actions">
-          <a class="btn btn-primary" href="/contact#beta">Join the Free Beta</a>
-          <a class="btn btn-outline" href="/how-it-works">
+          <PlayButton />
+          <a class="btn btn-outline" href={hasTour ? "#tour" : "/how-it-works"}>
             <img src={F + "play-circle.svg"} width="24" height="24" alt="" />
-            See How It Works
+            {hasTour ? "Watch the Tour" : "See How It Works"}
           </a>
         </div>
+        <ul class="facts" aria-label="At a glance">
+          <li>Ages 6 to 9</li>
+          <li>Android</li>
+          <li>Free during the beta</li>
+          <li>15 minutes a day</li>
+        </ul>
+        <p class="trust">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.5 3.2 8.4 7.5 9.5 4.3-1.1 7.5-5 7.5-9.5V6z"></path><path d="m9 12 2 2 4-4"></path></svg>
+          <span>No ads, no tracking. Progress is saved with your account, for your eyes only. <a href="/privacy">Privacy</a></span>
+        </p>
       </div>
       <div class="hero-art" aria-label="Screens from the ArithmeTick app">
         <div class="glow" aria-hidden="true"></div>
@@ -77,25 +119,24 @@ const moveAndPlay = [
     </div>
   </section>
 
+  <ProductVideo
+    title="One Level, Start to Finish"
+    text="A minute of real play: Brijo sets the task, the child counts, and the stars come in."
+    points={[
+      "Brijo reads the instruction aloud and the words light up.",
+      "The child taps, drags and counts real things.",
+      "A wrong answer gets a gentle hint, never a lost star.",
+    ]}
+  />
+
   <section class="split">
     <div class="container split-grid">
       <div class="row">
         <div class="mock kids-mock">
           <div class="tilt teal" aria-hidden="true"></div>
-          <div class="mock-panel mint">
-            <div class="tiles">
-              <div class="tile"><img src={F + "fox.png"} width="64" height="64" alt="" /><span>Count to 7</span></div>
-              <div class="tile"><img src={F + "cheetah.png"} width="64" height="64" alt="" /><span>Take away 2</span></div>
-            </div>
-            <div class="mission">
-              <div class="mission-top">
-                <span>Grade 1 · Level 2</span>
-                <span class="stars">+3 stars</span>
-              </div>
-              <div class="bar"><span></span></div>
-              <p>"The wind blew away seven feathers. Help Brijo collect them!"</p>
-            </div>
-          </div>
+          <figure class="phone md">
+            <img src="/images/app/badges.jpg" width="390" height="844" loading="lazy" alt="Jabali's badges: 1 of 18 won, with Feather Finder next up" />
+          </figure>
         </div>
         <div class="copy">
           <p class="kicker teal-text heading-lg">For Kids</p>
@@ -120,18 +161,10 @@ const moveAndPlay = [
         </div>
         <div class="mock parents-mock">
           <div class="tilt purple" aria-hidden="true"></div>
-          <div class="mock-panel lilac">
-            <p class="mock-title">Your weekly report <span>(example)</span></p>
-            <div class="child">
-              <span class="avatar l">J</span>
-              <div><strong>Jabali · Grade 1</strong><span>Making 10 is strong</span></div>
-              <b>+9 ★</b>
-            </div>
-            <div class="child">
-              <span class="avatar s">T</span>
-              <div><strong>Tessa · Grade 2</strong><span>Equal groups is still growing</span></div>
-              <b>+6 ★</b>
-            </div>
+          <div class="shots">
+            <figure class="email">
+              <img src="/images/app/report.jpg" width="408" height="843" loading="lazy" alt="An example weekly report email: Jabali did 4 levels and earned 9 stars, Making 10 is strong, with an idea to try at home" />
+            </figure>
           </div>
         </div>
       </div>
@@ -159,11 +192,11 @@ const moveAndPlay = [
     </div>
   </section>
 
+  <Faq items={FAQ} />
+
   <CtaBand
     title="Give Your Child the Gift of Maths Confidence."
-    text="ArithmeTick is free during the beta. Join, try it with your family, and help shape what comes next."
-    action="Join the Free Beta"
-    href="/contact#beta"
+    text="ArithmeTick is free during the beta. Install it from Google Play and try it with your family tonight."
   />
 </Base>
 
@@ -171,8 +204,8 @@ const moveAndPlay = [
   .hero {
     position: relative;
     overflow: hidden;
-    background: linear-gradient(180deg, #c9efe9 0%, var(--mint) 45%, var(--white) 100%);
-    padding: 80px 0;
+    background: linear-gradient(180deg, var(--mint-100) 0%, var(--mint-50) 45%, var(--white) 100%);
+    padding: var(--section-y) 0;
   }
   .hero-pattern {
     position: absolute;
@@ -196,8 +229,44 @@ const moveAndPlay = [
     flex-wrap: wrap;
     gap: 16px;
   }
-  .actions .btn {
-    flex: 1 1 200px;
+  .actions :global(.btn) {
+    flex: 0 1 auto;
+    white-space: nowrap;
+  }
+  @media (max-width: 480px) {
+    .actions :global(.btn) {
+      flex: 1 1 100%;
+    }
+  }
+  .trust {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .trust svg {
+    flex: none;
+    margin-top: 1px;
+    color: var(--teal-700);
+  }
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .facts li {
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    background: var(--white);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 600;
   }
   .hero-art {
     position: relative;
@@ -207,7 +276,7 @@ const moveAndPlay = [
     position: absolute;
     inset: 40px 20px;
     border-radius: 9999px;
-    background: var(--mint-glow);
+    background: var(--mint-100);
     opacity: 0.3;
     filter: blur(50px);
   }
@@ -217,8 +286,8 @@ const moveAndPlay = [
     width: 220px;
     border-radius: 32px;
     overflow: hidden;
-    border: 6px solid var(--ink);
-    background: var(--ink);
+    border: 6px solid var(--text);
+    background: var(--text);
     box-shadow: 0 8px 24px rgba(0, 107, 98, 0.18);
   }
   .phone img {
@@ -279,7 +348,7 @@ const moveAndPlay = [
   }
 
   .split {
-    padding: 80px 0;
+    padding: var(--section-y) 0;
     overflow-x: clip;
   }
   .split-grid {
@@ -302,10 +371,10 @@ const moveAndPlay = [
     margin-bottom: -8px;
   }
   .teal-text {
-    color: var(--teal);
+    color: var(--teal-700);
   }
   .purple-text {
-    color: var(--purple);
+    color: var(--purple-600);
   }
   .ticks {
     list-style: none;
@@ -326,144 +395,54 @@ const moveAndPlay = [
   }
   .mock {
     position: relative;
-    padding: 24px;
+    display: grid;
+    place-items: center;
+    padding: var(--space-8) var(--space-6);
+  }
+  .tilt.teal {
+    background: var(--mint-100);
+    rotate: -4deg;
+  }
+  .tilt.purple {
+    background: var(--purple-100);
+    rotate: 4deg;
+  }
+  .phone.md {
+    position: relative;
+    rotate: none;
+  }
+  .phone.md {
+    width: min(260px, 70vw);
+  }
+  .shots {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .email {
+    width: min(300px, 76vw);
+    margin: 0;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-pop);
+  }
+  .email img {
+    display: block;
+    width: 100%;
+    height: auto;
   }
   .tilt {
     position: absolute;
     inset: 0;
     border-radius: var(--radius-xl);
   }
-  .tilt.teal {
-    background: rgba(0, 178, 169, 0.25);
-    rotate: -6deg;
-  }
-  .tilt.purple {
-    background: rgba(136, 77, 207, 0.25);
-    rotate: 6deg;
-  }
-  .mock-panel {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    padding: 32px;
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-card);
-  }
-  .mint {
-    background: var(--mint);
-  }
-  .lilac {
-    background: var(--lilac);
-  }
-  .tiles {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-  .tile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    padding: 16px;
-    border-radius: var(--radius-md);
-    background: var(--white);
-    box-shadow: 0 4px 10px rgba(0, 107, 98, 0.08);
-    font-size: 16px;
-    font-weight: 700;
-  }
-  .mission {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 24px;
-    border-radius: var(--radius-md);
-    background: var(--white);
-    box-shadow: 0 4px 10px rgba(0, 107, 98, 0.08);
-    font-size: 16px;
-  }
-  .mission-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    font-weight: 700;
-  }
-  .stars {
-    padding: 4px 12px;
-    border-radius: 9999px;
-    background: #9ff2e6;
-    color: #00514a;
-    font-weight: 600;
-  }
-  .bar {
-    height: 16px;
-    border-radius: 9999px;
-    background: #e5e8ef;
-    overflow: hidden;
-  }
-  .bar span {
-    display: block;
-    width: 75%;
-    height: 100%;
-    background: var(--teal-bright);
-  }
-  .mission p {
-    font-style: italic;
-  }
-  .mock-title {
-    font-size: 16px;
-    font-weight: 600;
-  }
-  .mock-title span {
-    color: var(--ink-2);
-    font-weight: 500;
-  }
-  .child {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 16px;
-    border-radius: var(--radius-md);
-    background: #f5f2fb;
-    font-size: 16px;
-  }
-  .child div {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-  }
-  .child div span {
-    opacity: 0.75;
-  }
-  .child b {
-    color: var(--teal-bright);
-  }
-  .avatar {
-    flex: none;
-    display: grid;
-    place-items: center;
-    width: 48px;
-    height: 48px;
-    border-radius: 9999px;
-    font-weight: 700;
-  }
-  .avatar.l {
-    background: #deb7ff;
-    color: #71508f;
-  }
-  .avatar.s {
-    background: #9ff2e6;
-    color: #00514a;
-  }
 
   .move {
     position: relative;
     overflow: hidden;
-    background: var(--lilac);
-    padding: 80px 0;
+    background: var(--purple-100);
+    padding: var(--section-y) 0;
   }
   .move-pattern {
     position: absolute;
@@ -492,16 +471,16 @@ const moveAndPlay = [
     font-size: 17px;
   }
   .move-card.c0 {
-    background: #ebfaf8;
-    border-color: #b8e7e1;
+    background: var(--mint-50);
+    border-color: var(--line);
   }
   .move-card.c1 {
-    background: #fff7d6;
-    border-color: #f6dd8a;
+    background: var(--sun-50);
+    border-color: var(--sun-100);
   }
   .move-card.c2 {
-    background: #f6efff;
-    border-color: #d7c2f3;
+    background: var(--purple-50);
+    border-color: var(--purple-200);
   }
   .tag {
     align-self: flex-start;
@@ -510,7 +489,7 @@ const moveAndPlay = [
     background: var(--white);
     font-size: 14px;
     font-weight: 700;
-    color: var(--teal-deep);
+    color: var(--ink);
   }
 
   @media (max-width: 900px) {
@@ -532,15 +511,17 @@ const moveAndPlay = [
       grid-template-columns: 1fr;
     }
   }
+  @media (max-width: 600px) {
+    .mock {
+      padding: var(--space-6) var(--space-4);
+    }
+  }
   @media (max-width: 480px) {
     .phone {
       width: 180px;
     }
     .hero-art {
       height: 380px;
-    }
-    .mock-panel {
-      padding: 20px;
     }
   }
 </style>

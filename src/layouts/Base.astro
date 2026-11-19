@@ -2,17 +2,46 @@
 import "../styles/global.css";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
+import { PLAY_STORE_URL, SUPPORT_EMAIL } from "../data/site";
 
 interface Props {
   title: string;
   description: string;
   /** The nav link to mark as the current page. */
   current?: "home" | "how" | "privacy" | "contact";
+  /** Extra schema.org JSON-LD objects for this page. */
+  schema?: Record<string, unknown>[];
+  /** Keep the page out of search results (404). */
+  noindex?: boolean;
 }
 
-const { title, description, current } = Astro.props;
+const { title, description, current, schema = [], noindex = false } = Astro.props;
 const fullTitle = title === "ArithmeTick" ? title : `${title} · ArithmeTick`;
-const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://arithmetick.rachelkenyani.com");
+const site = Astro.site ?? new URL("https://arithmetick.rachelkenyani.com");
+const canonical = new URL(Astro.url.pathname.replace(/\.html$/, "").replace(/\/index$/, "") || "/", site);
+const ogImage = new URL("/images/og.jpg", site);
+const siteSchema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${site.origin}/#org`,
+    name: "ArithmeTick",
+    url: site.origin,
+    logo: new URL("/favicon.png", site).href,
+    email: SUPPORT_EMAIL,
+    founder: { "@type": "Person", name: "Rachel Kenyani" },
+    address: { "@type": "PostalAddress", addressLocality: "Nairobi", addressCountry: "KE" },
+    sameAs: [PLAY_STORE_URL],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "ArithmeTick",
+    url: site.origin,
+    inLanguage: "en-KE",
+    publisher: { "@id": `${site.origin}/#org` },
+  },
+];
 ---
 
 <!doctype html>
@@ -29,11 +58,22 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://arithmetick
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="ArithmeTick" />
+    <meta property="og:locale" content="en_KE" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="ArithmeTick: maths games for Grades 1 to 3, with Brijo the owl" />
+    <meta name="twitter:card" content="summary_large_image" />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="sitemap" href="/sitemap.xml" />
+    <link rel="alternate" type="text/markdown" title="ArithmeTick for AI agents" href="/llms.txt" />
+    {[...siteSchema, ...schema].map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap"
     />
   </head>
   <body>
@@ -43,6 +83,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://arithmetick
       <slot />
     </main>
     <Footer />
+    <script src="../scripts/webmcp.ts"></script>
   </body>
 </html>
 
@@ -54,7 +95,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://arithmetick
     z-index: 50;
     padding: 10px 16px;
     border-radius: 8px;
-    background: var(--teal);
+    background: var(--teal-700);
     color: var(--white);
     font-weight: 700;
     text-decoration: none;

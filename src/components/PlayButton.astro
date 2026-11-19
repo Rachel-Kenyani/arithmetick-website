@@ -1,0 +1,48 @@
+---
+import { PLAY_STORE_URL } from "../data/site";
+
+/**
+ * The official "Get it on Google Play" badge, linked to the store listing.
+ * Google's badge rules: don't recolour, crop or add effects to the badge. The PNG includes its own clear space.
+ */
+interface Props {
+  /** md for heroes and bands, sm for the nav. */
+  size?: "md" | "sm";
+  class?: string;
+  /** Kept so older callers still compile; the badge has no colour variants. */
+  variant?: string;
+  label?: string;
+}
+const { size = "md", class: className } = Astro.props;
+const height = size === "sm" ? 48 : 72;
+const width = Math.round((646 / 250) * height);
+---
+
+<a class:list={["play-badge", `play-badge-${size}`, className]} href={PLAY_STORE_URL} rel="noopener" data-store="google-play">
+  <img src="/images/google-play-badge.png" width={width} height={height} alt="Get it on Google Play" />
+</a>
+
+<style>
+  .play-badge {
+    display: inline-flex;
+    flex: none;
+    /* The PNG has transparent clear space around the badge; pull it back so it lines up with nearby buttons. */
+    margin: -10px -9px;
+    border-radius: 12px;
+    transition: transform 0.12s ease;
+  }
+  .play-badge-sm {
+    margin: -7px -6px;
+  }
+  .play-badge:hover {
+    transform: translateY(-1px);
+  }
+  .play-badge:active {
+    transform: translateY(1px);
+  }
+  .play-badge img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+  }
+</style>

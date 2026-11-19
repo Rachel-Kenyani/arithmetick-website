@@ -1,4 +1,6 @@
 ---
+import PlayButton from "./PlayButton.astro";
+
 interface Props {
   current?: "home" | "how" | "privacy" | "contact";
 }
@@ -6,15 +8,14 @@ const { current } = Astro.props;
 const links = [
   { id: "home", label: "For Families", href: "/" },
   { id: "how", label: "How It Works", href: "/how-it-works" },
-  { id: "privacy", label: "Privacy", href: "/privacy" },
-  { id: "contact", label: "Contact", href: "/contact" },
+  { id: "contact", label: "Contact Us", href: "/contact" },
 ] as const;
 ---
 
 <header class="nav">
   <div class="container bar">
     <a class="logo" href="/" aria-label="ArithmeTick home">
-      <img src="/images/figma/logo.svg" width="123.57" height="32" alt="" />
+      <img src="/images/logo-horizontal.svg" width="154" height="32" alt="" />
     </a>
     <nav aria-label="Main">
       <ul class="links">
@@ -29,7 +30,7 @@ const links = [
         }
       </ul>
     </nav>
-    <a class="btn btn-primary cta" href="/contact#beta">Join the Beta</a>
+    <PlayButton size="sm" class="cta" />
     <details class="menu">
       <summary aria-label="Menu">
         <span></span><span></span><span></span>
@@ -44,7 +45,6 @@ const links = [
             </li>
           ))
         }
-        <li><a class="btn btn-primary" href="/contact#beta">Join the Beta</a></li>
       </ul>
     </details>
   </div>
@@ -55,17 +55,19 @@ const links = [
     position: sticky;
     top: 0;
     z-index: 30;
-    background: var(--nav-bg);
+    background: var(--white);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
     padding-top: env(safe-area-inset-top, 0px);
   }
   .bar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    padding-top: 16px;
-    padding-bottom: 16px;
+    gap: 16px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  nav {
+    margin-left: auto;
   }
   .logo {
     display: flex;
@@ -73,12 +75,13 @@ const links = [
   }
   .logo img {
     display: block;
-    width: 123.57px;
+    width: 154px;
     height: 32px;
   }
   .links {
     display: flex;
-    gap: 24px;
+    align-items: center;
+    gap: 32px;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -86,22 +89,23 @@ const links = [
   .links a,
   .menu a:not(.btn) {
     display: inline-block;
-    padding-bottom: 4px;
+    padding: 6px 0 4px;
     border-bottom: 2px solid transparent;
-    color: var(--ink);
-    font-size: 18px;
-    font-weight: 500;
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 600;
     text-decoration: none;
     white-space: nowrap;
   }
   .links a:hover,
   .links a[aria-current="page"],
   .menu a[aria-current="page"] {
-    color: var(--purple-nav);
-    border-bottom-color: var(--purple-nav);
+    color: var(--purple-500);
+    border-bottom-color: var(--purple-500);
   }
-  .cta {
-    padding: 12px 24px;
+  .bar :global(.cta) {
+    margin-left: 24px;
+    flex: none;
   }
   .menu {
     display: none;
@@ -125,7 +129,7 @@ const links = [
     width: 24px;
     height: 3px;
     border-radius: 3px;
-    background: var(--teal-deep);
+    background: var(--ink);
   }
   .menu ul {
     position: absolute;
@@ -141,9 +145,25 @@ const links = [
     border-radius: var(--radius-md);
     box-shadow: 0 12px 30px rgba(0, 79, 74, 0.18);
   }
+  @media (max-width: 480px) {
+    .bar {
+      gap: 10px;
+    }
+    .logo img {
+      width: 128px;
+      height: auto;
+    }
+  }
+  @media (max-width: 359px) {
+    .logo img {
+      width: 108px;
+    }
+  }
   @media (max-width: 900px) {
-    nav,
-    .cta {
+    .bar :global(.cta) {
+      margin-left: auto;
+    }
+    nav {
       display: none;
     }
     .menu {

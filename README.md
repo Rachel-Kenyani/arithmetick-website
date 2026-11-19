@@ -2,7 +2,7 @@
 
 The family-facing site for ArithmeTick, built with [Astro](https://astro.build) from the Figma "Website" wireframes, with content matched to the app.
 
-Pages: Home (for families), How It Works, Privacy Policy, Terms of Use, Delete Your Account, Contact, and a 404 page. No cookies, analytics or tracking.
+Pages: Home (for families), How It Works, Privacy Policy, Terms of Use, Delete Your Account, Contact Us, and a 404 page. No cookies, analytics or tracking.
 
 ## Run it
 

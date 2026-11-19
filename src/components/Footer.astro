@@ -2,8 +2,15 @@
 const year = new Date().getFullYear();
 const columns = [
   { title: "Product", links: [ { label: "For Families", href: "/" }, { label: "How It Works", href: "/how-it-works" } ] },
-  { title: "Help", links: [ { label: "Contact", href: "/contact" }, { label: "Delete Your Account", href: "/delete-account" } ] },
-  { title: "Legal", links: [ { label: "Privacy Policy", href: "/privacy" }, { label: "Terms of Use", href: "/terms" } ] },
+  { title: "Help", links: [ { label: "FAQs", href: "/contact#faq" }, { label: "Contact Us", href: "/contact" } ] },
+  {
+    title: "Legal",
+    links: [
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Terms of Use", href: "/terms" },
+      { label: "Account Deletion", href: "/delete-account" },
+    ],
+  },
 ];
 ---
 
@@ -29,13 +36,16 @@ const columns = [
         ))
       }
     </div>
-    <p class="legal">© {year} Rachel Kenyani. ArithmeTick is made in Nairobi, Kenya.</p>
+    <div class="legal">
+      <p>© {year} Rachel Kenyani. ArithmeTick is made in Nairobi, Kenya.</p>
+      <p>Google Play and the Google Play logo are trademarks of Google LLC.</p>
+    </div>
   </div>
 </footer>
 
 <style>
   .footer {
-    background: var(--footer);
+    background: var(--outline);
     color: var(--white);
     padding: 40px 0 calc(32px + env(safe-area-inset-bottom, 0px));
   }
@@ -59,6 +69,7 @@ const columns = [
     max-width: 22ch;
   }
   h2 {
+    color: var(--white);
     font-size: 16px;
     font-weight: 700;
     letter-spacing: 0;
@@ -81,6 +92,10 @@ const columns = [
     text-decoration: underline;
   }
   .legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4px 24px;
     margin-top: 32px;
     padding-top: 13px;
     border-top: 1px solid rgba(136, 77, 207, 0.5);

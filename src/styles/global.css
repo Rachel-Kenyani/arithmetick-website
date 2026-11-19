@@ -1,31 +1,73 @@
 /*
- * ArithmeTick website tokens, taken from the Figma "Website" wireframes and matched to the app's brand
- * (teal brand, purple second voice, sun yellow for the main action). Quicksand throughout, as in the wireframes.
+ * ArithmeTick website design system.
+ *
+ * Colour, radius and spacing come from the app's design system (tokens.json, synced from
+ * arithmetick-mobile src/theme/index.ts) so the site and the app read as one brand:
+ * teal is the brand, purple the second voice, sun the reward, plum belongs to grown-ups.
+ *
+ * Type differs on purpose. The app's DynaPuff and Quicksand are made for children; the site
+ * speaks to parents, so it uses Figtree, a calm, highly readable sans, throughout.
  */
 :root {
-  --teal: #006f68;
-  --teal-deep: #004f4a;
-  --teal-bright: #009088;
-  --mint: #ebf9f7;
-  --mint-glow: #83d5ca;
-  --purple: #6d41a3;
-  --purple-nav: #884dcf;
-  --lilac: #ecdefe;
-  --sun: #ffd147;
-  --ink: #090000;
-  --ink-2: #414246;
-  --nav-bg: #f7f9ff;
-  --line: #cfe8e4;
+  /* Brand colour (app tokens) */
+  --teal-800: #006a62; /* 3D edge under teal buttons */
+  --teal-700: #006f68; /* brand surface, primary buttons, links. White on it 6.05:1 */
+  --teal-600: #00968a; /* fills and progress only; never small text */
+  --teal-500: #2fa79e;
+  --ink: #004f4a; /* headings and strong text on light surfaces */
+  --purple-700: #5a3596;
+  --purple-600: #6d41a3; /* second voice: For Parents, Move & Play, Grade 2 */
+  --purple-500: #7e4fcb; /* focus ring, current nav link */
+  --plum: #a8326e;
+  --danger: #b3261e;
+  --sun: #ffd54a; /* reward: the main call to action, stars */
+  --sun-edge: #c99a1c;
+  --yellow-soft: #ffe58a;
+  --mint-50: #ebf9f7;
+  --mint-100: #c9efe9;
+  --card: #eaf8f5;
+  --cream: #fffdf6;
   --white: #ffffff;
-  --footer: #090000;
+  --muted: #5b6664; /* secondary text, 5.4:1 on card */
+  --outline: #1b1b1b; /* footer and phone frames */
 
-  --font: "Quicksand", "Segoe UI", system-ui, sans-serif;
-  --shadow-card: 0 4px 20px rgba(0, 107, 98, 0.08);
-  --shadow-crisp: 0 2px 0 rgba(26, 26, 26, 0.12);
-  --radius-sm: 8px;
+  /* Web extensions: pale tints for section and card backgrounds */
+  --text: #1f2a29; /* body copy: near-black with a teal cast, 14.6:1 on white */
+  --purple-50: #f6efff;
+  --purple-100: #ecdefe;
+  --purple-200: #d7c2f3;
+  --sun-50: #fff4cc;
+  --sun-100: #f6dd8a;
+  --line: #cfe8e4;
+
+  /* Type */
+  --font: "Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  /* Spacing: the app's 4px scale, plus larger steps for page sections */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --section-y: var(--space-20);
+
+  /* Radius (app tokens) */
+  --radius-sm: 12px;
   --radius-md: 16px;
-  --radius-lg: 24px;
-  --radius-xl: 40px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /* Elevation. The app's heavy card shadow is made for the jungle backdrop; on white the site uses a soft one. */
+  --shadow-card: 0 4px 20px rgba(0, 79, 74, 0.08);
+  --shadow-pop: 0 12px 30px rgba(0, 79, 74, 0.18);
+  --shadow-button: 0 4px 0 var(--teal-800);
 
   --pad-x: 80px;
   --max: 1040px;
@@ -40,6 +82,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 88px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -51,27 +94,29 @@ html {
 body {
   margin: 0;
   background: var(--white);
-  color: var(--ink);
+  color: var(--text);
   font-family: var(--font);
-  font-weight: 500;
+  font-weight: 400;
   font-size: 18px;
-  line-height: 1.5;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
 }
 
-img {
+img,
+video {
   max-width: 100%;
 }
 
 a {
-  color: var(--teal);
+  color: var(--teal-700);
 }
 
 a:focus-visible,
 button:focus-visible,
 summary:focus-visible,
-label:focus-visible {
-  outline: 3px solid var(--purple-nav);
+label:focus-visible,
+video:focus-visible {
+  outline: 3px solid var(--purple-500);
   outline-offset: 3px;
   border-radius: 6px;
 }
@@ -80,13 +125,15 @@ h1,
 h2,
 h3 {
   margin: 0;
-  letter-spacing: -0.96px;
+  color: var(--ink);
+  letter-spacing: -0.02em;
   line-height: 1.15;
   text-wrap: balance;
 }
 
 p {
   margin: 0;
+  text-wrap: pretty;
 }
 
 .container {
@@ -100,92 +147,132 @@ p {
 @media (max-width: 900px) {
   :root {
     --pad-x: 24px;
+    --section-y: var(--space-16);
   }
 }
 
 @media (max-width: 480px) {
   :root {
     --pad-x: 16px;
+    --section-y: var(--space-12);
   }
   body {
     font-size: 17px;
   }
 }
 
-/* Type scale from the wireframes: Display Hero 48, Heading Lg 32, Heading Sm 24, Body Xl 20. */
+/* Type scale */
 .display {
-  font-size: clamp(34px, 5vw, 48px);
-  font-weight: 700;
+  font-size: clamp(34px, 5vw, 52px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
 }
 .heading-lg {
-  font-size: clamp(26px, 3.4vw, 32px);
-  font-weight: 700;
+  font-size: clamp(26px, 3.4vw, 36px);
+  font-weight: 800;
 }
 .heading-sm {
-  font-size: clamp(20px, 2.4vw, 24px);
-  font-weight: 600;
+  font-size: clamp(20px, 2.2vw, 22px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 .lede {
-  font-size: clamp(19px, 2.2vw, 24px);
-  font-weight: 600;
-  color: var(--ink-2);
-  letter-spacing: -0.4px;
-  line-height: 1.4;
+  font-size: clamp(18px, 2vw, 21px);
+  font-weight: 400;
+  color: var(--muted);
+  line-height: 1.5;
 }
 .body-xl {
-  font-size: clamp(17px, 1.9vw, 20px);
-  font-weight: 500;
-  color: var(--ink-2);
+  font-size: clamp(17px, 1.8vw, 18px);
+  color: var(--muted);
+}
+.overline {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-/* Buttons: teal primary with a crisp drop, outlined secondary, sun accent for the main call to action. */
+/* Section header: an overline, a heading and one line of lede, centred */
+.section-head {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Buttons. Primary carries the app's 3D edge; sun is the one main action per view. */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: var(--space-3);
   min-height: 52px;
   padding: 12px 24px;
   border-radius: var(--radius-sm);
   font: inherit;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 700;
+  line-height: 1.2;
   text-decoration: none;
   cursor: pointer;
-  transition: transform 0.12s ease;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
 }
 .btn:active {
-  transform: translateY(1px);
+  transform: translateY(2px);
 }
 .btn-primary {
-  background: var(--teal);
+  background: var(--teal-700);
   color: var(--white);
-  border: 2px solid var(--teal);
-  box-shadow: var(--shadow-crisp);
+  border: 2px solid var(--teal-700);
+  box-shadow: var(--shadow-button);
 }
 .btn-primary:hover {
-  background: var(--teal-deep);
-  border-color: var(--teal-deep);
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.btn-primary:active {
+  box-shadow: 0 2px 0 var(--teal-800);
 }
 .btn-outline {
-  background: transparent;
-  color: var(--teal-deep);
-  border: 2px solid var(--teal-deep);
-  box-shadow: var(--shadow-crisp);
+  background: var(--white);
+  color: var(--ink);
+  border: 2px solid var(--ink);
 }
 .btn-outline:hover {
-  background: rgba(0, 111, 104, 0.06);
+  background: var(--mint-50);
 }
 .btn-sun {
   background: var(--sun);
-  color: var(--ink);
-  border-radius: 12px;
-  padding: 18px 48px;
-  font-size: clamp(19px, 2.2vw, 24px);
-  box-shadow: var(--shadow-crisp);
+  color: var(--outline);
+  border: 2px solid var(--sun);
+  box-shadow: 0 4px 0 var(--sun-edge);
 }
 .btn-sun:hover {
-  background: #ffc61f;
+  background: #ffcd2b;
+}
+.btn-sun:active {
+  box-shadow: 0 2px 0 var(--sun-edge);
+}
+.btn-sm {
+  min-height: 44px;
+  padding: 8px 16px;
+  font-size: 16px;
+}
+
+/* Pill tag (grade labels, status) */
+.tag {
+  align-self: flex-start;
+  display: inline-block;
+  padding: 2px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
 }
 
 /* The triangle pattern from the wireframes, repeated in rows over a background colour. */

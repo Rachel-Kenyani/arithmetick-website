@@ -1,0 +1,115 @@
+---
+import fs from "node:fs";
+
+/**
+ * A short screen recording of the app inside a phone frame.
+ * Renders nothing until the recording exists at public/video/arithmetick-tour.mp4,
+ * so the section never ships with a broken player.
+ */
+interface Props {
+  title: string;
+  text: string;
+  points: string[];
+}
+const { title, text, points } = Astro.props;
+
+const VIDEO = "/video/arithmetick-tour.mp4";
+const POSTER = "/images/app/level.jpg";
+const hasVideo = fs.existsSync(`${process.cwd()}/public${VIDEO}`);
+---
+
+{
+  hasVideo && (
+    <section class="tour" id="tour">
+      <div class="container grid">
+        <div class="copy">
+          <p class="overline">See it in action</p>
+          <h2 class="heading-lg">{title}</h2>
+          <p class="lede">{text}</p>
+          <ol class="points">
+            {points.map((p, i) => (
+              <li>
+                <span class="n">{i + 1}</span>
+                {p}
+              </li>
+            ))}
+          </ol>
+        </div>
+        <figure class="phone">
+          <video controls playsinline preload="metadata" poster={POSTER} width="390" height="844">
+            <source src={VIDEO} type="video/mp4" />
+          </video>
+          <figcaption class="visually-hidden">A child plays a Grade 1 level while Brijo reads the instructions aloud.</figcaption>
+        </figure>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .tour {
+    padding: var(--section-y) 0;
+    background: var(--white);
+    scroll-margin-top: 72px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: var(--space-12);
+    align-items: center;
+  }
+  .copy {
+    display: grid;
+    gap: var(--space-4);
+  }
+  .overline {
+    color: var(--teal-700);
+  }
+  .points {
+    list-style: none;
+    margin: var(--space-2) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+  .points li {
+    display: flex;
+    gap: var(--space-3);
+    align-items: baseline;
+  }
+  .n {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-pill);
+    background: var(--mint-100);
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .phone {
+    justify-self: center;
+    width: min(300px, 80vw);
+    margin: 0;
+    padding: 8px;
+    border-radius: 40px;
+    background: var(--outline);
+    box-shadow: var(--shadow-pop);
+  }
+  video {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 390 / 844;
+    border-radius: 32px;
+    background: var(--outline);
+  }
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+  }
+</style>

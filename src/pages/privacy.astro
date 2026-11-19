@@ -21,7 +21,7 @@ const toc = [
   title="Privacy Policy"
   description="What ArithmeTick collects, where it is kept, and how to delete your account."
   intro="How we look after your family's information, in the app and on this website."
-  updated="18 November 2026"
+  updated="19 November 2026"
   toc={toc}
   current="privacy"
 >
@@ -31,7 +31,7 @@ const toc = [
       <strong>The short version</strong>
       <ul>
         <li>A grown-up creates the account. We keep their email address so they can log in.</li>
-        <li>Children's names, animals, stars, badges and progress stay on the phone, unless a grown-up turns on weekly email reports.</li>
+        <li>Children's first names, animals, stars, badges and progress are saved with the grown-up's account, so they come back on a new phone. Only that grown-up can see them.</li>
         <li>No ads, no tracking, no selling or sharing data for marketing. The app never uses the camera, microphone or location.</li>
         <li>You can delete the account and everything in it from inside the app at any time.</li>
       </ul>
@@ -49,10 +49,10 @@ const toc = [
         <tr><td>The grown-up's email address</td><td>Our sign-in service (Supabase)</td><td>To create the account, log in, and send verification and password-reset codes</td></tr>
         <tr><td>A password</td><td>Supabase, stored only in scrambled (hashed) form</td><td>To log in. We can never see it.</td></tr>
         <tr><td>Name and email from Google, if you choose Continue with Google</td><td>Supabase</td><td>To log in without a password</td></tr>
-        <tr><td>Each child's first name or nickname, chosen animal and grade</td><td>Only on the phone</td><td>To show each child their own map</td></tr>
-        <tr><td>Stars, badges, levels finished and answers given in games</td><td>Only on the phone</td><td>To unlock levels, award badges and suggest what to play next</td></tr>
+        <tr><td>Each child's first name or nickname, chosen animal and grade</td><td>On the phone, and saved with the grown-up's account (Supabase)</td><td>To show each child their own map</td></tr>
+        <tr><td>Stars, badges, levels finished and recent answers given in games</td><td>On the phone, and saved with the grown-up's account (Supabase)</td><td>To unlock levels, award badges and suggest what to play next</td></tr>
         <tr><td>Only with weekly reports on: each child's first name, grade, levels finished, stars, a one-line summary of their skills and one game to try at home</td><td>Supabase, until reports are turned off or the account is deleted</td><td>To email the grown-up a weekly report and an end-of-grade report</td></tr>
-        <tr><td>Sound and screen-time settings</td><td>Only on the phone</td><td>To remember the grown-up's choices</td></tr>
+        <tr><td>Sound settings for each child, and the day's screen time</td><td>Sound settings are saved with the account; screen time stays on the phone</td><td>To remember the grown-up's choices</td></tr>
       </tbody>
     </table>
   </div>
@@ -63,7 +63,7 @@ const toc = [
 
   <h2 id="children">Children</h2>
   <p>ArithmeTick is designed to be used by a child together with a parent or guardian. Only a grown-up can create the account, add a child, log out or delete the account, behind a 2-second hold so a young child cannot do it by accident.</p>
-  <p>We ask only for a first name or nickname for each child. If you believe a child has given us personal information without a grown-up, email us and we will delete it.</p>
+  <p>We ask only for a first name or nickname for each child. When a grown-up adds a child, the app says their progress will be saved with the account, and adding the child is their agreement to that. If you believe a child has given us personal information without a grown-up, email us and we will delete it.</p>
 
   <h2 id="others">Who else handles the information</h2>
   <p>We use a small number of service providers, only to run the app. They may use the information only to provide their service to us.</p>
@@ -82,7 +82,7 @@ const toc = [
   <ul>
     <li>Account details are kept until you delete the account.</li>
     <li>When you delete the account, it is removed from our sign-in service straight away. Copies in our providers' backups are removed when those backups expire, usually within 30 days.</li>
-    <li>Children's information stays on the phone until you delete the account in the app or uninstall the app.</li>
+    <li>Children's progress is saved with the account until you delete the account. Uninstalling the app removes it from the phone, but not from the account, so it comes back when you sign in again.</li>
     <li>Report summaries are deleted as soon as reports are turned off, or with the account.</li>
   </ul>
 

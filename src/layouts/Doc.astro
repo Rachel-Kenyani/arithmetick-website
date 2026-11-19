@@ -52,7 +52,7 @@ const { title, description, intro, updated, toc, current } = Astro.props;
   .doc-hero {
     position: relative;
     overflow: hidden;
-    background: var(--mint);
+    background: var(--mint-50);
     padding: 64px 0 48px;
   }
   .doc-pattern {
@@ -68,12 +68,12 @@ const { title, description, intro, updated, toc, current } = Astro.props;
     gap: 16px;
   }
   .doc-head h1 {
-    color: var(--teal);
+    color: var(--teal-700);
   }
   .intro {
     font-size: 18px;
     font-weight: 700;
-    color: var(--ink);
+    color: var(--text);
   }
   hr {
     width: 100%;
@@ -86,7 +86,7 @@ const { title, description, intro, updated, toc, current } = Astro.props;
     align-items: center;
     gap: 10px;
     font-size: 15px;
-    color: var(--ink-2);
+    color: var(--muted);
   }
   .doc-grid {
     display: grid;
@@ -106,7 +106,7 @@ const { title, description, intro, updated, toc, current } = Astro.props;
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: var(--ink-2);
+    color: var(--muted);
   }
   .toc ol {
     list-style: none;
@@ -119,14 +119,14 @@ const { title, description, intro, updated, toc, current } = Astro.props;
     display: block;
     padding: 10px 14px;
     border-radius: var(--radius-sm);
-    background: var(--mint);
-    color: var(--teal);
+    background: var(--mint-50);
+    color: var(--teal-700);
     font-size: 15px;
     font-weight: 700;
     text-decoration: none;
   }
   .toc a:hover {
-    background: var(--teal-deep);
+    background: var(--ink);
     color: var(--white);
   }
   .doc {
@@ -143,7 +143,7 @@ const { title, description, intro, updated, toc, current } = Astro.props;
     margin-top: 16px;
     font-size: 22px;
     font-weight: 700;
-    color: var(--teal);
+    color: var(--teal-700);
     letter-spacing: -0.4px;
     scroll-margin-top: 100px;
   }
@@ -157,13 +157,13 @@ const { title, description, intro, updated, toc, current } = Astro.props;
     display: flex;
     gap: 14px;
     padding: 18px 20px;
-    border: 1px solid #b8e7e1;
+    border: 1px solid var(--line);
     border-radius: var(--radius-md);
-    background: var(--mint);
+    background: var(--mint-50);
   }
   .doc :global(.callout strong) {
     display: block;
-    color: var(--teal);
+    color: var(--teal-700);
   }
   .doc :global(.table) {
     overflow-x: auto;
@@ -184,8 +184,8 @@ const { title, description, intro, updated, toc, current } = Astro.props;
     border-bottom: 1px solid var(--line);
   }
   .doc :global(th) {
-    background: var(--mint);
-    color: var(--teal);
+    background: var(--mint-50);
+    color: var(--teal-700);
     font-size: 13px;
     letter-spacing: 0.5px;
     text-transform: uppercase;
@@ -197,7 +197,7 @@ const { title, description, intro, updated, toc, current } = Astro.props;
     margin-top: 16px;
     padding: 32px;
     border-radius: var(--radius-lg);
-    background: var(--teal-deep);
+    background: var(--ink);
     color: var(--white);
     display: grid;
     gap: 12px;
