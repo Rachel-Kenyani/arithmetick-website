@@ -50,6 +50,28 @@ const links = [
   </div>
 </header>
 
+<script>
+  /* Close the mobile menu on a tap outside it, on Escape, or after choosing a link. */
+  const menu = document.querySelector<HTMLDetailsElement>(".nav .menu");
+  if (menu) {
+    const close = () => menu.removeAttribute("open");
+    document.addEventListener("click", (event) => {
+      if (menu.open && !menu.contains(event.target as Node)) {
+        close();
+      }
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && menu.open) {
+        close();
+        menu.querySelector("summary")?.focus();
+      }
+    });
+    for (const link of menu.querySelectorAll("a")) {
+      link.addEventListener("click", close);
+    }
+  }
+</script>
+
 <style>
   .nav {
     position: sticky;
