@@ -193,14 +193,43 @@ const { title, description, intro, updated, toc, current } = Astro.props;
   .doc :global(tr:last-child td) {
     border-bottom: 0;
   }
+  /* Matches the closing banner on the home and How it works pages: dark teal with a triangle row top and bottom. */
   .doc :global(.contact-card) {
+    position: relative;
+    overflow: hidden;
     margin-top: 16px;
-    padding: 32px;
+    padding: 72px 32px;
     border-radius: var(--radius-lg);
     background: var(--ink);
     color: var(--white);
     display: grid;
+    justify-items: center;
     gap: 12px;
+    text-align: center;
+  }
+  .doc :global(.contact-card::before),
+  .doc :global(.contact-card::after) {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 44px;
+    background-image: url("/images/figma/pattern-row.svg");
+    background-size: 894.5px 44px;
+    background-repeat: repeat-x;
+    background-position: center;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  .doc :global(.contact-card::before) {
+    top: 0;
+    transform: scaleY(-1);
+  }
+  .doc :global(.contact-card::after) {
+    bottom: 0;
+  }
+  .doc :global(.contact-card > *) {
+    position: relative;
   }
   .doc :global(.contact-card h2) {
     margin: 0;
