@@ -10,7 +10,7 @@ interface Props {
 const { size = 180, class: className } = Astro.props;
 const scale = size / 180;
 const P = "/images/figma/";
-type Part = { box: [number, number, number, number]; img: string; w: number; h: number; rot: string };
+type Part = { box: [number, number, number, number]; img: string; w: number; h: number; rot: string; head?: boolean };
 const parts: Part[] = [
   { box: [3.57, 96.81, 61.209, 73.576], img: "owl-wing-left.svg", w: 31.512, h: 66.854, rot: "rotate(-30.67deg)" },
   { box: [66.17, 96.97, 61.117, 73.42], img: "owl-wing-right.svg", w: 31.512, h: 66.673, rot: "rotate(-149.33deg) scaleY(-1)" },
@@ -23,7 +23,7 @@ const parts: Part[] = [
     [54.51, 132.76],
     [44.6, 119.35],
   ].map(([x, y]): Part => ({ box: [x, y, 19.777, 19.833], img: "owl-spot.svg", w: 14.279, h: 13.978, rot: "rotate(-52.6deg)" })),
-  { box: [2.46, 0, 125.669, 121.922], img: "owl-head.svg", w: 99.72, h: 93.452, rot: "rotate(20deg)" },
+  { box: [2.46, 0, 125.669, 121.922], img: "owl-head.svg", w: 99.72, h: 93.452, rot: "rotate(20deg)", head: true },
 ];
 const feet = [37.6, 45.76, 53.93, 67.92, 76.08, 84.25];
 ---
@@ -33,7 +33,7 @@ const feet = [37.6, 45.76, 53.93, 67.92, 76.08, 84.25];
     {feet.map((x) => <span class="foot" style={`left:${x}px`} />)}
     {
       parts.map((p) => (
-        <span class="part" style={`left:${p.box[0]}px;top:${p.box[1]}px;width:${p.box[2]}px;height:${p.box[3]}px`}>
+        <span class:list={["part", p.head && "head"]} style={`left:${p.box[0]}px;top:${p.box[1]}px;width:${p.box[2]}px;height:${p.box[3]}px`}>
           <img src={P + p.img} width={p.w} height={p.h} alt="" style={`transform:${p.rot}`} />
         </span>
       ))
@@ -66,6 +66,33 @@ const feet = [37.6, 45.76, 53.93, 67.92, 76.08, 84.25];
     display: block;
     max-width: none;
     flex: none;
+  }
+  /* Brijo looks around: a turn to one side, back to the front, then the other side. Pivots at the neck. */
+  .head {
+    transform-origin: 50% 80%;
+    animation: look-around 6s ease-in-out infinite;
+  }
+  @keyframes look-around {
+    0%,
+    18%,
+    50%,
+    68%,
+    100% {
+      transform: rotate(0deg);
+    }
+    28%,
+    40% {
+      transform: rotate(-14deg);
+    }
+    78%,
+    90% {
+      transform: rotate(12deg);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .head {
+      animation: none;
+    }
   }
   .foot {
     position: absolute;
