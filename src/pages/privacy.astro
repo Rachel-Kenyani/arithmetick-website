@@ -1,7 +1,6 @@
 ---
-import { GA_MEASUREMENT_ID } from "../data/site";
+import { GA_MEASUREMENT_ID, SUPPORT_EMAIL as EMAIL } from "../data/site";
 import Doc from "../layouts/Doc.astro";
-const EMAIL = "rachelkenyani@gmail.com";
 const toc = [
   { id: "short", label: "The short version" },
   { id: "who", label: "Who we are" },
@@ -22,7 +21,7 @@ const toc = [
   title="Privacy Policy"
   description="What ArithmeTick collects, where it is kept, and how to delete your account."
   intro="How we look after your family's information, in the app and on this website."
-  updated="19 November 2026"
+  updated="20 November 2026"
   toc={toc}
   current="privacy"
 >
@@ -33,7 +32,8 @@ const toc = [
       <ul>
         <li>A grown-up creates the account. We keep their email address so they can log in.</li>
         <li>Children's first names, animals, stars, badges and progress are saved with the grown-up's account, so they come back on a new phone. Only that grown-up can see them.</li>
-        <li>No ads, no tracking, no selling or sharing data for marketing. The app never uses the camera, microphone or location.</li>
+        <li>No ads, no analytics in the app, and no selling or sharing data for marketing. The app never uses the camera, microphone or location.</li>
+        <li>A grown-up chooses how long children can play each day. That setting stays on the phone.</li>
         <li>You can delete the account and everything in it from inside the app at any time.</li>
       </ul>
     </div>
@@ -53,7 +53,8 @@ const toc = [
         <tr><td>Each child's first name or nickname, chosen animal and grade</td><td>On the phone, and saved with the grown-up's account (Supabase)</td><td>To show each child their own map</td></tr>
         <tr><td>Stars, badges, levels finished and recent answers given in games</td><td>On the phone, and saved with the grown-up's account (Supabase)</td><td>To unlock levels, award badges and suggest what to play next</td></tr>
         <tr><td>Only with weekly reports on: each child's first name, grade, levels finished, stars, a one-line summary of their skills and one game to try at home</td><td>Supabase, until reports are turned off or the account is deleted</td><td>To email the grown-up a weekly report and an end-of-grade report</td></tr>
-        <tr><td>Sound settings for each child, and the day's screen time</td><td>Sound settings are saved with the account; screen time stays on the phone</td><td>To remember the grown-up's choices</td></tr>
+        <tr><td>Sound settings for each child</td><td>Saved with the grown-up's account (Supabase)</td><td>To remember the grown-up's choices on a new phone</td></tr>
+        <tr><td>The daily screen-time limit a grown-up sets, and how much of it has been used today</td><td>Only on the phone</td><td>To stop play when the day's time is up</td></tr>
       </tbody>
     </table>
   </div>
@@ -69,7 +70,7 @@ const toc = [
   <h2 id="others">Who else handles the information</h2>
   <p>We use a small number of service providers, only to run the app. They may use the information only to provide their service to us.</p>
   <ul>
-    <li><strong>Supabase</strong> runs our sign-in service. Its servers are in the European Union (Ireland).</li>
+    <li><strong>Supabase</strong> runs our sign-in service and stores each family's saved progress. Each family can read only its own data. Its servers are in the European Union (Ireland).</li>
     <li><strong>Resend</strong> sends emails with codes, and weekly reports for families who turn them on. It receives the email address and the email's contents.</li>
     <li><strong>Google</strong>, if you choose Continue with Google, confirms who you are under Google's own privacy policy.</li>
     <li><strong>Cloudflare</strong> hosts this website.</li>
@@ -77,7 +78,7 @@ const toc = [
   <p>We never sell personal information or share it for advertising. We would share it with authorities only if Kenyan law required us to.</p>
 
   <h2 id="outside">Information stored outside Kenya</h2>
-  <p>Account details are stored on Supabase servers in the European Union. The EU has strong data protection laws, and we rely on our providers' safeguards for these transfers, as the Kenya Data Protection Act, 2019 allows.</p>
+  <p>Account details and children's saved progress are stored on Supabase servers in the European Union. The EU has strong data protection laws, and we rely on our providers' safeguards for these transfers, as the Kenya Data Protection Act, 2019 allows.</p>
 
   <h2 id="keep">How long we keep it</h2>
   <ul>
