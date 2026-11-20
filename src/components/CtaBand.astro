@@ -20,6 +20,7 @@ const { title, text } = Astro.props;
           <h2 class="display">{title}</h2>
           <p class="lede">{text}</p>
           <PlayButton />
+          <p class="note">Works on Android phones.</p>
         </div>
       </div>
     </div>
@@ -47,7 +48,6 @@ const { title, text } = Astro.props;
     overflow: hidden;
     border-radius: var(--radius-lg);
     background: var(--ink);
-    box-shadow: 5px 5px 15.8px rgba(26, 26, 26, 0.18);
     padding: 80px var(--pad-x);
   }
   .strip {
@@ -76,6 +76,11 @@ const { title, text } = Astro.props;
     margin: 0 auto;
     text-align: center;
     color: var(--white);
+  }
+  .note {
+    margin-top: calc(-1 * var(--space-2));
+    color: var(--mint-100);
+    font-size: 14px;
   }
   .content h2 {
     color: var(--white);

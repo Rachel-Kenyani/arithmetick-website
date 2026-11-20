@@ -36,16 +36,19 @@ const moveAndPlay = [
     grade: "Grade 1",
     title: "Find It",
     text: "Find six things at home that are the same, line them up and count them together.",
+    focus: "counting objects",
   },
   {
     grade: "Grade 2",
     title: "Market Day",
     text: "Play shop with real shillings: pay for a cup of maize and count up to work out the change.",
+    focus: "money and change",
   },
   {
     grade: "Grade 3",
     title: "Treasure Walk",
     text: "Hide a treasure and guide a grown-up to it with directions: forward 3 steps, turn left.",
+    focus: "position and direction",
   },
 ];
 ---
@@ -60,6 +63,12 @@ const moveAndPlay = [
     <div class="pattern hero-pattern" aria-hidden="true"></div>
     <div class="container hero-grid">
       <div class="hero-copy">
+        <ul class="facts" aria-label="At a glance">
+          <li>CBC Grades 1 to 3</li>
+          <li>Ages 6 to 9</li>
+          <li class="mint">Free during the beta</li>
+          <li class="lilac">15 minutes a day</li>
+        </ul>
         <h1 class="display">Turn screen time into maths confidence.</h1>
         <p class="lede">
           Short maths games for Grades 1 to 3. Brijo the owl reads every instruction aloud, so children can play before
@@ -72,20 +81,12 @@ const moveAndPlay = [
             {hasTour ? "Watch the tour" : "See how it works"}
           </a>
         </div>
-        <ul class="facts" aria-label="At a glance">
-          <li>CBC Grades 1 to 3</li>
-          <li>Ages 6 to 9</li>
-          <li>Android</li>
-          <li>Free during the beta</li>
-          <li>15 minutes a day</li>
-        </ul>
         <p class="trust">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.5 3.2 8.4 7.5 9.5 4.3-1.1 7.5-5 7.5-9.5V6z"></path><path d="m9 12 2 2 4-4"></path></svg>
           <span>No ads, and we never sell your family's data. Progress is saved with your account, for your eyes only. <a href="/privacy">Privacy</a></span>
         </p>
       </div>
       <div class="hero-art" aria-label="Screens from the ArithmeTick app">
-        <div class="glow" aria-hidden="true"></div>
         <figure class="phone back">
           <img src="/images/app/level.jpg" width="390" height="844" alt="A level: Brijo asks the child to collect 7 feathers" />
         </figure>
@@ -96,20 +97,22 @@ const moveAndPlay = [
         <img class="pal cheetah" src={F + "cheetah.png"} width="64" height="64" alt="" />
       </div>
     </div>
+  </section>
 
+  <section class="pillars-section">
     <div class="container pillars">
       <div class="section-head">
         <h2 class="heading-lg">Maths doesn't have to be a chore</h2>
         <p class="lede">Every level is real Grade 1 to 3 maths, built to feel like a game a child wants to play again.</p>
       </div>
       <div class="cards">
-        <FeatureCard icon={F + "phone.svg"} title="Screen time you can feel good about">
+        <FeatureCard icon={F + "phone.svg"} title="Screen time you can feel good about" note="Play stops by itself after 15 minutes">
           Each level practises a skill from Kenya's CBC maths curriculum for Grades 1 to 3, and a daily 15-minute limit keeps play short.
         </FeatureCard>
-        <FeatureCard icon={F + "puzzle.svg"} title="Low-anxiety, playful learning">
+        <FeatureCard icon={F + "puzzle.svg"} title="Low-anxiety, playful learning" tone="purple" note="Gentle hints, never a lost star">
           Brijo guides children through mistakes with gentle hints. A wrong answer never costs stars.
         </FeatureCard>
-        <FeatureCard icon={F + "chart.svg"} title="See how they're doing">
+        <FeatureCard icon={F + "chart.svg"} title="See how they're doing" tone="sun" note="An optional weekly email for grown-ups">
           Turn on a weekly email: levels, stars, what they're strong at, and one game to try at home.
         </FeatureCard>
       </div>
@@ -126,7 +129,7 @@ const moveAndPlay = [
     ]}
   />
 
-  <section class="split">
+  <section class="split kids-band">
     <div class="container split-grid">
       <div class="row">
         <div class="mock kids-mock">
@@ -136,24 +139,30 @@ const moveAndPlay = [
           </figure>
         </div>
         <div class="copy">
-          <p class="kicker teal-text heading-lg">For kids</p>
-          <h2 class="heading-sm">A learning adventure they actually ask to play</h2>
+          <p class="overline label teal-text">For kids</p>
+          <h2 class="heading-lg">A learning adventure they actually ask to play</h2>
+          <p class="lede">Stories set in a Kenyan home and market turn numbers into things children can see and touch.</p>
           <ul class="ticks">
-            <li><img src={F + "route.svg"} width="24" height="24" alt="" />A jungle map of short levels, one small step at a time.</li>
-            <li><img src={F + "award.svg"} width="24" height="24" alt="" />Stars, badges and a family star goal to win together.</li>
-            <li><img src={F + "calculator.svg"} width="24" height="24" alt="" />Count, group and share real things: bottle tops, mangoes, seeds and chapati.</li>
+            <li><span class="tick teal"><img src={F + "route.svg"} width="22" height="22" alt="" /></span><span><strong>A jungle map of short levels.</strong> One small step at a time, so every session ends with a win.</span></li>
+            <li><span class="tick purple"><img src={F + "award.svg"} width="22" height="22" alt="" /></span><span><strong>Stars, badges and a family goal.</strong> Children win them alone and celebrate them together.</span></li>
+            <li><span class="tick sun"><img src={F + "calculator.svg"} width="22" height="22" alt="" /></span><span><strong>Real things to count.</strong> Bottle tops, mangoes, seeds and chapati make numbers concrete.</span></li>
           </ul>
         </div>
       </div>
+    </div>
+  </section>
 
+  <section class="split">
+    <div class="container split-grid">
       <div class="row reverse">
         <div class="copy">
-          <p class="kicker purple-text heading-lg">For parents</p>
-          <h2 class="heading-sm">Stay connected without hovering</h2>
+          <p class="overline label purple-text">For parents</p>
+          <h2 class="heading-lg">Stay connected without hovering</h2>
+          <p class="lede">See where your child is growing without sitting over their shoulder.</p>
           <ul class="ticks">
-            <li><img src={F + "user-plus.svg"} width="24" height="24" alt="" />Separate profiles for up to 4 children, each with their own progress.</li>
-            <li><img src={F + "chart-purple.svg"} width="24" height="24" alt="" />An optional weekly email report, and another when a grade is finished.</li>
-            <li><img src={F + "graduation.svg"} width="24" height="24" alt="" />Grown-up settings sit behind a 2-second hold, so children can't change them.</li>
+            <li><span class="tick purple"><img src={F + "user-plus.svg"} width="22" height="22" alt="" /></span><span><strong>A profile for each child.</strong> Up to 4 children, each with their own map and stars.</span></li>
+            <li><span class="tick teal"><img src={F + "chart-purple.svg"} width="22" height="22" alt="" /></span><span><strong>A weekly email, if you want it.</strong> What they're strong at, and one game to try at home.</span></li>
+            <li><span class="tick sun"><img src={F + "graduation.svg"} width="22" height="22" alt="" /></span><span><strong>Settings behind a 2-second hold.</strong> Small fingers can't change them by accident.</span></li>
           </ul>
         </div>
         <div class="mock parents-mock">
@@ -172,6 +181,7 @@ const moveAndPlay = [
     <div class="pattern move-pattern" aria-hidden="true"></div>
     <div class="container">
       <div class="section-head">
+        <p class="overline purple-text">Move & Play</p>
         <h2 class="heading-lg">Maths away from the screen</h2>
         <p class="lede">Every few levels, a Move & Play activity takes the maths into the home, with a grown-up.</p>
       </div>
@@ -182,6 +192,7 @@ const moveAndPlay = [
               <span class="tag">{m.grade}</span>
               <h3 class="heading-sm">{m.title}</h3>
               <p>{m.text}</p>
+              <p class="focus">Focus: {m.focus}</p>
             </article>
           ))
         }
@@ -201,7 +212,7 @@ const moveAndPlay = [
   .hero {
     position: relative;
     overflow: hidden;
-    background: linear-gradient(180deg, var(--mint-100) 0%, var(--mint-50) 45%, var(--white) 100%);
+    background: var(--mint-50);
     padding: var(--section-y) 0;
   }
   .hero-pattern {
@@ -262,20 +273,21 @@ const moveAndPlay = [
     background: var(--white);
     border: 1px solid var(--line);
     color: var(--ink);
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
+  }
+  .facts li.mint {
+    background: var(--mint-100);
+    border-color: var(--mint-100);
+  }
+  .facts li.lilac {
+    background: var(--purple-100);
+    border-color: var(--purple-100);
+    color: var(--purple-700);
   }
   .hero-art {
     position: relative;
     height: 500px;
-  }
-  .glow {
-    position: absolute;
-    inset: 40px 20px;
-    border-radius: 9999px;
-    background: var(--mint-100);
-    opacity: 0.3;
-    filter: blur(50px);
   }
   .phone {
     position: absolute;
@@ -323,9 +335,12 @@ const moveAndPlay = [
     top: 8px;
   }
 
+  .pillars-section {
+    padding: var(--section-y) 0;
+    border-top: 1px solid var(--line);
+  }
   .pillars {
     position: relative;
-    margin-top: 80px;
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -364,8 +379,14 @@ const moveAndPlay = [
     flex-direction: column;
     gap: 24px;
   }
-  .kicker {
-    margin-bottom: -8px;
+  .kids-band {
+    background: var(--mint-50);
+  }
+  .label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: calc(-1 * var(--space-2));
   }
   .teal-text {
     color: var(--teal-700);
@@ -378,17 +399,32 @@ const moveAndPlay = [
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 14px;
+    gap: var(--space-5);
   }
   .ticks li {
     display: flex;
-    gap: 12px;
+    gap: var(--space-4);
     align-items: flex-start;
-    font-size: clamp(17px, 1.9vw, 20px);
+    color: var(--muted);
+    font-size: 17px;
   }
-  .ticks img {
+  .ticks strong {
+    color: var(--ink);
+  }
+  .tick {
     flex: none;
-    margin-top: 2px;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background: var(--mint-100);
+  }
+  .tick.purple {
+    background: var(--purple-100);
+  }
+  .tick.sun {
+    background: var(--sun-50);
   }
   .mock {
     position: relative;
@@ -398,11 +434,9 @@ const moveAndPlay = [
   }
   .tilt.teal {
     background: var(--mint-100);
-    rotate: -4deg;
   }
   .tilt.purple {
     background: var(--purple-100);
-    rotate: 4deg;
   }
   .phone.md {
     position: relative;
@@ -438,13 +472,13 @@ const moveAndPlay = [
   .move {
     position: relative;
     overflow: hidden;
-    background: var(--purple-100);
+    background: var(--purple-50);
     padding: var(--section-y) 0;
   }
   .move-pattern {
     position: absolute;
     inset: 0;
-    opacity: 0.45;
+    opacity: 0.25;
   }
   .move .container {
     position: relative;
@@ -461,23 +495,43 @@ const moveAndPlay = [
     display: flex;
     flex-direction: column;
     gap: 12px;
-    padding: 28px;
-    border-radius: var(--radius-lg);
-    border: 2px solid transparent;
-    box-shadow: var(--shadow-card);
+    padding: var(--space-8);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--line);
+    background: var(--white);
+    color: var(--muted);
     font-size: 17px;
   }
-  .move-card.c0 {
-    background: var(--mint-50);
-    border-color: var(--line);
+  .move-card p:not(.focus) {
+    flex: 1;
+  }
+  .focus {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .move-card.c0 .tag {
+    background: var(--mint-100);
   }
   .move-card.c1 {
-    background: var(--sun-50);
+    background: var(--cream);
     border-color: var(--sun-100);
   }
-  .move-card.c2 {
-    background: var(--purple-50);
-    border-color: var(--purple-200);
+  .move-card.c1 .tag {
+    background: var(--sun-50);
+  }
+  .move-card.c1 .focus {
+    border-color: var(--sun-100);
+  }
+  .move-card.c2 .tag {
+    background: var(--purple-100);
+    color: var(--purple-700);
   }
   .tag {
     align-self: flex-start;

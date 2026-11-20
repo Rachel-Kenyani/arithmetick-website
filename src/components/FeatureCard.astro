@@ -1,56 +1,84 @@
 ---
+/** A feature card: icon, title, short text, and an optional one-line takeaway at the bottom. */
 interface Props {
   icon: string;
   title: string;
+  /** Tint of the card and its icon tile. */
+  tone?: "teal" | "purple" | "sun";
+  /** A short takeaway shown under a divider, e.g. "Stops by itself after 15 minutes". */
+  note?: string;
 }
-const { icon, title } = Astro.props;
+const { icon, title, tone = "teal", note } = Astro.props;
 ---
 
-<article class="card">
-  <img class="glow" src="/images/figma/card-bg.svg" width="320" height="320" alt="" />
-  <div class="icon"><img src={icon} width="36" height="36" alt="" /></div>
-  <h3 class="heading-sm">{title}</h3>
-  <p class="body-xl"><slot /></p>
+<article class={`card ${tone}`}>
+  <div class="top">
+    <div class="icon"><img src={icon} width="28" height="28" alt="" /></div>
+    <h3 class="heading-sm">{title}</h3>
+    <p><slot /></p>
+  </div>
+  {note && <p class="note">{note}</p>}
 </article>
 
 <style>
   .card {
-    position: relative;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    justify-content: space-between;
+    gap: var(--space-6);
     min-width: 0;
-    padding: 40px;
-    border-radius: var(--radius-lg);
-    background: var(--white);
-    box-shadow: var(--shadow-card);
-  }
-  .glow {
-    position: absolute;
-    left: 297px;
-    top: -120px;
-    pointer-events: none;
-  }
-  .icon {
-    position: relative;
-    display: flex;
-    align-self: flex-start;
-    padding: 24px;
-    border-radius: var(--radius-md);
+    padding: var(--space-8);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--line);
     background: var(--mint-50);
   }
-  h3 {
-    position: relative;
-    padding-top: 12px;
-    margin-bottom: -8px;
+  .card.purple {
+    background: var(--purple-50);
+    border-color: var(--purple-100);
+  }
+  .card.sun {
+    background: var(--cream);
+    border-color: var(--sun-100);
+  }
+  .top {
+    display: grid;
+    gap: var(--space-4);
+  }
+  .icon {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: var(--radius-md);
+    background: var(--mint-100);
+  }
+  .purple .icon {
+    background: var(--purple-100);
+  }
+  .sun .icon {
+    background: var(--sun-50);
   }
   p {
-    position: relative;
+    color: var(--muted);
+    font-size: 17px;
+  }
+  .note {
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .purple .note {
+    border-color: var(--purple-100);
+    color: var(--purple-700);
+  }
+  .sun .note {
+    border-color: var(--sun-100);
   }
   @media (max-width: 600px) {
     .card {
-      padding: 28px;
+      padding: var(--space-6);
     }
   }
 </style>
