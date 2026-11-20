@@ -1,14 +1,20 @@
 ---
-/** A two-column FAQ: heading on the left, an accordion of questions on the right. */
+/** An FAQ accordion with a centred heading. Pass `items` for one list, or `groups` for titled lists. */
+type Item = { question: string; answer: string };
 interface Props {
-  items: { question: string; answer: string }[];
+  items?: Item[];
+  /** Titled groups of questions, shown one after another. */
+  groups?: { title: string; items: Item[] }[];
   title?: string;
   /** The first question opens by default. */
   openFirst?: boolean;
   /** The line under the heading. Defaults to a link to the Contact page. */
   lede?: string;
+  /** A "See all questions" link under the list, for a short version of the FAQ. */
+  moreHref?: string;
 }
-const { items, title = "Questions parents ask", openFirst = true, lede } = Astro.props;
+const { items = [], groups, title = "Questions parents ask", openFirst = true, lede, moreHref } = Astro.props;
+const lists = groups ?? [{ title: "", items }];
 ---
 
 <section class="faq" id="faq">
@@ -17,33 +23,62 @@ const { items, title = "Questions parents ask", openFirst = true, lede } = Astro
       <h2 class="heading-lg">{title}</h2>
       {lede ? <p class="lede">{lede}</p> : <p class="lede">Anything else? <a href="/contact">Get in touch</a>.</p>}
     </div>
-    <div class="faq-list">
-      {
-        items.map((f, i) => (
-          <details open={openFirst && i === 0}>
-            <summary>{f.question}</summary>
-            <p>{f.answer}</p>
-          </details>
-        ))
-      }
-    </div>
+    {
+      lists.map((list, li) => (
+        <div class="faq-group">
+          {list.title && <h3 class="overline faq-group-title">{list.title}</h3>}
+          <div class="faq-list">
+            {list.items.map((f, i) => (
+              <details open={openFirst && li === 0 && i === 0}>
+                <summary>{f.question}</summary>
+                <p>{f.answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+    {moreHref && <a class="btn btn-outline more" href={moreHref}>See all questions</a>}
   </div>
 </section>
 
+<script>
+  /* One answer open at a time, so the list stays short and scannable. */
+  for (const list of document.querySelectorAll<HTMLElement>(".faq-list")) {
+    const items = [...list.querySelectorAll<HTMLDetailsElement>("details")];
+    for (const item of items) {
+      item.addEventListener("toggle", () => {
+        if (item.open) {
+          for (const other of items) {
+            if (other !== item) {
+              other.open = false;
+            }
+          }
+        }
+      });
+    }
+  }
+</script>
+
 <style>
+  .faq-group {
+    display: grid;
+    gap: var(--space-4);
+  }
+  .faq-group-title {
+    color: var(--teal-700);
+  }
+  .more {
+    justify-self: center;
+  }
   .faq {
     scroll-margin-top: 72px;
     padding: var(--section-y) 0;
   }
   .faq-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
-    gap: var(--space-12);
-    align-items: start;
-  }
-  .faq-head {
-    margin: 0;
-    text-align: left;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-10);
   }
   .faq-list {
     display: grid;
@@ -85,12 +120,13 @@ const { items, title = "Questions parents ask", openFirst = true, lede } = Astro
     translate: 0 3px;
   }
   .faq-list details p {
-    padding: 0 var(--space-5) var(--space-5);
+    margin: 0 var(--space-5);
+    padding: var(--space-4) 0 var(--space-5);
+    border-top: 1px solid var(--line);
     color: var(--muted);
   }
   @media (max-width: 900px) {
     .faq-grid {
-      grid-template-columns: 1fr;
       gap: var(--space-6);
     }
   }

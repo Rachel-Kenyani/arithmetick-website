@@ -47,7 +47,15 @@ const schema = [
     </article>
   </section>
 
-  <Faq items={questions} title="Common questions" openFirst={false} lede="Most answers are here. If yours isn't, email us." />
+  <Faq
+    groups={[
+      { title: "Using the app", items: HELP_FAQ },
+      { title: "Before you install", items: FAQ },
+    ]}
+    title="Common questions"
+    openFirst={false}
+    lede="Most answers are here. If yours isn't, email us."
+  />
 </Base>
 
 <script>

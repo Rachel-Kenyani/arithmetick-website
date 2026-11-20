@@ -70,3 +70,11 @@ export const HELP_FAQ: { question: string; answer: string }[] = [
       "Yes. Install ArithmeTick on the new phone and sign in with the same email. Each child's progress is saved with your account, so their maps, stars and badges come with them.",
   },
 ];
+
+/** The short list on the home page: the questions that decide whether a parent installs. */
+export const HOME_FAQ = [
+  "How much does it cost?",
+  "Does my child need to read?",
+  "Which phones does it work on?",
+  "What happens to my child's data?",
+].map((question) => FAQ.find((f) => f.question === question)!);

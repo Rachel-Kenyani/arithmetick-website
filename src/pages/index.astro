@@ -5,7 +5,7 @@ import CtaBand from "../components/CtaBand.astro";
 import PlayButton from "../components/PlayButton.astro";
 import ProductVideo from "../components/ProductVideo.astro";
 import fs from "node:fs";
-import { FAQ } from "../data/faq";
+import { FAQ, HOME_FAQ } from "../data/faq";
 import Faq from "../components/Faq.astro";
 import { PLAY_STORE_URL, ANDROID_PACKAGE } from "../data/site";
 
@@ -29,11 +29,6 @@ const schema = [
     teaches: FAQ.at(-1)?.answer,
     inLanguage: "en",
     author: { "@type": "Person", name: "Rachel Kenyani" },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: FAQ.map((f) => ({ "@type": "Question", name: f.question, acceptedAnswer: { "@type": "Answer", text: f.answer } })),
   },
 ];
 const moveAndPlay = [
@@ -194,7 +189,7 @@ const moveAndPlay = [
     </div>
   </section>
 
-  <Faq items={FAQ} />
+  <Faq items={HOME_FAQ} moreHref="/contact#faq" />
 
   <CtaBand
     title="Give your child the gift of maths confidence."

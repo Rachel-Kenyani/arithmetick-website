@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import levels from "../data/levels.json";
-import { FAQ } from "../data/faq";
+import { FAQ, HELP_FAQ } from "../data/faq";
 import { PLAY_STORE_URL, SUPPORT_EMAIL } from "../data/site";
 
 /** A plain Markdown summary of the site for AI agents and LLM crawlers (llmstxt.org). */
@@ -31,7 +31,7 @@ export const GET: APIRoute = ({ site }) => {
 
 ## Questions parents ask
 
-${FAQ.map((f) => `**${f.question}** ${f.answer}`).join("\n\n")}
+${[...FAQ, ...HELP_FAQ].map((f) => `**${f.question}** ${f.answer}`).join("\n\n")}
 
 ## Every level
 
