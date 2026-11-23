@@ -24,3 +24,10 @@ pnpm-debug.log*
 .idea/
 
 AGENTS.md
+
+# Cloudflare Wrangler: local state and secrets
+.wrangler/
+.dev.vars
+.dev.vars.*
+.env.*
+!.env.example
