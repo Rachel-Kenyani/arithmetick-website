@@ -1,0 +1,19 @@
+---
+import Base from "../layouts/Base.astro";
+import Owl from "../components/Owl.astro";
+---
+
+<Base title="Weekly reports are off" description="You've turned off ArithmeTick's weekly email reports." noindex>
+  <section class="container done">
+    <Owl size={120} />
+    <h1 class="display">Weekly reports are off</h1>
+    <p class="lede">We've deleted what we kept for them. You won't get any more report emails.</p>
+    <p class="note">Changed your mind? Turn them on again in the app: hold the gear on “Who is playing today?”, then use the <strong>Weekly reports</strong> switch.</p>
+    <a class="btn btn-primary" href="/">Go to the home page</a>
+  </section>
+</Base>
+
+<style>
+  .done { display: grid; justify-items: center; gap: 18px; padding-top: 72px; padding-bottom: 96px; text-align: center; }
+  .note { max-width: 46ch; margin: 0; }
+</style>
