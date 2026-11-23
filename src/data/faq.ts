@@ -49,11 +49,20 @@ export const HELP_FAQ: { question: string; answer: string }[] = [
   {
     question: "How do I open the grown-up settings?",
     answer:
-      "On the \"Who is playing today?\" screen, press and hold the round gear in the top corner for 2 seconds. The hold keeps young children out.",
+      "On the \"Who is playing today?\" screen, press and hold the round gear marked Hold in the top corner for 2 seconds. The hold keeps young children out.",
   },
   {
     question: "How do I add another child?",
     answer: "Open the grown-up settings, then tap Add a child under Family. You can add up to 4 children, each with their own map and stars.",
+  },
+  {
+    question: "Can I change how Brijo sounds and looks for my child?",
+    answer:
+      "Yes, for each child separately. On the child's Settings tab, under For grown-ups, hold a switch for 2 seconds: Brijo reads aloud turns the voice on or off, Larger Brijo captions makes Brijo's words bigger, and Calm mode stops sparkles, bouncing and cheering sounds. The music button at the top turns sound effects off.",
+  },
+  {
+    question: "How do I change the daily play limit?",
+    answer: "Open the grown-up settings and pick the minutes under Daily play limit, from 10 to 60. It is shared by every child on that phone.",
   },
   {
     question: "How do I turn weekly reports on or off?",
