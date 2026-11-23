@@ -1,0 +1,58 @@
+---
+import Doc from "../layouts/Doc.astro";
+import { SUPPORT_EMAIL as EMAIL } from "../data/site";
+const toc = [
+  { id: "aim", label: "What we aim for" },
+  { id: "works", label: "What works today" },
+  { id: "grown-ups", label: "Settings for grown-ups" },
+  { id: "limits", label: "What isn't there yet" },
+  { id: "testing", label: "How we check" },
+  { id: "report", label: "Tell us about a problem" },
+];
+---
+
+<Doc
+  title="Accessibility"
+  description="How ArithmeTick works for children who use a screen reader, find sound or movement too much, or need larger text, and how to tell us when something doesn't work."
+  intro="Every child should be able to play ArithmeTick. Here is what works today, what doesn't yet, and how to tell us."
+  updated="23 November 2026"
+  toc={toc}
+>
+  <h2 id="aim">What we aim for</h2>
+  <p>We aim to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at level AA wherever they apply to a phone app. We are not there everywhere yet, and this page says where we fall short. ArithmeTick is on Android first, so that is where we build and test.</p>
+
+  <h2 id="works">What works today</h2>
+  <ul>
+    <li><strong>Screen readers:</strong> game pieces have names that say what they are and what state they're in, such as "Hole 2, 4 seeds, full". TalkBack says whether an answer was right, and when a level is finished.</li>
+    <li><strong>Tapping instead of dragging:</strong> every step in every game can be done with taps. Dragging is there for children who like it, but it is never needed.</li>
+    <li><strong>Hearing and reading:</strong> Brijo reads every instruction aloud, and the words are always on screen too, lighting up as Brijo says them. A "Hear it" button plays an instruction again.</li>
+    <li><strong>Not by colour alone:</strong> a wrong answer shows "Not quite. Have another go." with an arrow, and a full group shows a tick, so nothing depends on telling colours apart.</li>
+    <li><strong>Less movement:</strong> if the phone's Remove animations (Reduce Motion) setting is on, the app stops its bouncing and sparkles.</li>
+    <li><strong>No time pressure:</strong> there are no timers in the games. A child can take as long as they need.</li>
+    <li><strong>Help when stuck:</strong> after a few tries, Brijo shows the way step by step instead of just saying no again.</li>
+  </ul>
+
+  <h2 id="grown-ups">Settings for grown-ups</h2>
+  <p>Each child has their own settings on the Settings tab, under "For grown-ups". Each one needs a 2-second hold, so a young child can't change it by accident. With a screen reader, a double tap is enough.</p>
+  <ul>
+    <li><strong>Brijo reads aloud:</strong> turn Brijo's voice off for a child who reads well or needs quiet.</li>
+    <li><strong>Larger Brijo captions:</strong> makes the words Brijo says bigger on screen.</li>
+    <li><strong>Calm mode:</strong> turns off sparkles, bouncing and cheering sounds for a child who is easily overwhelmed, while keeping the sounds that tell them what happened.</li>
+  </ul>
+  <p>Sound effects can be turned off with the music button at the top of the screen. A daily screen time limit is on the Grown-ups page.</p>
+
+  <h2 id="limits">What isn't there yet</h2>
+  <ul>
+    <li>Instructions and recordings are in English only. Kiswahili is planned.</li>
+    <li>There is no iPhone app yet.</li>
+    <li>Only Brijo's captions get larger. Buttons and other text stay the same size.</li>
+    <li>Cutting the chapati is not yet described aloud as each cut happens, although the result is.</li>
+    <li>We have not yet tested with children who have disabilities. We plan to do this during the beta with families and schools who'd like to help.</li>
+  </ul>
+
+  <h2 id="testing">How we check</h2>
+  <p>Before each new version reaches Google Play, we run a short check: one level of every game with TalkBack, the larger captions and Calm mode, the phone's largest font size, Remove animations, and playing with the sound off. We use the accessibility self-assessment from the iHub Accessibility Toolkit to find what to improve next.</p>
+
+  <h2 id="report">Tell us about a problem</h2>
+  <p>If something in ArithmeTick is hard for your child to use, we want to know. In the app, hold the gear on "Who is playing today?", then tap <strong>Report a problem</strong> and choose "Hard to use or reach". Or email <a href={`mailto:${EMAIL}`}>{EMAIL}</a>. We read every report.</p>
+</Doc>

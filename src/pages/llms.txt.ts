@@ -27,6 +27,7 @@ export const GET: APIRoute = ({ site }) => {
 - [Contact](${origin}/contact): install link and support email
 - [Privacy Policy](${origin}/privacy): what is collected and why
 - [Terms of Use](${origin}/terms)
+- [Accessibility](${origin}/accessibility): what works for children with disabilities, and what does not yet
 - [Delete your account](${origin}/delete-account)
 
 ## Questions parents ask
