@@ -34,7 +34,8 @@ const schema = [
 
     <article class="card">
       <h2 class="heading-lg">Questions and help</h2>
-      <p class="body-xl">For questions, problems in the app, or anything about your family's data, email:</p>
+      <p class="tip"><strong>Using the app?</strong> The quickest way to report a problem is in the app: hold the gear on “Who is playing today?”, then tap <strong>Report a problem</strong>.</p>
+      <p class="body-xl">For other questions, or anything about your family's data, email:</p>
       <p class="email">
         <span id="email-text">{EMAIL}</span>
         <button type="button" class="copy" data-copy={EMAIL}>Copy</button>
@@ -131,6 +132,13 @@ const schema = [
   .card :global(.btn) {
     align-self: flex-start;
     margin-top: 8px;
+  }
+  .tip {
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    background: #fff4cc;
+    font-size: 17px;
+    color: var(--ink);
   }
   .email {
     display: flex;
