@@ -1,6 +1,5 @@
 ---
 import Base from "../layouts/Base.astro";
-import CtaBand from "../components/CtaBand.astro";
 import levels from "../data/levels.json";
 import { SUPPORT_EMAIL } from "../data/site";
 
@@ -103,7 +102,7 @@ const sources = [
   </section>
 
   <section class="why-grades">
-    <div class="container">
+    <div class="container stack">
       <div class="section-head">
         <p class="overline purple">Why Grades 1 to 3</p>
         <h2 class="heading-lg">The years when numbers become symbols</h2>
@@ -150,7 +149,7 @@ const sources = [
   </section>
 
   <section class="principles">
-    <div class="container">
+    <div class="container stack">
       <div class="section-head">
         <p class="overline">How it shaped the app</p>
         <h2 class="heading-lg">Five principles, built in</h2>
@@ -199,7 +198,7 @@ const sources = [
   </section>
 
   <section class="kenya">
-    <div class="container">
+    <div class="container stack">
       <div class="section-head">
         <p class="overline">The Kenyan context</p>
         <h2 class="heading-lg">Made in Nairobi, for Kenyan homes</h2>
@@ -238,7 +237,7 @@ const sources = [
   </section>
 
   <section class="not-built">
-    <div class="container">
+    <div class="container stack">
       <div class="section-head">
         <p class="overline purple">What we chose not to build</p>
         <h2 class="heading-lg">Saying no was part of the design</h2>
@@ -286,6 +285,8 @@ const sources = [
   </section>
 
   <section class="orgs">
+    <img class="strip top" src="/images/figma/cta-strip-top.svg" alt="" />
+    <img class="strip bottom" src="/images/figma/cta-strip-bottom.svg" alt="" />
     <div class="container orgs-inner">
       <div>
         <p class="overline">For schools and organisations</p>
@@ -300,17 +301,32 @@ const sources = [
     <div class="container">
       <h2 class="heading-sm">Sources</h2>
       <ul>
-        {sources.map((s) => <li><a href={s.href} rel="noopener">{s.label}</a></li>)}
+        {
+          sources.map((s) => (
+            <li>
+              <a href={s.href} target="_blank" rel="noopener noreferrer">
+                {s.label}
+                <span class="visually-hidden"> (opens in a new tab)</span>
+              </a>
+            </li>
+          ))
+        }
       </ul>
     </div>
   </section>
 
-  <CtaBand title="Give your child the gift of maths confidence." text="ArithmeTick is free during the beta. Install it from Google Play and try it with your family tonight." />
 </Base>
 
 <style>
+  /* Same rhythm as the rest of the site: section padding, a 40px gap from heading to content,
+     24px between cards and inside them, and 64px between side-by-side columns. */
   section {
     padding: var(--section-y) 0;
+  }
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
   }
   .overline {
     color: var(--teal-700);
@@ -349,8 +365,15 @@ const sources = [
   .two-col {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: var(--space-12);
+    gap: var(--space-16);
     align-items: start;
+  }
+  /* The heading stays in view while its cards scroll past, then the next section takes over. */
+  @media (min-width: 900px) {
+    .two-col > .section-head.left {
+      position: sticky;
+      top: calc(60px + var(--space-10));
+    }
   }
   .section-head.left {
     margin: 0;
@@ -397,7 +420,7 @@ const sources = [
   }
   .cards {
     display: grid;
-    gap: var(--space-5);
+    gap: var(--space-6);
   }
   .cards.three {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -417,7 +440,7 @@ const sources = [
   }
   .findings {
     display: grid;
-    gap: var(--space-5);
+    gap: var(--space-4);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -492,7 +515,7 @@ const sources = [
   }
   .pal-steps {
     display: grid;
-    gap: var(--space-4);
+    gap: var(--space-6);
   }
   .pal-step {
     display: grid;
@@ -506,22 +529,22 @@ const sources = [
     margin: 0;
     color: var(--muted);
   }
-  .tag {
+  .pal-step .tag {
     justify-self: start;
     padding: 3px 12px;
     border-radius: var(--radius-pill);
     background: var(--purple-100);
-    color: var(--purple-700) !important;
+    color: var(--purple-700);
     font-size: 13px;
     font-weight: 700;
   }
-  .tag.mint {
+  .pal-step .tag.mint {
     background: var(--mint-100);
-    color: var(--ink) !important;
+    color: var(--ink);
   }
-  .tag.sun {
+  .pal-step .tag.sun {
     background: #fff1c2;
-    color: var(--ink) !important;
+    color: var(--ink);
   }
   .ticks-list {
     display: grid;
@@ -556,7 +579,7 @@ const sources = [
   .no-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--space-4);
+    gap: var(--space-6);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -565,7 +588,7 @@ const sources = [
     display: grid;
     gap: var(--space-2);
     align-content: start;
-    padding: var(--space-5);
+    padding: var(--space-6);
     border-radius: var(--radius-lg);
     border: 1px dashed var(--purple-200);
   }
@@ -590,8 +613,31 @@ const sources = [
     color: var(--muted);
   }
   .orgs {
-    background: var(--purple-950);
+    position: relative;
+    overflow: clip;
+    padding: calc(var(--section-y) + var(--space-8)) 0;
+    background: var(--ink);
     color: var(--white);
+  }
+  /* The same pattern strips as the site's other call-to-action band. */
+  .strip {
+    position: absolute;
+    left: 50%;
+    width: 184%;
+    max-width: none;
+    height: auto;
+    translate: -50% 0;
+    pointer-events: none;
+  }
+  .strip.top {
+    top: -4%;
+    transform: rotate(180deg) scaleX(-1);
+  }
+  .strip.bottom {
+    bottom: -4%;
+  }
+  .orgs-inner {
+    position: relative;
   }
   .orgs-inner {
     display: flex;
@@ -615,12 +661,12 @@ const sources = [
     color: #e4d6f7;
   }
   .sources {
-    padding: var(--space-12) 0;
+    padding: var(--space-16) 0;
     background: var(--white);
   }
   .sources ul {
     display: grid;
-    gap: var(--space-2);
+    gap: var(--space-3);
     margin: var(--space-4) 0 0;
     padding-left: 1.1em;
     font-size: 15px;
@@ -636,7 +682,7 @@ const sources = [
       grid-template-columns: 1fr;
     }
     .two-col {
-      gap: var(--space-8);
+      gap: var(--space-10);
     }
   }
 </style>
