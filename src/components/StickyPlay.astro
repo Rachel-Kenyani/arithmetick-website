@@ -1,0 +1,109 @@
+---
+import PlayButton from "./PlayButton.astro";
+
+/**
+ * A bar pinned to the bottom of small screens with the Play badge. It shows once the page's own
+ * badges have scrolled out of view, and hides again whenever another badge or the footer is on screen.
+ */
+---
+
+<div class="sticky-play" id="sticky-play" aria-hidden="true">
+  <img src="/favicon.svg" width="36" height="36" alt="" />
+  <p><strong>ArithmeTick</strong><span>Free maths games, Grades 1 to 3</span></p>
+  <PlayButton size="sm" />
+</div>
+
+<script>
+  const bar = document.getElementById("sticky-play");
+  const small = window.matchMedia("(max-width: 700px)");
+  if (bar && "IntersectionObserver" in window) {
+    const watched = [...document.querySelectorAll<HTMLElement>(".play-badge, .play-ios, footer")].filter((el) => !bar.contains(el));
+    const onScreen = new Set<Element>();
+    let pastTop = false;
+
+    const update = () => {
+      const show = small.matches && pastTop && onScreen.size === 0;
+      bar.classList.toggle("shown", show);
+      bar.setAttribute("aria-hidden", String(!show));
+      bar.inert = !show;
+    };
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          onScreen.add(entry.target);
+        } else {
+          onScreen.delete(entry.target);
+        }
+      }
+      update();
+    });
+    for (const el of watched) {
+      observer.observe(el);
+    }
+    window.addEventListener(
+      "scroll",
+      () => {
+        const next = window.scrollY > 300;
+        if (next !== pastTop) {
+          pastTop = next;
+          update();
+        }
+      },
+      { passive: true },
+    );
+    small.addEventListener("change", update);
+    bar.inert = true;
+  }
+</script>
+
+<style>
+  .sticky-play {
+    position: fixed;
+    z-index: 30;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--line);
+    background: var(--white);
+    translate: 0 100%;
+    transition: translate 0.2s ease;
+  }
+  .sticky-play.shown {
+    translate: 0 0;
+  }
+  .sticky-play > img {
+    flex: none;
+  }
+  .sticky-play p {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    display: grid;
+    font-size: 13px;
+    line-height: 1.3;
+    color: var(--muted);
+  }
+  .sticky-play strong {
+    color: var(--ink);
+    font-size: 15px;
+  }
+  @media (max-width: 700px) {
+    .sticky-play {
+      display: flex;
+    }
+  }
+  @media (max-width: 360px) {
+    .sticky-play p span {
+      display: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sticky-play {
+      transition: none;
+    }
+  }
+</style>

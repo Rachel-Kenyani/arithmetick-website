@@ -185,6 +185,15 @@ const links = [
     .bar :global(.cta) {
       margin-left: auto;
     }
+  }
+  /* On phones the Play badge moves to the sticky bar at the bottom (StickyPlay), where thumbs reach it. */
+  @media (max-width: 700px) {
+    .bar :global(.cta) {
+      display: none;
+    }
+    .menu {
+      margin-left: auto;
+    }
     nav {
       display: none;
     }

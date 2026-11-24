@@ -3,6 +3,7 @@ import "../styles/global.css";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import Analytics from "../components/Analytics.astro";
+import StickyPlay from "../components/StickyPlay.astro";
 import { PLAY_STORE_URL, SUPPORT_EMAIL } from "../data/site";
 
 interface Props {
@@ -12,11 +13,13 @@ interface Props {
   current?: "home" | "how" | "privacy" | "contact";
   /** Extra schema.org JSON-LD objects for this page. */
   schema?: Record<string, unknown>[];
+  /** Show the Play badge in a bar at the bottom of small screens once the page's own badges scroll away. */
+  stickyPlay?: boolean;
   /** Keep the page out of search results (404). */
   noindex?: boolean;
 }
 
-const { title, description, current, schema = [], noindex = false } = Astro.props;
+const { title, description, current, schema = [], noindex = false, stickyPlay = !noindex } = Astro.props;
 const fullTitle = title === "ArithmeTick" ? title : `${title} · ArithmeTick`;
 const site = Astro.site ?? new URL("https://arithmetick.rachelkenyani.com");
 const canonical = new URL(Astro.url.pathname.replace(/\.html$/, "").replace(/\/index$/, "") || "/", site);
@@ -93,6 +96,7 @@ const siteSchema = [
       <slot />
     </main>
     <Footer />
+    {stickyPlay && <StickyPlay />}
     <Analytics />
     <script src="../scripts/webmcp.ts"></script>
   </body>

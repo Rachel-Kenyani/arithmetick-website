@@ -1,12 +1,13 @@
 ---
-import { PLAY_STORE_LINK } from "../data/site";
+import { PLAY_STORE_LINK, SUPPORT_EMAIL } from "../data/site";
 
 /**
  * The official "Get it on Google Play" badge, linked to the store listing.
  * Google's badge rules: don't recolour, crop or add effects to the badge. The PNG includes its own clear space.
+ * On iPhones and iPads the badge is swapped for "Not on iPhone yet" and a way to hear when it is.
  */
 interface Props {
-  /** md for heroes and bands, sm for the nav. */
+  /** md for heroes and bands, sm for the nav and the sticky bar. */
   size?: "md" | "sm";
   class?: string;
   /** Kept so older callers still compile; the badge has no colour variants. */
@@ -16,11 +17,34 @@ interface Props {
 const { size = "md", class: className } = Astro.props;
 const height = size === "sm" ? 48 : 72;
 const width = Math.round((646 / 250) * height);
+const notifyHref = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent("Tell me when ArithmeTick is on iPhone")}&body=${encodeURIComponent("Please email me when ArithmeTick is available on iPhone.")}`;
 ---
 
 <a class:list={["play-badge", `play-badge-${size}`, className]} href={PLAY_STORE_LINK} rel="noopener" data-store="google-play">
   <img src="/images/google-play-badge.png" width={width} height={height} alt="Get it on Google Play" />
 </a>
+{
+  size === "sm" ? (
+    <a class:list={["play-ios", "btn", "btn-sun", "btn-sm", className]} href={notifyHref}>
+      iPhone: get notified
+    </a>
+  ) : (
+    <div class:list={["play-ios", "play-ios-md", className]}>
+      <p>
+        <strong>Not on iPhone yet.</strong> ArithmeTick is on Android for now.
+      </p>
+      <a class="btn btn-sun" href={notifyHref}>Get notified</a>
+    </div>
+  )
+}
+
+<script>
+  /* iPadOS reports itself as a Mac, so a touch screen gives it away. */
+  const isIos = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  if (isIos) {
+    document.documentElement.classList.add("is-ios");
+  }
+</script>
 
 <style>
   .play-badge {
@@ -44,5 +68,22 @@ const width = Math.round((646 / 250) * height);
     display: block;
     height: auto;
     max-width: 100%;
+  }
+  .play-ios {
+    display: none;
+  }
+  .play-ios-md {
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-4);
+  }
+  .play-ios-md p {
+    margin: 0;
+  }
+  :global(.is-ios) .play-badge {
+    display: none;
+  }
+  :global(.is-ios) .play-ios {
+    display: inline-flex;
   }
 </style>
