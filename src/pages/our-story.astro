@@ -1,7 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import levels from "../data/levels.json";
-import { SUPPORT_EMAIL } from "../data/site";
+import { PORTFOLIO_URL, SUPPORT_EMAIL } from "../data/site";
 import Pictogram from "../components/Pictogram.astro";
 import StoryIcon from "../components/StoryIcon.astro";
 import AppArt from "../components/AppArt.astro";
@@ -55,6 +55,9 @@ const sources = [
         ArithmeTick is a maths app for Kenyan children in Grades 1 to 3. It was researched, designed and engineered by
         Rachel Kenyani, a Product Designer and Developer. This is why it exists, and why it works the way it does.
       </p>
+      <a class="maker-link" href={PORTFOLIO_URL} target="_blank" rel="noopener">
+        See Rachel's other work<span aria-hidden="true"> →</span><span class="visually-hidden"> (opens in a new tab)</span>
+      </a>
     </div>
   </section>
 
@@ -341,6 +344,12 @@ const sources = [
   }
   .story-hero h1 {
     color: var(--white);
+  }
+  .maker-link {
+    justify-self: start;
+    color: var(--sun);
+    font-weight: 700;
+    text-underline-offset: 3px;
   }
   .story-hero .lede {
     color: #e4d6f7;

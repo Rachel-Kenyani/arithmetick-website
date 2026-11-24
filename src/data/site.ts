@@ -5,6 +5,9 @@ export const ANDROID_PACKAGE = "com.rachelkenyani.arithmetick";
 export const PLAY_STORE_URL = `https://play.google.com/store/apps/details?id=${ANDROID_PACKAGE}`;
 
 /** Help and data requests still go by email. */
+/** Rachel's portfolio, for people who want to see her other work. */
+export const PORTFOLIO_URL = "https://rachelkenyani.com";
+
 export const SUPPORT_EMAIL = "hello@arithmetick.rachelkenyani.com";
 
 /**
