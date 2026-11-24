@@ -108,8 +108,6 @@ const moveAndPlay = [
         <figure class="phone front">
           <img src="/images/app/map.webp" width="390" height="844" alt="The jungle map of Grade 1 levels" />
         </figure>
-        <img class="pal fox" src={F + "fox.png"} width="64" height="64" alt="" />
-        <img class="pal cheetah" src={F + "cheetah.png"} width="64" height="64" alt="" />
       </div>
     </div>
   </section>
@@ -364,8 +362,7 @@ const moveAndPlay = [
   @media (prefers-reduced-motion: no-preference) {
     @supports (animation-timeline: scroll()) {
       .hero-art .phone.back,
-      .hero-art .phone.front,
-      .hero-art .pal {
+      .hero-art .phone.front {
         animation-timing-function: linear;
         animation-fill-mode: both;
         animation-timeline: scroll(root);
@@ -376,9 +373,6 @@ const moveAndPlay = [
       }
       .hero-art .phone.front {
         animation-name: drift-front;
-      }
-      .hero-art .pal {
-        animation-name: drift-pal;
       }
     }
   }
@@ -394,11 +388,7 @@ const moveAndPlay = [
       rotate: -10deg;
     }
   }
-  @keyframes drift-pal {
-    to {
-      translate: 0 -140px;
-    }
-  }
+
   .hero .lede {
     color: #e4d6f7;
   }
@@ -516,24 +506,9 @@ const moveAndPlay = [
     top: 0;
     rotate: 5deg;
   }
-  .pal {
-    position: absolute;
-    z-index: 3;
-    width: 64px;
-    height: 64px;
-    border-radius: 9999px;
-    padding: 6px;
-    /* A see-through ring, so the hero's purple shows through it. */
-    background: rgb(255 255 255 / 0.25);
-  }
-  .pal.fox {
-    right: 0;
-    bottom: 40px;
-  }
-  .pal.cheetah {
-    left: 0;
-    top: 8px;
-  }
+
+
+
 
   .pillars-section {
     padding: var(--section-y) 0;
