@@ -51,6 +51,7 @@ const links = [
       </ul>
     </details>
   </div>
+  <div class="progress" aria-hidden="true"></div>
 </header>
 
 <script>
@@ -154,6 +155,38 @@ const links = [
     .nav,
     .bar {
       transition: none;
+    }
+  }
+
+  /* Reading progress along the bottom edge, driven by the page scroll with no script.
+     Browsers without scroll-driven animations simply don't show it. */
+  .progress {
+    display: none;
+  }
+  @supports (animation-timeline: scroll()) {
+    .progress {
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 3px;
+      background: var(--teal-600);
+      transform-origin: 0 50%;
+      scale: 0 1;
+      animation: read-progress linear both;
+    }
+    /* Kept in its own rule: the CSS minifier would fold it into the shorthand above, which browsers ignore. */
+    .nav .progress {
+      animation-timeline: scroll(root);
+    }
+    .over-hero:not(.scrolled) .progress {
+      opacity: 0;
+    }
+  }
+  @keyframes read-progress {
+    to {
+      scale: 1 1;
     }
   }
   nav {
