@@ -3,6 +3,7 @@ import Base from "../layouts/Base.astro";
 import CtaBand from "../components/CtaBand.astro";
 import PlayButton from "../components/PlayButton.astro";
 import levels from "../data/levels.json";
+import SkillArt from "../components/SkillArt.astro";
 
 const F = "/images/figma/";
 const SKILL_NAMES: Record<string, string> = {
@@ -107,10 +108,17 @@ const skills = [
           <a class="btn btn-outline" href="#levels">See every level</a>
         </div>
       </div>
+      <div class="story" data-active="0">
+      <div class="pinned" aria-hidden="true">
+        <figure class="pinned-phone">
+          {steps.map((step, i) => <img class:list={[i === 0 && "on"]} src={step.image} width="390" height="844" loading={i === 0 ? "eager" : "lazy"} alt="" />)}
+        </figure>
+        <div class="pinned-dots">{steps.map((_, i) => <span class:list={[i === 0 && "on"]} />)}</div>
+      </div>
       <ol class="steps">
         {
           steps.map((step, i) => (
-            <li class="step">
+            <li class:list={["step", i === 0 && "active"]}>
               <figure class="shot">
                 <img src={step.image} width="390" height="844" loading={i === 0 ? "eager" : "lazy"} alt={step.alt} />
               </figure>
@@ -123,6 +131,7 @@ const skills = [
           ))
         }
       </ol>
+      </div>
     </div>
   </section>
 
@@ -178,6 +187,7 @@ const skills = [
               <li class="skill">
                 <span class="skill-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
                 <div class="skill-body">
+                  <SkillArt index={i} />
                   <h3 class="heading-sm">{skill.name}</h3>
                   <p>{skill.text}</p>
                   <p class="skill-meta">
@@ -220,6 +230,58 @@ const skills = [
       if (section) {
         observer.observe(section);
       }
+    }
+  }
+</script>
+
+<script>
+  /* Skill drawings play once as each card comes into view, and again on hover or tap. */
+  const skillCards = [...document.querySelectorAll<HTMLElement>(".skill")];
+  const replay = (card: HTMLElement) => {
+    card.classList.remove("play");
+    void card.offsetWidth;
+    card.classList.add("play");
+  };
+  if ("IntersectionObserver" in window) {
+    const seen = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            replay(entry.target as HTMLElement);
+            seen.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.6 },
+    );
+    skillCards.forEach((card) => seen.observe(card));
+  }
+  for (const card of skillCards) {
+    card.addEventListener("mouseenter", () => replay(card));
+    card.addEventListener("click", () => replay(card));
+  }
+
+  /* Pinned story (desktop): the step in the middle of the screen sets which screenshot the fixed phone shows. */
+  const story = document.querySelector<HTMLElement>(".story");
+  if (story && "IntersectionObserver" in window) {
+    const steps = [...story.querySelectorAll<HTMLElement>(".step")];
+    const shots = [...story.querySelectorAll<HTMLElement>(".pinned-phone img")];
+    const dots = [...story.querySelectorAll<HTMLElement>(".pinned-dots span")];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const index = steps.indexOf(entry.target as HTMLElement);
+            steps.forEach((el, i) => el.classList.toggle("active", i === index));
+            shots.forEach((el, i) => el.classList.toggle("on", i === index));
+            dots.forEach((el, i) => el.classList.toggle("on", i === index));
+          }
+        }
+      },
+      { rootMargin: "-45% 0px -45% 0px" },
+    );
+    for (const step of steps) {
+      observer.observe(step);
     }
   }
 </script>
@@ -516,5 +578,98 @@ const skills = [
   #levels,
   #skills {
     scroll-margin-top: 130px;
+  }
+  /* Pinned story: on wide screens one phone stays put while the steps scroll past beside it. */
+  .pinned {
+    display: none;
+  }
+  @media (min-width: 900px) {
+    .story {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-16);
+      margin-top: var(--space-12);
+    }
+    .pinned {
+      position: sticky;
+      top: calc(50vh - 260px);
+      display: grid;
+      justify-items: center;
+      gap: var(--space-5);
+      align-self: start;
+    }
+    .pinned-phone {
+      position: relative;
+      width: 240px;
+      aspect-ratio: 390 / 844;
+      margin: 0;
+      padding: 6px;
+      border-radius: 34px;
+      background: var(--outline);
+      box-shadow: 0 30px 60px rgb(0 79 74 / 0.2);
+    }
+    .pinned-phone img {
+      position: absolute;
+      inset: 6px;
+      width: calc(100% - 12px);
+      height: calc(100% - 12px);
+      border-radius: 28px;
+      opacity: 0;
+      scale: 1.04;
+      transition:
+        opacity 0.5s ease,
+        scale 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .pinned-phone img.on {
+      opacity: 1;
+      scale: 1;
+    }
+    .pinned-dots {
+      display: flex;
+      gap: 8px;
+    }
+    .pinned-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 4px;
+      background: var(--line);
+      transition:
+        width 0.3s ease,
+        background-color 0.3s ease;
+    }
+    .pinned-dots span.on {
+      width: 28px;
+      background: var(--teal-700);
+    }
+    .story .steps {
+      grid-template-columns: 1fr;
+      gap: 0;
+      margin: 0;
+    }
+    .story .step {
+      min-height: 70vh;
+      align-content: center;
+      opacity: 0.3;
+      transition: opacity 0.4s ease;
+    }
+    .story .step.active {
+      opacity: 1;
+    }
+    .story .step .shot {
+      display: none;
+    }
+    .story .step-copy {
+      text-align: left;
+      max-width: 440px;
+    }
+    .story .step-copy .heading-sm {
+      font-size: clamp(28px, 3vw, 40px);
+    }
+  }
+  @media (min-width: 900px) and (prefers-reduced-motion: reduce) {
+    .pinned-phone img,
+    .story .step {
+      transition: none;
+    }
   }
 </style>

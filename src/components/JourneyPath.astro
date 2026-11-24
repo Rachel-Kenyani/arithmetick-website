@@ -1,0 +1,236 @@
+---
+/**
+ * The jungle map's dotted path, running down the home page like the app's level map: it weaves between
+ * the sections through the side margins, draws itself as you scroll, lights up a numbered stop at each
+ * section, and Brijo walks along its front. Only on screens wide enough to have side margins for it.
+ */
+---
+
+<div class="journey" aria-hidden="true">
+  <svg class="journey-svg">
+    <defs>
+      <mask id="journey-mask" maskUnits="userSpaceOnUse">
+        <path class="journey-reveal" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round"></path>
+      </mask>
+    </defs>
+    <path class="journey-road" fill="none"></path>
+    <path class="journey-drawn" fill="none" mask="url(#journey-mask)"></path>
+  </svg>
+  <img class="journey-owl" src="/images/figma/owl-head.svg" width="44" height="41" alt="" />
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>(".journey");
+  const main = document.querySelector<HTMLElement>("main");
+  const svg = root?.querySelector<SVGSVGElement>("svg");
+  const road = root?.querySelector<SVGPathElement>(".journey-road");
+  const drawn = root?.querySelector<SVGPathElement>(".journey-drawn");
+  const reveal = root?.querySelector<SVGPathElement>(".journey-reveal");
+  const owl = root?.querySelector<HTMLElement>(".journey-owl");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (root && main && svg && road && drawn && reveal && owl) {
+    const SVG = "http://www.w3.org/2000/svg";
+    let total = 0;
+    let samples: { len: number; y: number }[] = [];
+    let stops: { el: SVGGElement; len: number }[] = [];
+    let ticking = false;
+
+    const layout = () => {
+      for (const s of stops) {
+        s.el.remove();
+      }
+      stops = [];
+      const sections = [...main.children].filter((el) => el.tagName === "SECTION").slice(1) as HTMLElement[];
+      const container = main.querySelector<HTMLElement>("section .container");
+      const mainBox = main.getBoundingClientRect();
+      const width = mainBox.width;
+      const inner = container ? container.getBoundingClientRect() : null;
+      const gutter = inner ? inner.left - mainBox.left + parseFloat(getComputedStyle(container!).paddingLeft) : 0;
+      if (gutter < 72 || sections.length < 2) {
+        root.hidden = true;
+        return;
+      }
+      root.hidden = false;
+      const height = main.scrollHeight;
+      svg.setAttribute("width", String(width));
+      svg.setAttribute("height", String(height));
+      svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+
+      /* Down one margin, then across the gap between sections to the other margin, and so on. */
+      const left = gutter / 2;
+      const right = width - gutter / 2;
+      const top = (el: HTMLElement) => el.getBoundingClientRect().top - mainBox.top;
+      let side = left;
+      let y = top(sections[0]) + 40;
+      let d = `M${side} ${y}`;
+      const crossings: { x: number; y: number }[] = [];
+      for (let i = 1; i < sections.length; i++) {
+        const boundary = top(sections[i]);
+        /* Short sections (like the words band) are walked straight through, not crossed. */
+        if (sections[i].offsetHeight < 420 || sections[i - 1].offsetHeight < 420) {
+          continue;
+        }
+        const next = side === left ? right : left;
+        d += ` L${side} ${boundary - 70}`;
+        d += ` C${side} ${boundary - 10}, ${next} ${boundary + 10}, ${next} ${boundary + 70}`;
+        crossings.push({ x: width / 2, y: boundary });
+        side = next;
+      }
+      const last = sections.at(-1)!;
+      d += ` L${side} ${top(last) + last.offsetHeight * 0.5}`;
+      for (const p of [road, drawn, reveal]) {
+        p.setAttribute("d", d);
+      }
+      total = drawn.getTotalLength();
+
+      samples = [];
+      for (let len = 0; len <= total; len += 16) {
+        samples.push({ len, y: drawn.getPointAtLength(len).y });
+      }
+
+      /* A numbered stop where the path crosses each gap, like the levels on the app's map. */
+      crossings.forEach((c, i) => {
+        let best = 0;
+        let bestGap = Infinity;
+        for (const s of samples) {
+          const p = drawn.getPointAtLength(s.len);
+          const gap = Math.hypot(p.x - c.x, p.y - c.y);
+          if (gap < bestGap) {
+            bestGap = gap;
+            best = s.len;
+          }
+        }
+        const p = drawn.getPointAtLength(best);
+        const g = document.createElementNS(SVG, "g");
+        g.setAttribute("class", "journey-stop");
+        g.setAttribute("transform", `translate(${p.x} ${p.y})`);
+        const circle = document.createElementNS(SVG, "circle");
+        circle.setAttribute("r", "17");
+        const text = document.createElementNS(SVG, "text");
+        text.setAttribute("dy", "6");
+        text.textContent = String(i + 1);
+        g.append(circle, text);
+        svg.append(g);
+        stops.push({ el: g, len: best });
+      });
+      update();
+    };
+
+    /* How far along the path to draw: down to 60% of the way down the screen. */
+    const update = () => {
+      ticking = false;
+      if (!total) {
+        return;
+      }
+      const mainTop = main.getBoundingClientRect().top;
+      const target = reduce ? Infinity : window.innerHeight * 0.6 - mainTop;
+      let len = 0;
+      for (const s of samples) {
+        if (s.y <= target) {
+          len = s.len;
+        } else {
+          break;
+        }
+      }
+      if (target === Infinity) {
+        len = total;
+      }
+      reveal.style.strokeDasharray = `${len} ${total}`;
+      for (const s of stops) {
+        s.el.classList.toggle("reached", s.len <= len);
+      }
+      const p = drawn.getPointAtLength(len);
+      const ahead = drawn.getPointAtLength(Math.min(total, len + 8));
+      owl.style.translate = `${p.x - 22}px ${p.y - 34}px`;
+      owl.style.scale = ahead.x < p.x - 0.5 ? "-1 1" : "1 1";
+      owl.classList.toggle("walking", len > 0 && len < total);
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+    new ResizeObserver(() => requestAnimationFrame(layout)).observe(main);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    layout();
+  }
+</script>
+
+<style>
+  .journey {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    overflow: clip;
+  }
+  .journey[hidden] {
+    display: none;
+  }
+  .journey-svg {
+    position: absolute;
+    inset: 0 auto auto 0;
+  }
+  .journey-road {
+    stroke: rgb(0 111 104 / 0.18);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-dasharray: 1 12;
+  }
+  .journey-drawn {
+    stroke: var(--teal-600);
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-dasharray: 1 12;
+  }
+  :global(.journey-stop circle) {
+    fill: var(--white);
+    stroke: rgb(0 111 104 / 0.25);
+    stroke-width: 3;
+    transition:
+      fill 0.3s ease,
+      stroke 0.3s ease;
+  }
+  :global(.journey-stop text) {
+    fill: var(--muted);
+    font-size: 15px;
+    font-weight: 800;
+    text-anchor: middle;
+    transition: fill 0.3s ease;
+  }
+  :global(.journey-stop.reached circle) {
+    fill: var(--sun);
+    stroke: var(--ink);
+  }
+  :global(.journey-stop.reached text) {
+    fill: var(--ink);
+  }
+  .journey-owl {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 44px;
+    height: 41px;
+    filter: drop-shadow(0 3px 3px rgb(0 0 0 / 0.18));
+    will-change: translate;
+  }
+  .journey-owl.walking {
+    animation: waddle 0.5s ease-in-out infinite alternate;
+  }
+  @keyframes waddle {
+    from {
+      rotate: -7deg;
+    }
+    to {
+      rotate: 7deg;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .journey-owl {
+      display: none;
+    }
+  }
+</style>

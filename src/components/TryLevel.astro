@@ -1,6 +1,7 @@
 ---
 import PlayButton from "./PlayButton.astro";
 import levels from "../data/levels.json";
+import { FEATHERS_LINE } from "../data/brijoLine";
 
 /**
  * A tiny playable version of the app's "Collect 7 feathers" level: tap feathers until Brijo has seven.
@@ -16,13 +17,16 @@ const levelCount = levels.reduce((sum, g) => sum + g.levels.length, 0);
     <div class="try-copy">
       <p class="overline">Try a level</p>
       <h2 class="heading-lg">Help Brijo collect 7 feathers</h2>
-      <p class="lede">This is the first level children play. Tap the feathers to count them into Brijo's nest, one at a time.</p>
+      <p class="lede">This is level 2 of Grade 1. Press play to hear Brijo, then tap the feathers to count them into her nest, one at a time.</p>
     </div>
 
     <div class="board" data-target={TARGET}>
       <div class="prompt">
-        <img src="/images/figma/owl-head.svg" width="56" height="52" alt="" />
-        <p>The wind blew away seven feathers. Help me collect them!</p>
+        <button type="button" class="listen" aria-label="Hear Brijo read this aloud">
+          <img src="/images/figma/owl-head.svg" width="56" height="52" alt="" />
+          <span class="listen-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M3 1.5v11l9-5.5z" fill="currentColor" /></svg></span>
+        </button>
+        <p class="line">{FEATHERS_LINE.map(([w, t]) => <span data-t={t}>{w} </span>)}</p>
       </div>
       <div class="stage">
       <ul class="feathers" aria-label="Feathers">
@@ -57,13 +61,23 @@ const levelCount = levels.reduce((sum, g) => sum + g.levels.length, 0);
 </section>
 
 <script>
+  import { say } from "../scripts/brijo-voice";
+
   for (const board of document.querySelectorAll<HTMLElement>(".board")) {
     const target = Number(board.dataset.target);
     const feathers = [...board.querySelectorAll<HTMLButtonElement>(".feather")];
     const now = board.querySelector<HTMLElement>("[data-count-now]");
     const dots = [...board.querySelectorAll<HTMLElement>(".dots span")];
     const done = board.querySelector<HTMLElement>(".done");
+    const line = board.querySelector<HTMLElement>(".line");
     let collected = 0;
+    /* Counting aloud starts only once someone has chosen to hear Brijo. */
+    let voiceOn = false;
+    board.querySelector(".listen")?.addEventListener("click", () => {
+      voiceOn = true;
+      board.classList.add("voice-on");
+      void say("feathers-ask", line);
+    });
 
     const render = () => {
       if (now) {
@@ -88,6 +102,13 @@ const levelCount = levels.reduce((sum, g) => sum + g.levels.length, 0);
         feather.setAttribute("aria-pressed", "true");
         collected += 1;
         render();
+        if (voiceOn) {
+          void say(`num-${collected}`).then(() => {
+            if (collected >= target) {
+              void say("feathers-done");
+            }
+          });
+        }
         if (collected >= target) {
           done?.querySelector<HTMLElement>(".done-title")?.setAttribute("tabindex", "-1");
           done?.querySelector<HTMLElement>(".done-title")?.focus();
@@ -139,8 +160,53 @@ const levelCount = levels.reduce((sum, g) => sum + g.levels.length, 0);
     font-weight: 700;
     color: var(--ink);
   }
-  .prompt img {
+  .listen {
+    position: relative;
     flex: none;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    cursor: pointer;
+  }
+  .listen img {
+    display: block;
+  }
+  .listen-icon {
+    position: absolute;
+    right: -4px;
+    bottom: -2px;
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border: 2px solid var(--white);
+    border-radius: 50%;
+    background: var(--purple-600);
+    color: var(--white);
+  }
+  /* A soft pulse invites the first press; it stops once Brijo has spoken. */
+  .board:not(.voice-on) .listen-icon {
+    animation: invite 1.8s ease-in-out infinite;
+  }
+  @keyframes invite {
+    50% {
+      scale: 1.18;
+      box-shadow: 0 0 0 6px rgb(126 79 203 / 0.2);
+    }
+  }
+  .line span {
+    transition:
+      color 0.15s ease,
+      background-color 0.15s ease;
+    border-radius: 4px;
+  }
+  .line.speaking span {
+    color: var(--muted);
+  }
+  .line.speaking span.spoken-word {
+    color: var(--purple-700);
+    background: var(--purple-100);
   }
   .prompt p {
     margin: 0;
@@ -273,6 +339,9 @@ const levelCount = levels.reduce((sum, g) => sum + g.levels.length, 0);
     margin-top: var(--space-2);
   }
   @media (prefers-reduced-motion: reduce) {
+    .board:not(.voice-on) .listen-icon {
+      animation: none;
+    }
     .done {
       animation: none;
     }

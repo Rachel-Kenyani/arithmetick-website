@@ -100,7 +100,7 @@ const siteSchema = [
     {stickyPlay && <StickyPlay />}
     <script>
       /* Reveal on scroll for browsers without CSS scroll-driven animations; the CSS version needs no script. */
-      const targets = "main > section:not(:first-child) :is(.section-head, .copy, .mock, .animals, article, .step, .move-card, .faq-group)";
+      const targets = "main > section:not(:first-of-type) :is(.section-head, .copy, .mock, .animals, article, .step, .move-card, .faq-group)";
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (!reduce && !CSS.supports("animation-timeline: view()") && "IntersectionObserver" in window) {
         const observer = new IntersectionObserver(

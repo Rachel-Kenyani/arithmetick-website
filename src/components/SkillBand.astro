@@ -1,0 +1,114 @@
+---
+/**
+ * A band of the triangle pattern with the eight skills in large type. As the page scrolls, the pattern
+ * slides one way and the words the other. Pure CSS (scroll-driven animations); it simply sits still elsewhere.
+ */
+const skills = ["Making 10", "Taking away", "Place value", "Adding on", "Counting in steps", "Equal groups", "Sharing equally", "Telling the time"];
+const line = [...skills, ...skills];
+---
+
+<section class="band" aria-label="The eight skills children practise">
+  <div class="strip strip-top" aria-hidden="true"></div>
+  <div class="words-wrap">
+    <p class="words">
+      {
+        line.map((s, i) => (
+          <span class="word" aria-hidden={i >= skills.length ? "true" : undefined}>
+            {s}
+            <svg width="22" height="20" viewBox="0 0 22 20" aria-hidden="true">
+              <path d="M11 2 20 18H2Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" />
+            </svg>
+          </span>
+        ))
+      }
+    </p>
+  </div>
+  <div class="strip strip-bottom" aria-hidden="true"></div>
+</section>
+
+<style>
+  .band {
+    position: relative;
+    overflow: clip;
+    padding: var(--space-6) 0;
+    background: var(--purple-950);
+    color: var(--white);
+  }
+  .strip {
+    height: 44px;
+    background: url("/images/figma/pattern-row.svg") 0 50% / 895px 44px repeat-x;
+    opacity: 0.35;
+    filter: invert(1);
+  }
+  .words-wrap {
+    padding: var(--space-6) 0;
+  }
+  .words {
+    display: flex;
+    gap: var(--space-8);
+    width: max-content;
+    margin: 0;
+    /* Its own background, so contrast checkers can read the words that have slid off-screen. */
+    background: var(--purple-950);
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+  .word {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-8);
+  }
+  .word:nth-child(even) {
+    color: var(--sun);
+  }
+  .word svg {
+    color: var(--teal-500);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .strip,
+      .words {
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: cover 0% cover 100%;
+      }
+      .strip-top {
+        animation-name: slide-pattern-left;
+      }
+      .strip-bottom {
+        animation-name: slide-pattern-right;
+      }
+      .words {
+        animation-name: slide-words;
+      }
+    }
+  }
+  @keyframes slide-pattern-left {
+    from {
+      background-position-x: 0;
+    }
+    to {
+      background-position-x: -600px;
+    }
+  }
+  @keyframes slide-pattern-right {
+    from {
+      background-position-x: -600px;
+    }
+    to {
+      background-position-x: 0;
+    }
+  }
+  @keyframes slide-words {
+    from {
+      translate: 0 0;
+    }
+    to {
+      translate: -45% 0;
+    }
+  }
+</style>

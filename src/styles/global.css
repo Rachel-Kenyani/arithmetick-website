@@ -158,6 +158,11 @@ p {
   text-wrap: pretty;
 }
 
+/* The home page's journey path is drawn over the sections, measured from here. */
+main {
+  position: relative;
+}
+
 .container {
   width: 100%;
   max-width: calc(var(--max) + 2 * var(--pad-x));
@@ -333,29 +338,29 @@ p {
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
     /* Written as longhands: the CSS minifier drops a separate animation-timeline rule. */
-    main > section:not(:first-child) :is(.section-head, .copy, .mock, .animals, article, .step, .move-card, .faq-group) {
+    main > section:not(:first-of-type) :is(.section-head, .copy, .mock, .animals, article, .step, .move-card, .faq-group) {
       animation-name: reveal;
       animation-timing-function: ease-out;
       animation-fill-mode: both;
       animation-timeline: view();
       animation-range: entry 0% cover 35%;
     }
-    main > section:not(:first-child) :is(.mock, .animals) {
+    main > section:not(:first-of-type) :is(.mock, .animals) {
       animation-name: reveal-media;
       animation-range: entry 0% cover 40%;
     }
     /* Cards in a row arrive one after another. */
-    main > section:not(:first-child) :is(article, .move-card, .step):nth-child(2) {
+    main > section:not(:first-of-type) :is(article, .move-card, .step):nth-child(2) {
       animation-range: entry 10% cover 40%;
     }
-    main > section:not(:first-child) :is(article, .move-card, .step):nth-child(3) {
+    main > section:not(:first-of-type) :is(article, .move-card, .step):nth-child(3) {
       animation-range: entry 20% cover 45%;
     }
   }
 }
 /* Fallback for browsers without scroll-driven animations (Firefox, older Safari): a script in Base
    marks the same elements, and they fade up once when they come into view. */
-.reveal-fallback main > section:not(:first-child) :is(.section-head, .copy, .mock, .animals, article, .step, .move-card, .faq-group) {
+.reveal-fallback main > section:not(:first-of-type) :is(.section-head, .copy, .mock, .animals, article, .step, .move-card, .faq-group) {
   opacity: 0;
   translate: 0 80px;
   scale: 0.92;
@@ -366,13 +371,13 @@ p {
     translate 0.9s cubic-bezier(0.16, 1, 0.3, 1),
     scale 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.reveal-fallback main > section:not(:first-child) :nth-child(2).revealed {
+.reveal-fallback main > section:not(:first-of-type) :nth-child(2).revealed {
   transition-delay: 0.12s;
 }
-.reveal-fallback main > section:not(:first-child) :nth-child(3).revealed {
+.reveal-fallback main > section:not(:first-of-type) :nth-child(3).revealed {
   transition-delay: 0.24s;
 }
-.reveal-fallback main > section:not(:first-child) :is(.section-head, .copy, .mock, .animals, article, .step, .move-card, .faq-group).revealed {
+.reveal-fallback main > section:not(:first-of-type) :is(.section-head, .copy, .mock, .animals, article, .step, .move-card, .faq-group).revealed {
   opacity: 1;
   translate: 0 0;
   scale: 1;

@@ -1,0 +1,302 @@
+---
+/**
+ * A tiny animated drawing for each of the eight skills (by position in the list, 0 to 7).
+ * It plays when its card gets the "play" class (in view, hover or tap). Under 1 KB each.
+ */
+interface Props {
+  index: number;
+}
+const { index } = Astro.props;
+const range = (n: number) => Array.from({ length: n }, (_, i) => i);
+---
+
+<svg class="art" width="96" height="64" viewBox="0 0 96 64" aria-hidden="true">
+  {
+    index === 0 && (
+      <g>
+        {range(10).map((i) => (
+          <rect x={6 + (i % 5) * 17} y={14 + Math.floor(i / 5) * 19} width="15" height="17" rx="3" class="cell" />
+        ))}
+        {range(10).map((i) => (
+          <circle cx={13.5 + (i % 5) * 17} cy={22.5 + Math.floor(i / 5) * 19} r="5.5" class="pop" style={`--d:${i * 70}ms`} />
+        ))}
+      </g>
+    )
+  }
+  {
+    index === 1 && (
+      <g>
+        {range(7).map((i) => (
+          <circle cx={10 + i * 12.5} cy="36" r="5.5" class:list={["dot", i >= 5 && "away"]} style={`--d:${(i - 5) * 150}ms`} />
+        ))}
+      </g>
+    )
+  }
+  {
+    index === 2 && (
+      <g>
+        {range(3).map((b) => (
+          <g class="rise" style={`--d:${b * 120}ms`}>
+            {range(10).map((i) => (
+              <rect x={8 + b * 14} y={8 + i * 5} width="11" height="4" rx="1" class="cell-fill" />
+            ))}
+          </g>
+        ))}
+        {range(4).map((i) => (
+          <circle cx={58 + (i % 2) * 12} cy={32 + Math.floor(i / 2) * 12} r="4.5" class="pop" style={`--d:${400 + i * 90}ms`} />
+        ))}
+      </g>
+    )
+  }
+  {
+    index === 3 && (
+      <g>
+        <line x1="4" y1="48" x2="92" y2="48" class="axis" />
+        {range(9).map((i) => (
+          <line x1={8 + i * 10} y1="44" x2={8 + i * 10} y2="52" class="axis" />
+        ))}
+        {range(3).map((i) => (
+          <path d={`M${48 + i * 10} 44 q5 -16 10 0`} pathLength="1" class="hop" style={`--d:${i * 220}ms`} />
+        ))}
+        <circle cx="48" cy="44" r="4.5" class="jumper" />
+      </g>
+    )
+  }
+  {
+    index === 4 && (
+      <g>
+        {range(4).map((i) => (
+          <g class="pop-g" style={`--d:${i * 160}ms`}>
+            <rect x={4 + i * 23} y="20" width="20" height="24" rx="4" class="cell-fill" />
+            <text x={14 + i * 23} y="37" class="num">{(i + 1) * 10}</text>
+          </g>
+        ))}
+      </g>
+    )
+  }
+  {
+    index === 5 && (
+      <g>
+        {range(12).map((i) => (
+          <circle cx={22 + (i % 4) * 17} cy={14 + Math.floor(i / 4) * 17} r="5.5" class="pop" style={`--d:${Math.floor(i / 4) * 200 + (i % 4) * 40}ms`} />
+        ))}
+      </g>
+    )
+  }
+  {
+    index === 6 && (
+      <g>
+        <g class="split-a">
+          <path d="M48 32 L48 8 A24 24 0 0 0 24 32 Z" class="slice" />
+        </g>
+        <g class="split-b">
+          <path d="M48 32 L72 32 A24 24 0 0 0 48 8 Z" class="slice" />
+        </g>
+        <g class="split-c">
+          <path d="M48 32 L24 32 A24 24 0 0 0 48 56 Z" class="slice" />
+        </g>
+        <g class="split-d">
+          <path d="M48 32 L48 56 A24 24 0 0 0 72 32 Z" class="slice" />
+        </g>
+      </g>
+    )
+  }
+  {
+    index === 7 && (
+      <g>
+        <circle cx="48" cy="32" r="26" class="face" />
+        {range(12).map((i) => (
+          <circle cx={48 + 20 * Math.sin((i * Math.PI) / 6)} cy={32 - 20 * Math.cos((i * Math.PI) / 6)} r="1.6" class="tick" />
+        ))}
+        <line x1="48" y1="32" x2="48" y2="17" class="hand long" />
+        <line x1="48" y1="32" x2="48" y2="22" class="hand short" />
+        <circle cx="48" cy="32" r="2.5" class="hub" />
+      </g>
+    )
+  }
+</svg>
+
+<style>
+  .art {
+    display: block;
+    overflow: visible;
+    --ease: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .cell {
+    fill: none;
+    stroke: rgb(255 255 255 / 0.35);
+    stroke-width: 1.5;
+  }
+  .cell-fill {
+    fill: rgb(255 255 255 / 0.14);
+    stroke: rgb(255 255 255 / 0.4);
+    stroke-width: 1;
+  }
+  .pop,
+  .dot,
+  .jumper {
+    fill: var(--sun);
+  }
+  .num {
+    fill: var(--white);
+    font-size: 11px;
+    font-weight: 800;
+    text-anchor: middle;
+  }
+  .axis {
+    stroke: rgb(255 255 255 / 0.45);
+    stroke-width: 1.5;
+  }
+  .hop {
+    fill: none;
+    stroke: var(--sun);
+    stroke-width: 2;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+  .slice {
+    fill: #e9c27c;
+    stroke: var(--ink);
+    stroke-width: 1.5;
+  }
+  .face {
+    fill: rgb(255 255 255 / 0.1);
+    stroke: var(--white);
+    stroke-width: 2;
+  }
+  .tick,
+  .hub {
+    fill: var(--white);
+  }
+  .hand {
+    stroke: var(--sun);
+    stroke-linecap: round;
+    transform-origin: 48px 32px;
+  }
+  .hand.long {
+    stroke-width: 2.5;
+  }
+  .hand.short {
+    stroke-width: 3.5;
+    rotate: 90deg;
+  }
+
+  /* Plays when the card has .play; each drawing restarts because the class is removed and re-added. */
+  :global(.play) .pop,
+  :global(.play) .pop-g {
+    animation: art-pop 0.45s var(--ease) both;
+    animation-delay: var(--d);
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  :global(.play) .away {
+    animation: art-away 0.6s ease-in both;
+    animation-delay: calc(var(--d) + 300ms);
+  }
+  :global(.play) .rise {
+    animation: art-rise 0.5s var(--ease) both;
+    animation-delay: var(--d);
+  }
+  :global(.play) .hop {
+    animation: art-draw 0.25s ease-out both;
+    animation-delay: var(--d);
+  }
+  :global(.play) .jumper {
+    animation: art-jump 0.66s linear both;
+  }
+  :global(.play) .split-a {
+    animation: art-split-a 0.8s var(--ease) 0.2s both;
+  }
+  :global(.play) .split-b {
+    animation: art-split-b 0.8s var(--ease) 0.2s both;
+  }
+  :global(.play) .split-c {
+    animation: art-split-c 0.8s var(--ease) 0.2s both;
+  }
+  :global(.play) .split-d {
+    animation: art-split-d 0.8s var(--ease) 0.2s both;
+  }
+  :global(.play) .hand.long {
+    animation: art-spin 1.2s cubic-bezier(0.45, 0, 0.2, 1) both;
+  }
+  @keyframes art-pop {
+    from {
+      scale: 0;
+      opacity: 0;
+    }
+  }
+  @keyframes art-away {
+    to {
+      translate: 0 -26px;
+      opacity: 0;
+    }
+  }
+  @keyframes art-rise {
+    from {
+      translate: 0 20px;
+      opacity: 0;
+    }
+  }
+  @keyframes art-draw {
+    from {
+      stroke-dashoffset: 1;
+    }
+  }
+  @keyframes art-jump {
+    0% {
+      translate: 0 0;
+    }
+    16% {
+      translate: 5px -16px;
+    }
+    33% {
+      translate: 10px 0;
+    }
+    50% {
+      translate: 15px -16px;
+    }
+    66% {
+      translate: 20px 0;
+    }
+    83% {
+      translate: 25px -16px;
+    }
+    100% {
+      translate: 30px 0;
+    }
+  }
+  @keyframes art-split-a {
+    50%,
+    to {
+      translate: -4px -4px;
+    }
+  }
+  @keyframes art-split-b {
+    50%,
+    to {
+      translate: 4px -4px;
+    }
+  }
+  @keyframes art-split-c {
+    50%,
+    to {
+      translate: -4px 4px;
+    }
+  }
+  @keyframes art-split-d {
+    50%,
+    to {
+      translate: 4px 4px;
+    }
+  }
+  @keyframes art-spin {
+    from {
+      rotate: -360deg;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.play) * {
+      animation: none !important;
+    }
+  }
+</style>

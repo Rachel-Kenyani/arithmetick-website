@@ -8,7 +8,10 @@ import fs from "node:fs";
 import { FAQ, HOME_FAQ } from "../data/faq";
 import Faq from "../components/Faq.astro";
 import TryLevel from "../components/TryLevel.astro";
+import SkillBand from "../components/SkillBand.astro";
+import JourneyPath from "../components/JourneyPath.astro";
 import levels from "../data/levels.json";
+import { FEATHERS_LINE } from "../data/brijoLine";
 import { PLAY_STORE_URL, ANDROID_PACKAGE } from "../data/site";
 
 const F = "/images/figma/";
@@ -69,6 +72,8 @@ const moveAndPlay = [
   current="home"
   schema={schema}
 >
+  <JourneyPath />
+
   <section class="hero">
     <div class="pattern hero-pattern" aria-hidden="true"></div>
     <div class="container hero-grid">
@@ -79,7 +84,11 @@ const moveAndPlay = [
           <li class="mint">Free during the beta</li>
           <li class="lilac">Daily limit you set</li>
         </ul>
-        <h1 class="display">Turn screen time into maths confidence.</h1>
+        <h1 class="display headline">
+          {"Turn screen time into maths confidence.".split(" ").map((w, i) => (
+            <span class="word"><span style={`--i:${i}`}>{w}</span></span>
+          ))}
+        </h1>
         <p class="lede">
           Short maths games for Grades 1 to 3. Brijo the owl reads every instruction aloud, so children can play before
           they can read.
@@ -91,6 +100,10 @@ const moveAndPlay = [
             {hasTour ? "Watch the tour" : "See how it works"}
           </a>
         </div>
+        <button type="button" class="hear" data-line="hero-line">
+          <span class="hear-play" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 14 14"><path d="M3 1.5v11l9-5.5z" fill="currentColor" /></svg></span>
+          <span><strong>Hear Brijo</strong> <span class="hear-sub" id="hero-line">{FEATHERS_LINE.map(([w, t]) => <span data-t={t}>{w} </span>)}</span></span>
+        </button>
         <p class="trust">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.5 3.2 8.4 7.5 9.5 4.3-1.1 7.5-5 7.5-9.5V6z"></path><path d="m9 12 2 2 4-4"></path></svg>
           <span>No ads, and we never sell your family's data. Progress is saved with your account, for your eyes only. <a href="/privacy">Privacy</a></span>
@@ -128,6 +141,8 @@ const moveAndPlay = [
       </div>
     </div>
   </section>
+
+  <SkillBand />
 
   <TryLevel />
 
@@ -245,6 +260,16 @@ const moveAndPlay = [
 </Base>
 
 <script>
+  import { say } from "../scripts/brijo-voice";
+
+  /* "Hear Brijo" in the hero plays her real recording, word by word. */
+  for (const button of document.querySelectorAll<HTMLButtonElement>(".hear")) {
+    button.addEventListener("click", () => {
+      button.classList.add("playing");
+      void say("feathers-ask", document.getElementById(button.dataset.line ?? "")).then(() => button.classList.remove("playing"));
+    });
+  }
+
   /* The kids-section numbers count up from zero the first time they come into view. */
   const counters = [...document.querySelectorAll<HTMLElement>("[data-count]")];
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -298,6 +323,153 @@ const moveAndPlay = [
   }
   .hero h1 {
     color: var(--white);
+  }
+  /* Headline: each word slides up out of its own line, one after another, on load.
+     Only the words move, never their opacity, so the headline still paints straight away. */
+  .headline .word {
+    display: inline-block;
+    overflow: clip;
+    overflow-clip-margin: 0.1em;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+    vertical-align: top;
+  }
+  .headline .word > span {
+    display: inline-block;
+    white-space: pre;
+    animation: word-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--i) * 70ms + 100ms);
+  }
+  .headline .word:not(:last-child) > span::after {
+    content: " ";
+  }
+  @keyframes word-up {
+    from {
+      translate: 0 110%;
+      rotate: 4deg;
+    }
+  }
+  /* "confidence." ticks in like a counter settling: a quick overshoot, ArithmeTick's tick. */
+  .headline .word:last-child > span {
+    color: var(--sun);
+    animation:
+      word-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both,
+      tick 0.5s steps(4) both;
+    animation-delay:
+      calc(var(--i) * 70ms + 100ms),
+      calc(var(--i) * 70ms + 650ms);
+  }
+  @keyframes tick {
+    25% {
+      rotate: -6deg;
+    }
+    50% {
+      rotate: 4deg;
+    }
+    75% {
+      rotate: -2deg;
+    }
+    to {
+      rotate: 0deg;
+    }
+  }
+  .hear {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    align-self: flex-start;
+    padding: 8px 18px 8px 8px;
+    border: 1px solid rgb(255 255 255 / 0.25);
+    border-radius: var(--radius-pill);
+    background: rgb(255 255 255 / 0.08);
+    color: var(--white);
+    font: inherit;
+    font-size: 15px;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  .hear:hover {
+    background: rgb(255 255 255 / 0.16);
+  }
+  .hear-play {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--sun);
+    color: var(--ink);
+  }
+  .hear.playing .hear-play {
+    animation: hear-pulse 1s ease-in-out infinite;
+  }
+  @keyframes hear-pulse {
+    50% {
+      box-shadow: 0 0 0 6px rgb(255 211 77 / 0.3);
+    }
+  }
+  .hear-sub {
+    color: #e4d6f7;
+  }
+  .hear-sub span {
+    border-radius: 4px;
+    transition: background-color 0.15s ease;
+  }
+  .hear-sub.speaking span.spoken-word {
+    background: rgb(255 255 255 / 0.22);
+    color: var(--white);
+  }
+  @media (max-width: 480px) {
+    .hear-sub {
+      display: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .headline .word > span,
+    .hear.playing .hear-play {
+      animation: none !important;
+    }
+  }
+  /* Hero phones drift apart and tilt as the page scrolls away: depth without a script. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      .hero-art .phone.back,
+      .hero-art .phone.front,
+      .hero-art .pal {
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: scroll(root);
+        animation-range: 0 90vh;
+      }
+      .hero-art .phone.back {
+        animation-name: drift-back;
+      }
+      .hero-art .phone.front {
+        animation-name: drift-front;
+      }
+      .hero-art .pal {
+        animation-name: drift-pal;
+      }
+    }
+  }
+  @keyframes drift-back {
+    to {
+      translate: 30px -90px;
+      rotate: 11deg;
+    }
+  }
+  @keyframes drift-front {
+    to {
+      translate: -30px -30px;
+      rotate: -10deg;
+    }
+  }
+  @keyframes drift-pal {
+    to {
+      translate: 0 -140px;
+    }
   }
   .hero .lede {
     color: #e4d6f7;
