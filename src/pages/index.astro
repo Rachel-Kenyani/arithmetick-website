@@ -7,9 +7,17 @@ import ProductVideo from "../components/ProductVideo.astro";
 import fs from "node:fs";
 import { FAQ, HOME_FAQ } from "../data/faq";
 import Faq from "../components/Faq.astro";
+import TryLevel from "../components/TryLevel.astro";
+import levels from "../data/levels.json";
 import { PLAY_STORE_URL, ANDROID_PACKAGE } from "../data/site";
 
 const F = "/images/figma/";
+/** Counted from the level data, so they stay right when levels change. */
+const stats = [
+  { value: levels.reduce((sum, g) => sum + g.levels.length, 0), label: "levels on the map" },
+  { value: 8, label: "maths skills" },
+  { value: levels.length, label: "grades, 1 to 3" },
+];
 const hasTour = fs.existsSync(`${process.cwd()}/public/video/arithmetick-tour.mp4`);
 const schema = [
   {
@@ -121,6 +129,8 @@ const moveAndPlay = [
     </div>
   </section>
 
+  <TryLevel />
+
   <ProductVideo
     title="One level, start to finish"
     text="A minute of real play: Brijo sets the task, the child counts, and the stars come in."
@@ -149,6 +159,16 @@ const moveAndPlay = [
             <li><span class="tick purple"><img src={F + "award.svg"} width="22" height="22" alt="" /></span><span><strong>Stars, badges and a family goal.</strong> Children win them alone and celebrate them together.</span></li>
             <li><span class="tick sun"><img src={F + "calculator.svg"} width="22" height="22" alt="" /></span><span><strong>Real things to count.</strong> Bottle tops, mangoes, seeds and chapati make numbers concrete.</span></li>
           </ul>
+          <dl class="stats">
+            {
+              stats.map((st) => (
+                <div>
+                  <dt>{st.label}</dt>
+                  <dd data-count={st.value}>{st.value}</dd>
+                </div>
+              ))
+            }
+          </dl>
         </div>
       </div>
       <div class="animals">
@@ -223,6 +243,40 @@ const moveAndPlay = [
     text="ArithmeTick is free during the beta. Install it from Google Play and try it with your family tonight."
   />
 </Base>
+
+<script>
+  /* The kids-section numbers count up from zero the first time they come into view. */
+  const counters = [...document.querySelectorAll<HTMLElement>("[data-count]")];
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (counters.length && !reduceMotion && "IntersectionObserver" in window) {
+    const countUp = (el: HTMLElement) => {
+      const target = Number(el.dataset.count);
+      const start = performance.now();
+      const step = (now: number) => {
+        const t = Math.min((now - start) / 900, 1);
+        el.textContent = String(Math.round(target * (1 - (1 - t) ** 3)));
+        if (t < 1) {
+          requestAnimationFrame(step);
+        }
+      };
+      requestAnimationFrame(step);
+    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            observer.unobserve(entry.target);
+            countUp(entry.target as HTMLElement);
+          }
+        }
+      },
+      { threshold: 0.6 },
+    );
+    for (const el of counters) {
+      observer.observe(el);
+    }
+  }
+</script>
 
 <style>
   .hero {
@@ -427,6 +481,30 @@ const moveAndPlay = [
   }
   .kids-band {
     background: var(--mint-50);
+  }
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4) var(--space-10);
+    margin: var(--space-2) 0 0;
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--line);
+  }
+  .stats div {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .stats dt {
+    color: var(--muted);
+    font-size: 15px;
+  }
+  .stats dd {
+    margin: 0;
+    color: var(--teal-700);
+    font-size: clamp(36px, 4vw, 48px);
+    font-weight: 800;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
   }
   .animals {
     display: grid;

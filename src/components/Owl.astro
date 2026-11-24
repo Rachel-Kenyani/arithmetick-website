@@ -41,6 +41,53 @@ const feet = [37.6, 45.76, 53.93, 67.92, 76.08, 84.25];
   </div>
 </div>
 
+<script>
+  /* Brijo reacts: when the mouse comes near, she stops looking around and turns to watch it.
+     A tap or click makes her hop. Off for people who reduce motion. */
+  const owls = [...document.querySelectorAll<HTMLElement>(".owl")];
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (owls.length && !reduceMotion) {
+    const RANGE = 420;
+    let idleTimer: number | undefined;
+    window.addEventListener(
+      "pointermove",
+      (event) => {
+        for (const owl of owls) {
+          const head = owl.querySelector<HTMLElement>(".head");
+          if (!head) {
+            continue;
+          }
+          const box = owl.getBoundingClientRect();
+          const dx = event.clientX - (box.left + box.width / 2);
+          const dy = event.clientY - (box.top + box.height / 3);
+          if (Math.hypot(dx, dy) < RANGE) {
+            const look = Math.max(-16, Math.min(16, dx / 12));
+            head.style.setProperty("--look", `${look}deg`);
+            owl.classList.add("watching");
+            window.clearTimeout(idleTimer);
+            idleTimer = window.setTimeout(() => owl.classList.remove("watching"), 1500);
+          } else {
+            owl.classList.remove("watching");
+          }
+        }
+      },
+      { passive: true },
+    );
+    for (const owl of owls) {
+      owl.addEventListener("click", () => {
+        owl.classList.remove("hop");
+        void owl.offsetWidth;
+        owl.classList.add("hop");
+      });
+      owl.addEventListener("animationend", (event) => {
+        if (event.animationName.startsWith("hop")) {
+          owl.classList.remove("hop");
+        }
+      });
+    }
+  }
+</script>
+
 <style>
   .owl {
     position: relative;
@@ -87,6 +134,25 @@ const feet = [37.6, 45.76, 53.93, 67.92, 76.08, 84.25];
     78%,
     90% {
       transform: rotate(12deg);
+    }
+  }
+  .watching .head {
+    animation: none;
+    transform: rotate(var(--look, 0deg));
+    transition: transform 0.25s ease-out;
+  }
+  .owl.hop {
+    animation: hop 0.5s ease-out;
+  }
+  @keyframes hop {
+    30% {
+      translate: 0 -16px;
+    }
+    55% {
+      translate: 0 0;
+    }
+    70% {
+      translate: 0 -5px;
     }
   }
   @media (prefers-reduced-motion: reduce) {

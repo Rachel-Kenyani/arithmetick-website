@@ -313,3 +313,38 @@ p {
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
+
+/* Page transitions: moving between pages cross-fades instead of flashing white, and the nav stays put.
+   Built into the browser (cross-document view transitions); older browsers just load the page as usual. */
+@view-transition {
+  navigation: auto;
+}
+.nav {
+  view-transition-name: site-nav;
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
+/* Reveal on scroll: below the hero, headings, cards and screenshots ease up as they come into view.
+   CSS only (scroll-driven animations); browsers without it show everything straight away. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    main > section:not(:first-child) :is(.section-head, .copy, .mock, .animals, article, .step, .move-card, .faq-group) {
+      animation: reveal ease-out both;
+    }
+    /* Kept in its own rule: the CSS minifier would fold it into the shorthand above, which browsers ignore. */
+    html main > section:not(:first-child) :is(.section-head, .copy, .mock, .animals, article, .step, .move-card, .faq-group) {
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+  }
+}
+@keyframes reveal {
+  from {
+    opacity: 0;
+    translate: 0 24px;
+  }
+}

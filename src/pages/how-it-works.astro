@@ -57,6 +57,13 @@ const steps = [
   },
 ];
 /** Where each skill is practised, worked out from the level data. */
+/** The page's three parts, for the bar that shows where you are. */
+const sections = [
+  { id: "steps", label: "One level" },
+  { id: "levels", label: "Every level" },
+  { id: "skills", label: "Eight skills" },
+];
+
 function skillFacts(name: string): { grades: string; count: number; example: string } {
   const key = Object.keys(SKILL_NAMES).find((k) => SKILL_NAMES[k] === name);
   const found = levels.flatMap((g) => g.levels.filter((l) => l.skill === key).map((l) => ({ grade: g.grade, eq: l.eq })));
@@ -82,7 +89,15 @@ const skills = [
   current="how"
   schema={schema}
 >
-  <section class="hero">
+  <nav class="page-nav" aria-label="On this page">
+    <div class="container">
+      <ul>
+        {sections.map((s) => <li><a href={`#${s.id}`}>{s.label}</a></li>)}
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero" id="steps">
     <div class="container">
       <div class="head">
         <h1 class="display">One small level at a time.</h1>
@@ -148,7 +163,7 @@ const skills = [
     </div>
   </section>
 
-  <section class="skills">
+  <section class="skills" id="skills">
     <div class="pattern skills-pattern" aria-hidden="true"></div>
     <div class="container">
       <div class="skills-head">
@@ -183,6 +198,31 @@ const skills = [
     text="ArithmeTick is free during the beta. Install it from Google Play and play a few levels together."
   />
 </Base>
+
+<script>
+  /* Mark the section in the middle of the screen in the "On this page" bar. */
+  const links = [...document.querySelectorAll<HTMLAnchorElement>(".page-nav a")];
+  if (links.length && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            for (const link of links) {
+              link.setAttribute("aria-current", String(link.hash === `#${entry.target.id}`));
+            }
+          }
+        }
+      },
+      { rootMargin: "-45% 0px -50% 0px" },
+    );
+    for (const link of links) {
+      const section = document.querySelector(link.hash);
+      if (section) {
+        observer.observe(section);
+      }
+    }
+  }
+</script>
 
 <style>
   .hero {
@@ -433,5 +473,48 @@ const skills = [
     .skill-list {
       grid-template-columns: 1fr;
     }
+  }
+  /* Sticky bar under the nav that marks the part of the page you're reading. */
+  .page-nav {
+    position: sticky;
+    top: calc(60px + env(safe-area-inset-top, 0px));
+    z-index: 20;
+    background: rgb(255 255 255 / 0.72);
+    -webkit-backdrop-filter: saturate(180%) blur(16px);
+    backdrop-filter: saturate(180%) blur(16px);
+    border-bottom: 1px solid rgb(0 79 74 / 0.1);
+  }
+  .page-nav ul {
+    display: flex;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 10px 0;
+    list-style: none;
+    overflow-x: auto;
+  }
+  .page-nav a {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+    color: var(--muted);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+  .page-nav a:hover {
+    color: var(--ink);
+  }
+  .page-nav a[aria-current="true"] {
+    background: var(--mint-100);
+    color: var(--ink);
+  }
+  #steps,
+  #levels,
+  #skills {
+    scroll-margin-top: 130px;
   }
 </style>

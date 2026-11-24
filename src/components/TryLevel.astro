@@ -1,0 +1,270 @@
+---
+import PlayButton from "./PlayButton.astro";
+import levels from "../data/levels.json";
+
+/**
+ * A tiny playable version of the app's "Collect 7 feathers" level: tap feathers until Brijo has seven.
+ * Works with a mouse, touch or keyboard; each feather is a button.
+ */
+const TARGET = 7;
+const FEATHERS = 10;
+const levelCount = levels.reduce((sum, g) => sum + g.levels.length, 0);
+---
+
+<section class="try" id="try">
+  <div class="container try-grid">
+    <div class="try-copy">
+      <p class="overline">Try a level</p>
+      <h2 class="heading-lg">Help Brijo collect 7 feathers</h2>
+      <p class="lede">This is the first level children play. Tap the feathers to count them into Brijo's nest, one at a time.</p>
+    </div>
+
+    <div class="board" data-target={TARGET}>
+      <div class="prompt">
+        <img src="/images/figma/owl-head.svg" width="56" height="52" alt="" />
+        <p>The wind blew away seven feathers. Help me collect them!</p>
+      </div>
+      <ul class="feathers" aria-label="Feathers">
+        {
+          Array.from({ length: FEATHERS }, (_, i) => (
+            <li>
+              <button type="button" class="feather" aria-pressed="false" aria-label={`Feather ${i + 1}`}>
+                <svg width="40" height="56" viewBox="0 0 40 56" aria-hidden="true">
+                  <path d="M20 3C9 13 6 28 10 42l4 4c3-2 5-4 7-7 7-11 8-24-1-36Z" fill="#7e4fcb" stroke="#1b1b1b" stroke-width="2.5" stroke-linejoin="round" />
+                  <path d="M19 9c-2 12-4 24-7 41" fill="none" stroke="#1b1b1b" stroke-width="2.5" stroke-linecap="round" />
+                </svg>
+              </button>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="nest">
+        <p class="count" aria-live="polite"><strong data-count-now>0</strong> of {TARGET} feathers</p>
+        <div class="dots" aria-hidden="true">{Array.from({ length: TARGET }, () => <span />)}</div>
+      </div>
+      <div class="done" hidden>
+        <p class="done-title">You counted 7 feathers!</p>
+        <p>There are {levelCount} levels like this on the map, and Brijo reads every one aloud.</p>
+        <div class="done-actions">
+          <PlayButton />
+          <button type="button" class="btn btn-outline again">Play again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  for (const board of document.querySelectorAll<HTMLElement>(".board")) {
+    const target = Number(board.dataset.target);
+    const feathers = [...board.querySelectorAll<HTMLButtonElement>(".feather")];
+    const now = board.querySelector<HTMLElement>("[data-count-now]");
+    const dots = [...board.querySelectorAll<HTMLElement>(".dots span")];
+    const done = board.querySelector<HTMLElement>(".done");
+    let collected = 0;
+
+    const render = () => {
+      if (now) {
+        now.textContent = String(collected);
+      }
+      dots.forEach((dot, i) => dot.classList.toggle("on", i < collected));
+      const finished = collected >= target;
+      board.classList.toggle("finished", finished);
+      if (done) {
+        done.hidden = !finished;
+      }
+      for (const f of feathers) {
+        f.disabled = finished || f.getAttribute("aria-pressed") === "true";
+      }
+    };
+
+    for (const feather of feathers) {
+      feather.addEventListener("click", () => {
+        if (feather.getAttribute("aria-pressed") === "true" || collected >= target) {
+          return;
+        }
+        feather.setAttribute("aria-pressed", "true");
+        collected += 1;
+        render();
+        if (collected >= target) {
+          done?.querySelector<HTMLElement>(".done-title")?.setAttribute("tabindex", "-1");
+          done?.querySelector<HTMLElement>(".done-title")?.focus();
+        }
+      });
+    }
+    board.querySelector(".again")?.addEventListener("click", () => {
+      collected = 0;
+      for (const f of feathers) {
+        f.setAttribute("aria-pressed", "false");
+      }
+      render();
+      feathers[0]?.focus();
+    });
+  }
+</script>
+
+<style>
+  .try {
+    padding: var(--section-y) 0;
+    background: var(--white);
+    scroll-margin-top: 72px;
+  }
+  .try-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: var(--space-12);
+    align-items: center;
+  }
+  .try-copy {
+    display: grid;
+    gap: var(--space-4);
+  }
+  .try-copy .overline {
+    color: var(--purple-600);
+  }
+  .board {
+    display: grid;
+    gap: var(--space-5);
+    padding: var(--space-8);
+    border: 1px solid var(--purple-100);
+    border-radius: var(--radius-xl);
+    background: var(--purple-50);
+  }
+  .prompt {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .prompt img {
+    flex: none;
+  }
+  .prompt p {
+    margin: 0;
+  }
+  .feathers {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .feather {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    min-height: 72px;
+    border: 2px solid transparent;
+    border-radius: var(--radius-md);
+    background: var(--white);
+    cursor: pointer;
+    transition:
+      scale 0.15s ease,
+      opacity 0.2s ease,
+      background-color 0.2s ease;
+  }
+  .feather:hover:not(:disabled) {
+    scale: 1.06;
+    border-color: var(--purple-200);
+  }
+  .feather svg {
+    transition: rotate 0.2s ease;
+  }
+  .feather:hover:not(:disabled) svg {
+    rotate: -10deg;
+  }
+  .feather[aria-pressed="true"] {
+    opacity: 0.25;
+    background: transparent;
+    cursor: default;
+  }
+  .finished .feather[aria-pressed="false"] {
+    opacity: 0.5;
+    cursor: default;
+  }
+  .nest {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+  .count {
+    margin: 0;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .count strong {
+    font-size: 22px;
+    font-variant-numeric: tabular-nums;
+  }
+  .dots {
+    display: flex;
+    gap: 6px;
+  }
+  .dots span {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--purple-200);
+    background: var(--white);
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      scale 0.2s ease;
+  }
+  .dots span.on {
+    background: var(--purple-600);
+    border-color: var(--purple-600);
+    scale: 1.15;
+  }
+  .done {
+    display: grid;
+    gap: var(--space-3);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--purple-100);
+  }
+  .done[hidden] {
+    display: none;
+  }
+  .done p {
+    margin: 0;
+    color: var(--muted);
+  }
+  .done .done-title {
+    color: var(--purple-700);
+    font-size: 22px;
+    font-weight: 800;
+    outline: none;
+  }
+  .done-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+    margin-top: var(--space-2);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .feather,
+    .feather svg,
+    .dots span {
+      transition: none;
+    }
+  }
+  @media (max-width: 900px) {
+    .try-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+  }
+  @media (max-width: 480px) {
+    .board {
+      padding: var(--space-5);
+    }
+    .feathers {
+      gap: var(--space-2);
+    }
+  }
+</style>
