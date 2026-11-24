@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 
 /** Every public page. The 404 page is left out on purpose. */
-const PAGES = ["/", "/how-it-works", "/contact", "/privacy", "/terms", "/delete-account", "/accessibility"];
+const PAGES = ["/", "/how-it-works", "/our-story", "/contact", "/privacy", "/terms", "/delete-account", "/accessibility"];
 
 export const GET: APIRoute = ({ site }) => {
   const origin = (site ?? new URL("https://arithmetick.rachelkenyani.com")).origin;

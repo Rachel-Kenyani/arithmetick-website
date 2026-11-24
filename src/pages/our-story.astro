@@ -1,0 +1,642 @@
+---
+import Base from "../layouts/Base.astro";
+import CtaBand from "../components/CtaBand.astro";
+import levels from "../data/levels.json";
+import { SUPPORT_EMAIL } from "../data/site";
+
+/**
+ * Why ArithmeTick exists and the thinking behind it: for parents, schools and education organisations.
+ * Only facts about the shipped app and published research; nothing hypothetical.
+ */
+const levelCount = levels.reduce((sum, g) => sum + g.levels.length, 0);
+const orgMail = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent("ArithmeTick for our school or programme")}`;
+
+const principles = [
+  {
+    title: "People first, screen second",
+    text: "Children learn maths best with someone beside them. Every few levels a Move & Play activity sends the child away from the phone to count, share or measure with a grown-up, and a level ends with a real high-five.",
+  },
+  {
+    title: "Slow maths",
+    text: "No countdown timers and no rapid multiple choice. Children move bottle tops, tomatoes and seeds with their fingers, the way Kenyan classrooms use real counters, so the answer is built, not guessed.",
+  },
+  {
+    title: "Help without the red cross",
+    text: "A wrong answer never shows a \"Wrong!\" message and never costs a star. When a child is stuck, the game quietly gives more help instead. We call it stealth adaptive learning.",
+  },
+  {
+    title: "Voice before text",
+    text: "Grade 1 children are still learning to read, so Brijo the owl reads every instruction aloud in a recorded voice, and the words light up as she speaks.",
+  },
+  {
+    title: "Short, then stop",
+    text: "A grown-up sets a daily limit, from 10 to 60 minutes and 15 to start. Only time inside a level counts, and when it's used up, play stops until tomorrow.",
+  },
+];
+
+const kenya = [
+  { title: "The CBC, grade by grade", text: "Every level practises a skill from Kenya's Competency-Based Curriculum for Grades 1 to 3, the foundational years." },
+  { title: "Things children already count", text: "Bottle tops (vifuniko), mangoes, chapati, seeds and shillings at the market, not apples and dollars." },
+  { title: "Any grown-up can help", text: "Parents, grandparents, tutors and house managers. The activities use fingers, pencils and bottle tops, which every home has." },
+  { title: "Brijo speaks like home", text: "She greets children with \"Jambo\" and celebrates with \"Hongera!\" and \"Asante sana\"." },
+  { title: "Built for the phones families have", text: "Android first, light on data, and the game keeps working when the connection drops, saving progress when it's back." },
+  { title: "Children's data stays protected", text: "Designed around Kenya's Data Protection Act 2019: no ads, nothing sold, progress kept with the parent's account and deletable at any time." },
+];
+
+const notBuilt = [
+  { title: "Timed drills", text: "Speed pressure is where early maths anxiety starts." },
+  { title: "Losing stars for mistakes", text: "Children should never be punished for trying." },
+  { title: "Rankings against strangers", text: "Stars go towards a family goal instead of a public leaderboard." },
+  { title: "Photo or camera rewards", text: "They put children's privacy at risk and reward the picture, not the maths." },
+  { title: "Endless play loops", text: "The daily limit ends the session on purpose." },
+];
+
+const sources = [
+  { label: "Usawa Agenda, Foundational Learning Assessment (FLANA) 2025 report, published January 2026", href: "https://www.usawaagenda.org" },
+  { label: "Jo Boaler, \"Fluency Without Fear\", youcubed, Stanford University", href: "https://www.youcubed.org/evidence/fluency-without-fear/" },
+  { label: "Mark H. Ashcraft, \"Math Anxiety: Personal, Educational, and Cognitive Consequences\", Current Directions in Psychological Science, 2002", href: "https://doi.org/10.1111/1467-8721.00196" },
+  { label: "EdTech Hub, research on personalised adaptive learning in low- and middle-income countries", href: "https://edtechhub.org" },
+  { label: "UNESCO, Global Education Monitoring Report 2023: Technology in education", href: "https://www.unesco.org/gem-report/en/technology" },
+];
+---
+
+<Base
+  title="Our story"
+  description="Why ArithmeTick teaches maths to Grades 1 to 3 in Kenya: the research, the design principles and the decisions behind it."
+  current="story"
+>
+  <section class="story-hero">
+    <div class="pattern story-pattern" aria-hidden="true"></div>
+    <div class="container story-hero-inner">
+      <p class="overline">Our story</p>
+      <h1 class="display">Maths confidence is built early, or not at all.</h1>
+      <p class="lede">
+        ArithmeTick is a maths app for Kenyan children in Grades 1 to 3. It was designed, researched and built in Nairobi by product
+        designer Rachel Kenyani. This is why it exists, and why it works the way it does.
+      </p>
+    </div>
+  </section>
+
+  <section class="why-maths">
+    <div class="container two-col">
+      <div class="section-head left">
+        <p class="overline teal">Why maths</p>
+        <h2 class="heading-lg">Maths builds on itself</h2>
+        <p class="lede">
+          A child can pick up reading from stories, conversation and the radio. Maths has fewer side doors: each idea rests on the one
+          before. Without confident adding and subtracting by Grade 3, multiplication, fractions and word problems in upper primary all
+          get harder, and the gap tends to widen year by year.
+        </p>
+      </div>
+      <div class="stats-panel">
+        <div class="stat">
+          <p class="stat-n">1 in 5</p>
+          <p>Grade 3 learners in Kenyan public schools can solve a Grade 3 numeracy problem.</p>
+        </div>
+        <div class="stat">
+          <p class="stat-n">1 in 3</p>
+          <p>Grade 4 learners can solve it a year later (33.8%).</p>
+        </div>
+        <p class="stat-source">Source: Usawa Agenda, FLANA 2025 report.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="why-grades">
+    <div class="container">
+      <div class="section-head">
+        <p class="overline purple">Why Grades 1 to 3</p>
+        <h2 class="heading-lg">The years when numbers become symbols</h2>
+      </div>
+      <div class="cards three">
+        <article class="card">
+          <h3 class="heading-sm">The foundational years</h3>
+          <p>Under Kenya's CBC, Grades 1 to 3 are the foundational level, and the curriculum asks for learning through play. ArithmeTick is play with a curriculum underneath.</p>
+        </article>
+        <article class="card">
+          <h3 class="heading-sm">Where anxiety starts</h3>
+          <p>Children aged 6 to 9 understand numbers best as things they can hold. Trouble tends to begin when bottle tops turn into "8 + __ = 14" on a page, and timed tests make it worse.</p>
+        </article>
+        <article class="card">
+          <h3 class="heading-sm">Before they can read</h3>
+          <p>Many children in Grade 1 can't read instructions yet. That shaped everything: Brijo speaks every line, and pictures do the work text would.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="research">
+    <div class="container two-col">
+      <div class="section-head left">
+        <p class="overline teal">What the research told us</p>
+        <h2 class="heading-lg">Four findings we designed around</h2>
+        <p class="lede">The work began with desk research: Kenya's national learning assessments, studies on maths anxiety, and evidence on what technology does and doesn't do for learning.</p>
+      </div>
+      <ol class="findings">
+        <li>
+          <strong>Fear blocks thinking.</strong> Timed drills and memorisation under pressure can trigger maths anxiety from Grade 1, and anxiety uses up the working memory a child needs to solve a problem (Boaler; Ashcraft).
+        </li>
+        <li>
+          <strong>Seeing helps understanding.</strong> Visual, hands-on representations such as ten-frames and arrays help children grasp how numbers fit together, instead of memorising facts.
+        </li>
+        <li>
+          <strong>Adaptive practice suits maths.</strong> Studies from low- and middle-income countries show some of the most consistent gains from software that adapts foundational maths to each child, because the skills come in a clear order (EdTech Hub).
+        </li>
+        <li>
+          <strong>Screens don't teach on their own.</strong> UNESCO warns that technology rarely improves learning unless it's tied to good teaching, and that its costs are often underestimated. So ArithmeTick runs on phones families already own and keeps adults in the loop.
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="principles">
+    <div class="container">
+      <div class="section-head">
+        <p class="overline">How it shaped the app</p>
+        <h2 class="heading-lg">Five principles, built in</h2>
+      </div>
+      <ol class="principle-list">
+        {
+          principles.map((p, i) => (
+            <li class="principle">
+              <span class="principle-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              <div>
+                <h3 class="heading-sm">{p.title}</h3>
+                <p>{p.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="pal">
+    <div class="container two-col">
+      <div class="section-head left">
+        <p class="overline purple">Stealth adaptive learning</p>
+        <h2 class="heading-lg">The help a child never notices</h2>
+        <p class="lede">
+          Most learning apps tell a struggling child they're wrong, then show the answer. Both teach the child to stop trying. ArithmeTick
+          changes the game instead of stopping it.
+        </p>
+      </div>
+      <div class="pal-steps">
+        <article class="pal-step">
+          <p class="tag">When a child is doing well</p>
+          <p>The ten-frame stays plain. They place each bottle top themselves and decide when they're done.</p>
+        </article>
+        <article class="pal-step">
+          <p class="tag mint">When a child gets stuck</p>
+          <p>The frame starts helping: the first row of five fills and glows, the next space is marked, and groups are coloured so 7 reads as 5 and 2. No message, no pause.</p>
+        </article>
+        <article class="pal-step">
+          <p class="tag sun">Either way</p>
+          <p>The level ends with the same celebration and the same stars. Every attempt is recorded quietly, so the weekly email can tell parents what's strong and what's still growing.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="kenya">
+    <div class="container">
+      <div class="section-head">
+        <p class="overline">The Kenyan context</p>
+        <h2 class="heading-lg">Made in Nairobi, for Kenyan homes</h2>
+      </div>
+      <div class="cards three">
+        {
+          kenya.map((k) => (
+            <article class="card">
+              <h3 class="heading-sm">{k.title}</h3>
+              <p>{k.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="access">
+    <div class="container two-col">
+      <div class="section-head left">
+        <p class="overline teal">Accessibility</p>
+        <h2 class="heading-lg">Every child, every phone</h2>
+        <p class="lede">Accessibility was designed in from the first screen, not added at the end.</p>
+        <a class="text-link" href="/accessibility">Read our accessibility statement</a>
+      </div>
+      <ul class="ticks-list">
+        <li>Every instruction read aloud, with the words lighting up as they're spoken</li>
+        <li>Screen-reader labels throughout, tested for Android's TalkBack</li>
+        <li>Colour contrast that meets WCAG AA</li>
+        <li>Text that grows with the phone's text-size setting</li>
+        <li>Animations that calm down when Reduce motion is on</li>
+        <li>Large touch targets sized for small hands</li>
+        <li>Grown-up settings behind a 2-second hold, so small fingers can't change them</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="not-built">
+    <div class="container">
+      <div class="section-head">
+        <p class="overline purple">What we chose not to build</p>
+        <h2 class="heading-lg">Saying no was part of the design</h2>
+        <p class="lede">Each of these would have made the app stickier. None would have made children better at maths.</p>
+      </div>
+      <ul class="no-list">
+        {
+          notBuilt.map((n) => (
+            <li>
+              <strong>{n.title}</strong>
+              <span>{n.text}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="honest">
+    <div class="container two-col">
+      <div class="section-head left">
+        <p class="overline teal">Where it stands</p>
+        <h2 class="heading-lg">Today, and what's next</h2>
+        <p class="lede">ArithmeTick is in open beta on Android, free for families, with {levelCount} levels across Grades 1 to 3.</p>
+      </div>
+      <div class="honest-cols">
+        <div>
+          <h3 class="heading-sm">What it still needs</h3>
+          <ul>
+            <li>A grown-up nearby for the Move & Play activities.</li>
+            <li>A shared Android phone. There's no iPhone version yet.</li>
+            <li>English only for now.</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="heading-sm">What we're working on</h3>
+          <ul>
+            <li>Brijo's voice and the stories in Kiswahili.</li>
+            <li>Help that adapts across more levels and grades.</li>
+            <li>Simple insights for teachers who use ArithmeTick with a class.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="orgs">
+    <div class="container orgs-inner">
+      <div>
+        <p class="overline">For schools and organisations</p>
+        <h2 class="heading-lg">Working on foundational numeracy?</h2>
+        <p class="lede">We'd like to hear from schools, NGOs and programmes in Kenya that want to try ArithmeTick with their learners.</p>
+      </div>
+      <a class="btn btn-sun" href={orgMail}>Get in touch</a>
+    </div>
+  </section>
+
+  <section class="sources">
+    <div class="container">
+      <h2 class="heading-sm">Sources</h2>
+      <ul>
+        {sources.map((s) => <li><a href={s.href} rel="noopener">{s.label}</a></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand title="Give your child the gift of maths confidence." text="ArithmeTick is free during the beta. Install it from Google Play and try it with your family tonight." />
+</Base>
+
+<style>
+  section {
+    padding: var(--section-y) 0;
+  }
+  .overline {
+    color: var(--teal-700);
+  }
+  .overline.purple {
+    color: var(--purple-600);
+  }
+  .story-hero {
+    position: relative;
+    overflow: clip;
+    background:
+      linear-gradient(160deg, var(--purple-950) 0%, rgb(109 65 163 / 0) 80%),
+      linear-gradient(160deg, var(--purple-600) 0%, var(--purple-950) 80%);
+    color: var(--white);
+  }
+  .story-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.12;
+  }
+  .story-hero-inner {
+    position: relative;
+    display: grid;
+    gap: var(--space-5);
+    max-width: 860px;
+  }
+  .story-hero .overline {
+    color: var(--sun);
+  }
+  .story-hero h1 {
+    color: var(--white);
+  }
+  .story-hero .lede {
+    color: #e4d6f7;
+  }
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+  .section-head.left {
+    margin: 0;
+    text-align: left;
+    justify-items: start;
+  }
+  .why-maths,
+  .research,
+  .access {
+    background: var(--white);
+  }
+  .why-grades,
+  .kenya,
+  .honest {
+    background: var(--mint-50);
+  }
+  .stats-panel {
+    display: grid;
+    gap: var(--space-6);
+    padding: var(--space-8);
+    border-radius: var(--radius-xl);
+    background: var(--ink);
+    color: var(--mint-100);
+  }
+  .stat {
+    display: grid;
+    gap: var(--space-1);
+    padding-bottom: var(--space-5);
+    border-bottom: 1px solid rgb(255 255 255 / 0.15);
+  }
+  .stat p {
+    margin: 0;
+  }
+  .stat-n {
+    color: var(--sun);
+    font-size: clamp(44px, 6vw, 64px);
+    font-weight: 800;
+    line-height: 1;
+  }
+  .stat-source {
+    margin: 0;
+    font-size: 14px;
+    color: rgb(255 255 255 / 0.7);
+  }
+  .cards {
+    display: grid;
+    gap: var(--space-5);
+  }
+  .cards.three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .card {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+    padding: var(--space-6);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+  }
+  .card p {
+    margin: 0;
+    color: var(--muted);
+  }
+  .findings {
+    display: grid;
+    gap: var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: finding;
+  }
+  .findings li {
+    position: relative;
+    padding: var(--space-5) var(--space-5) var(--space-5) 64px;
+    border-radius: var(--radius-md);
+    background: var(--mint-50);
+    color: var(--muted);
+    counter-increment: finding;
+  }
+  .findings li::before {
+    content: counter(finding);
+    position: absolute;
+    left: var(--space-5);
+    top: var(--space-5);
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--teal-700);
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 800;
+  }
+  .findings strong {
+    color: var(--ink);
+  }
+  .principles {
+    background: var(--ink);
+    color: var(--white);
+  }
+  .principles h2 {
+    color: var(--white);
+  }
+  .principles .overline {
+    color: var(--sun);
+  }
+  .principle-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-12);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .principle {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: var(--space-4);
+    padding: var(--space-6) 0;
+    border-top: 1px solid rgb(255 255 255 / 0.18);
+  }
+  .principle h3 {
+    color: var(--white);
+  }
+  .principle p {
+    margin: var(--space-2) 0 0;
+    color: var(--mint-100);
+  }
+  .principle-n {
+    color: var(--sun);
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+  .pal {
+    background: var(--purple-50);
+  }
+  .pal-steps {
+    display: grid;
+    gap: var(--space-4);
+  }
+  .pal-step {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    border: 1px solid var(--purple-100);
+  }
+  .pal-step p {
+    margin: 0;
+    color: var(--muted);
+  }
+  .tag {
+    justify-self: start;
+    padding: 3px 12px;
+    border-radius: var(--radius-pill);
+    background: var(--purple-100);
+    color: var(--purple-700) !important;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .tag.mint {
+    background: var(--mint-100);
+    color: var(--ink) !important;
+  }
+  .tag.sun {
+    background: #fff1c2;
+    color: var(--ink) !important;
+  }
+  .ticks-list {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .ticks-list li {
+    position: relative;
+    padding-left: 36px;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .ticks-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--teal-700) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 12 4 4 8-8'/%3E%3C/svg%3E") center / 14px no-repeat;
+  }
+  .text-link {
+    color: var(--teal-700);
+    font-weight: 700;
+  }
+  .not-built {
+    background: var(--white);
+  }
+  .no-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .no-list li {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+    border: 1px dashed var(--purple-200);
+  }
+  .no-list strong {
+    color: var(--purple-700);
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+  }
+  .no-list span {
+    color: var(--muted);
+  }
+  .honest-cols {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+  .honest-cols ul {
+    display: grid;
+    gap: var(--space-2);
+    margin: var(--space-3) 0 0;
+    padding-left: 1.1em;
+    color: var(--muted);
+  }
+  .orgs {
+    background: var(--purple-950);
+    color: var(--white);
+  }
+  .orgs-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+  }
+  .orgs-inner > div {
+    display: grid;
+    gap: var(--space-3);
+    max-width: 640px;
+  }
+  .orgs h2 {
+    color: var(--white);
+  }
+  .orgs .overline {
+    color: var(--sun);
+  }
+  .orgs .lede {
+    color: #e4d6f7;
+  }
+  .sources {
+    padding: var(--space-12) 0;
+    background: var(--white);
+  }
+  .sources ul {
+    display: grid;
+    gap: var(--space-2);
+    margin: var(--space-4) 0 0;
+    padding-left: 1.1em;
+    font-size: 15px;
+  }
+  .sources a {
+    color: var(--teal-700);
+  }
+  @media (max-width: 900px) {
+    .two-col,
+    .cards.three,
+    .principle-list,
+    .honest-cols {
+      grid-template-columns: 1fr;
+    }
+    .two-col {
+      gap: var(--space-8);
+    }
+  }
+</style>

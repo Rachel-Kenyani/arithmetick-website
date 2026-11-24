@@ -2,7 +2,7 @@
 import PlayButton from "./PlayButton.astro";
 
 interface Props {
-  current?: "home" | "how" | "privacy" | "contact";
+  current?: "home" | "how" | "story" | "privacy" | "contact";
   /** Start see-through with a white logo, over a dark hero, and turn to frosted glass on scroll. */
   overHero?: boolean;
 }
@@ -10,6 +10,7 @@ const { current, overHero = false } = Astro.props;
 const links = [
   { id: "home", label: "For families", href: "/" },
   { id: "how", label: "How it works", href: "/how-it-works" },
+  { id: "story", label: "Our story", href: "/our-story" },
   { id: "contact", label: "Contact us", href: "/contact" },
 ] as const;
 ---

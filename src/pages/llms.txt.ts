@@ -24,6 +24,7 @@ export const GET: APIRoute = ({ site }) => {
 
 - [For families](${origin}/): what the app is and who it is for
 - [How it works](${origin}/how-it-works): every level, grade by grade, and the eight skills
+- [Our story](${origin}/our-story): why ArithmeTick exists, the research behind it and the design principles
 - [Contact](${origin}/contact): install link and support email
 - [Privacy Policy](${origin}/privacy): what is collected and why
 - [Terms of Use](${origin}/terms)
