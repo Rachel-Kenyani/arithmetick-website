@@ -35,6 +35,7 @@
   --teal-600: #00968a; /* fills and progress only; never small text */
   --teal-500: #2fa79e;
   --ink: #004f4a; /* headings and strong text on light surfaces */
+  --purple-950: #29183d; /* darkest purple, the edges of the Landscape 3 hero background */
   --purple-900: #3e0e79; /* the app's deep purple (email header); home hero. White on it 13:1 */
   --purple-700: #5a3596;
   --purple-600: #6d41a3; /* second voice: For Parents, Move & Play, Grade 2 */

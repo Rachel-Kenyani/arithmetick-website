@@ -228,7 +228,11 @@ const moveAndPlay = [
   .hero {
     position: relative;
     overflow: hidden;
-    background: var(--purple-900);
+    /* Figma colour style "Landscape 3": a dark-to-clear layer over a purple-to-dark layer, so the
+       corners are dark and a lighter purple band runs across the middle. */
+    background:
+      linear-gradient(160deg, var(--purple-950) 0%, rgb(109 65 163 / 0) 80%),
+      linear-gradient(160deg, var(--purple-600) 0%, var(--purple-950) 80%);
     color: var(--white);
     padding: var(--section-y) 0;
   }
