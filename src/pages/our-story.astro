@@ -235,27 +235,32 @@ const sources = [
   </section>
 
   <section class="honest">
-    <div class="container two-col">
-      <div class="section-head left">
+    <div class="container stack">
+      <div class="section-head">
         <p class="overline teal">Where it stands</p>
         <h2 class="heading-lg">Today, and what's next</h2>
-        <p class="lede">ArithmeTick is in open beta on Android, free for families, with {levelCount} levels across Grades 1 to 3.</p>
       </div>
-      <div class="honest-cols">
-        <div>
-          <h3 class="heading-sm">What it still needs</h3>
+      <ul class="facts-row">
+        <li><strong>Open beta</strong><span>on Android</span></li>
+        <li><strong>Free</strong><span>for families</span></li>
+        <li><strong>{levelCount}</strong><span>levels</span></li>
+        <li><strong>3</strong><span>grades</span></li>
+      </ul>
+      <div class="status-cols">
+        <div class="status-card">
+          <h3 class="heading-sm">What it needs today</h3>
           <ul>
-            <li>A grown-up nearby for the Move & Play activities.</li>
-            <li>A shared Android phone. There's no iPhone version yet.</li>
-            <li>English only for now.</li>
+            <li><StoryIcon name="family" size={36} /><span>A grown-up nearby for Move &amp; Play</span></li>
+            <li><StoryIcon name="phone" size={36} /><span>An Android phone. No iPhone yet</span></li>
+            <li><StoryIcon name="speaker" size={36} /><span>English only for now</span></li>
           </ul>
         </div>
-        <div>
+        <div class="status-card next">
           <h3 class="heading-sm">What we're working on</h3>
           <ul>
-            <li>Brijo's voice and the stories in Kiswahili.</li>
-            <li>Help that adapts across more levels and grades.</li>
-            <li>Simple insights for teachers who use ArithmeTick with a class.</li>
+            <li><StoryIcon name="speaker" size={36} /><span>Brijo and the stories in Kiswahili</span></li>
+            <li><StoryIcon name="steps" size={36} /><span>Help that adapts across more levels</span></li>
+            <li><StoryIcon name="together" size={36} /><span>Simple insights for teachers</span></li>
           </ul>
         </div>
       </div>
@@ -802,17 +807,72 @@ const sources = [
 
 
 
-  .honest-cols {
+  .facts-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .facts-row li {
+    display: grid;
+    gap: var(--space-1);
+    justify-items: center;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    border: 1px solid var(--line);
+    text-align: center;
+  }
+  .facts-row strong {
+    color: var(--teal-700);
+    font-size: clamp(26px, 3vw, 34px);
+    font-weight: 800;
+    line-height: 1.1;
+  }
+  .facts-row span {
+    color: var(--muted);
+  }
+  .status-cols {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-6);
   }
-  .honest-cols ul {
+  .status-card {
     display: grid;
-    gap: var(--space-2);
-    margin: var(--space-3) 0 0;
-    padding-left: 1.1em;
-    color: var(--muted);
+    gap: var(--space-4);
+    align-content: start;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    border: 1px solid var(--line);
+  }
+  .status-card.next {
+    border-color: var(--purple-200);
+    background: var(--purple-50);
+  }
+  .status-card ul {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .status-card li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--ink);
+    font-weight: 600;
+  }
+  @media (max-width: 700px) {
+    .facts-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .status-cols {
+      grid-template-columns: 1fr;
+    }
   }
   .orgs {
     position: relative;
@@ -877,8 +937,7 @@ const sources = [
     color: var(--teal-700);
   }
   @media (max-width: 900px) {
-    .two-col,
-    .honest-cols {
+    .two-col {
       grid-template-columns: 1fr;
     }
     .two-col {
