@@ -5,7 +5,7 @@ export const ANDROID_PACKAGE = "com.rachelkenyani.arithmetick";
 export const PLAY_STORE_URL = `https://play.google.com/store/apps/details?id=${ANDROID_PACKAGE}`;
 
 /** Help and data requests still go by email. */
-export const SUPPORT_EMAIL = "rachelkenyani@gmail.com";
+export const SUPPORT_EMAIL = "hello@arithmetick.rachelkenyani.com";
 
 /**
  * The Google Play link the badges use. The referrer tags installs from this website,
