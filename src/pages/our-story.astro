@@ -534,7 +534,7 @@ const sources = [
   .journey {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-6);
+    gap: var(--space-16);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -551,17 +551,19 @@ const sources = [
     border: 1px solid var(--line);
     text-align: center;
   }
+  /* The same purple arrow as the before-and-after ten-frames. */
   .j-step:not(:last-child)::after {
     content: "";
     position: absolute;
-    right: calc(-1 * var(--space-6) / 2 - 9px);
-    top: 72px;
+    right: calc(-1 * var(--space-16) / 2 - 16px);
+    top: 50%;
     z-index: 1;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--teal-700) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E") center / 12px no-repeat;
+    width: 32px;
+    height: 20px;
+    margin-top: -10px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 24'%3E%3Cpath d='M2 12h34M26 3l10 9-10 9' fill='none' stroke='%237e4fcb' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
   }
+
   .j-step svg {
     width: 100%;
     max-width: 200px;
@@ -746,11 +748,14 @@ const sources = [
     .frames {
       grid-template-columns: 1fr;
     }
+    .journey {
+      gap: var(--space-6);
+    }
     .j-step:not(:last-child)::after {
       right: 50%;
       top: auto;
-      bottom: calc(-1 * var(--space-6) / 2 - 9px);
-      margin-right: -9px;
+      bottom: calc(-1 * var(--space-6) / 2 - 10px);
+      margin: 0 -16px 0 0;
       rotate: 90deg;
     }
     .frames-arrow {
