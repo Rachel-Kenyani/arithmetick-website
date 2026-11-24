@@ -1,5 +1,5 @@
 ---
-import { PLAY_STORE_URL } from "../data/site";
+import { PLAY_STORE_LINK } from "../data/site";
 
 /**
  * The official "Get it on Google Play" badge, linked to the store listing.
@@ -18,7 +18,7 @@ const height = size === "sm" ? 48 : 72;
 const width = Math.round((646 / 250) * height);
 ---
 
-<a class:list={["play-badge", `play-badge-${size}`, className]} href={PLAY_STORE_URL} rel="noopener" data-store="google-play">
+<a class:list={["play-badge", `play-badge-${size}`, className]} href={PLAY_STORE_LINK} rel="noopener" data-store="google-play">
   <img src="/images/google-play-badge.png" width={width} height={height} alt="Get it on Google Play" />
 </a>
 

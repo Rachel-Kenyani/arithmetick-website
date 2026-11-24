@@ -1,0 +1,6 @@
+# How to report a security problem with ArithmeTick or this website.
+Contact: mailto:rachelkenyani@gmail.com
+Expires: 2027-11-24T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://arithmetick.rachelkenyani.com/.well-known/security.txt
+Policy: https://arithmetick.rachelkenyani.com/privacy#safe
