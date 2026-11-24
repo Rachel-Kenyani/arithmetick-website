@@ -228,13 +228,34 @@ const moveAndPlay = [
   .hero {
     position: relative;
     overflow: hidden;
-    background: var(--mint-50);
+    background: var(--purple-900);
+    color: var(--white);
     padding: var(--section-y) 0;
   }
   .hero-pattern {
     position: absolute;
     inset: 0;
-    opacity: 0.5;
+    opacity: 0.35;
+  }
+  .hero h1 {
+    color: var(--white);
+  }
+  .hero .lede {
+    color: #e4d6f7;
+  }
+  .hero :focus-visible {
+    outline-color: var(--white);
+  }
+  .hero .actions :global(.btn-outline) {
+    background: transparent;
+    color: var(--white);
+    border-color: var(--white);
+  }
+  .hero .actions :global(.btn-outline:hover) {
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .hero .actions :global(.btn-outline img) {
+    filter: brightness(0) invert(1);
   }
   .hero-grid {
     position: relative;
@@ -266,14 +287,17 @@ const moveAndPlay = [
     display: flex;
     align-items: flex-start;
     gap: var(--space-2);
-    color: var(--ink);
+    color: var(--white);
     font-size: 15px;
     font-weight: 600;
+  }
+  .trust a {
+    color: var(--white);
   }
   .trust svg {
     flex: none;
     margin-top: 1px;
-    color: var(--teal-700);
+    color: var(--mint-100);
   }
   .facts {
     display: flex;
@@ -286,15 +310,16 @@ const moveAndPlay = [
   .facts li {
     padding: 4px 12px;
     border-radius: var(--radius-pill);
-    background: var(--white);
-    border: 1px solid var(--line);
-    color: var(--ink);
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: var(--white);
     font-size: 14px;
     font-weight: 600;
   }
   .facts li.mint {
     background: var(--mint-100);
     border-color: var(--mint-100);
+    color: var(--ink);
   }
   .facts li.lilac {
     background: var(--purple-100);
