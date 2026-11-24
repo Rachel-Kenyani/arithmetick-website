@@ -11,6 +11,11 @@
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
   Content-Security-Policy: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; media-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Built scripts and styles have a content hash in their name, so they can be cached for good.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
 
 /.well-known/security.txt
   Content-Type: text/plain; charset=utf-8
