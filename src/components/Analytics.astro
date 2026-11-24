@@ -1,122 +1,14 @@
 ---
-import { GA_MEASUREMENT_ID } from "../data/site";
+import { CLOUDFLARE_ANALYTICS_TOKEN } from "../data/site";
 /**
- * Google Analytics, loaded only after the visitor accepts analytics cookies (Kenya Data Protection Act, 2019).
- * Also records clicks on the Google Play badge as a "play_store_click" event.
+ * Cloudflare Web Analytics: counts page views with no cookies and no personal data,
+ * so no consent banner is needed. Renders nothing until the token is set.
  */
+const beacon = JSON.stringify({ token: CLOUDFLARE_ANALYTICS_TOKEN });
 ---
 
 {
-  GA_MEASUREMENT_ID && (
-    <div class="consent" id="consent" role="region" aria-label="Cookie choice" hidden data-ga={GA_MEASUREMENT_ID}>
-      <p>
-        We'd like to use Google Analytics cookies to see which pages help families find ArithmeTick.
-        <a href="/privacy#website">Learn more</a>
-      </p>
-      <div class="choices">
-        <button type="button" class="btn btn-outline btn-sm" data-consent="denied">No thanks</button>
-        <button type="button" class="btn btn-primary btn-sm" data-consent="granted">Accept</button>
-      </div>
-    </div>
+  CLOUDFLARE_ANALYTICS_TOKEN && (
+    <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={beacon} />
   )
 }
-
-<script>
-  const KEY = "analytics-consent";
-  const banner = document.getElementById("consent");
-  const id = banner?.dataset.ga;
-
-  const read = () => {
-    try {
-      return localStorage.getItem(KEY);
-    } catch {
-      return null;
-    }
-  };
-  const save = (value: string) => {
-    try {
-      localStorage.setItem(KEY, value);
-    } catch {
-      /* Private mode: the choice lasts for this page only. */
-    }
-  };
-
-  type Gtag = (...args: unknown[]) => void;
-  const win = window as Window & { dataLayer?: unknown[]; gtag?: Gtag };
-
-  const load = () => {
-    if (!id || win.gtag) {
-      return;
-    }
-    win.dataLayer = win.dataLayer ?? [];
-    win.gtag = function gtag() {
-      // eslint-disable-next-line prefer-rest-params
-      win.dataLayer!.push(arguments);
-    };
-    win.gtag("js", new Date());
-    win.gtag("config", id, { anonymize_ip: true });
-    const script = document.createElement("script");
-    script.async = true;
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
-    document.head.append(script);
-  };
-
-  if (banner && id) {
-    const choice = read();
-    if (choice === "granted") {
-      load();
-    } else if (choice === null) {
-      banner.hidden = false;
-    }
-    for (const button of banner.querySelectorAll<HTMLButtonElement>("[data-consent]")) {
-      button.addEventListener("click", () => {
-        const value = button.dataset.consent ?? "denied";
-        save(value);
-        banner.hidden = true;
-        if (value === "granted") {
-          load();
-        }
-      });
-    }
-    for (const link of document.querySelectorAll<HTMLAnchorElement>("[data-cookie-settings]")) {
-      link.hidden = false;
-      link.addEventListener("click", (event) => {
-        event.preventDefault();
-        banner.hidden = false;
-      });
-    }
-    document.addEventListener("click", (event) => {
-      const badge = (event.target as Element).closest?.("[data-store='google-play']");
-      if (badge && win.gtag) {
-        win.gtag("event", "play_store_click", { link_url: (badge as HTMLAnchorElement).href, page_path: location.pathname });
-      }
-    });
-  }
-</script>
-
-<style>
-  .consent {
-    position: fixed;
-    z-index: 40;
-    left: 16px;
-    right: 16px;
-    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
-    max-width: 560px;
-    margin: 0 auto;
-    display: grid;
-    gap: 12px;
-    padding: 16px 20px;
-    border-radius: var(--radius-md);
-    background: var(--white);
-    box-shadow: var(--shadow-pop);
-    font-size: 15px;
-  }
-  .consent[hidden] {
-    display: none;
-  }
-  .choices {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-  }
-</style>

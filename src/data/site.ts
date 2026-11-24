@@ -8,7 +8,13 @@ export const PLAY_STORE_URL = `https://play.google.com/store/apps/details?id=${A
 export const SUPPORT_EMAIL = "rachelkenyani@gmail.com";
 
 /**
- * Google Analytics 4 measurement ID, like "G-XXXXXXXXXX" (GA admin > Data streams).
- * Empty means analytics is off and no banner shows. GA loads only after a visitor accepts.
+ * The Google Play link the badges use. The referrer tags installs from this website,
+ * so Play Console > Store performance shows how many came from here.
  */
-export const GA_MEASUREMENT_ID = "";
+export const PLAY_STORE_LINK = `${PLAY_STORE_URL}&referrer=${encodeURIComponent("utm_source=website&utm_medium=badge")}`;
+
+/**
+ * Cloudflare Web Analytics site token (Cloudflare dashboard > Web Analytics > the site > Manage site).
+ * Empty means analytics is off. It sets no cookies and keeps no personal data, so there is no consent banner.
+ */
+export const CLOUDFLARE_ANALYTICS_TOKEN = "";
