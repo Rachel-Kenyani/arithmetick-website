@@ -21,7 +21,7 @@ const toc = [
   title="Privacy Policy"
   description="What ArithmeTick collects, where it is kept, and how to delete your account."
   intro="How we look after your family's information, in the app and on this website."
-  updated="23 November 2026"
+  updated="24 November 2026"
   toc={toc}
   current="privacy"
 >
@@ -66,7 +66,7 @@ const toc = [
 
   <h2 id="children">Children</h2>
   <p>ArithmeTick is designed to be used by a child together with a parent or guardian. Only a grown-up can create the account, add a child, log out or delete the account, behind a 2-second hold so a young child cannot do it by accident.</p>
-  <p>We ask only for a first name or nickname for each child. When a grown-up creates the account or signs in, including with Google, they agree to this Privacy Policy, which explains that each child's progress is saved with the account. Adding a child is done under that agreement. If you believe a child has given us personal information without a grown-up, email us and we will delete it.</p>
+  <p>We ask only for a first name or nickname for each child. When a grown-up creates the account or signs in, including with Google, they confirm that they are a parent or guardian aged 18 or over, and agree to this Privacy Policy, which explains that each child's progress is saved with the account. Adding a child is done under that agreement. If you believe a child has given us personal information without a grown-up, email us and we will delete it.</p>
 
   <h2 id="others">Who else handles the information</h2>
   <p>We use a small number of service providers, only to run the app. They may use the information only to provide their service to us.</p>
@@ -74,12 +74,13 @@ const toc = [
     <li><strong>Supabase</strong> runs our sign-in service and stores each family's saved progress. Each family can read only its own data. Its servers are in the European Union (Ireland).</li>
     <li><strong>Resend</strong> sends emails with codes, and weekly reports for families who turn them on. It receives the email address and the email's contents.</li>
     <li><strong>Google</strong>, if you choose Continue with Google, confirms who you are under Google's own privacy policy.</li>
-    <li><strong>Cloudflare</strong> hosts this website.</li>
+    <li><strong>Cloudflare</strong> hosts this website. In the app, its <strong>Turnstile</strong> check runs when a grown-up signs up, logs in or asks for a code, to stop automated sign-ups. It sees technical details about the phone and connection (such as the IP address), not account details, and keeps no record linked to the account.</li>
+          <li><strong>Expo</strong> delivers app updates. When the app opens, it asks Expo whether an update is ready, which shares the IP address, the app version and the type of phone.</li>
   </ul>
   <p>We never sell personal information or share it for advertising. We would share it with authorities only if Kenyan law required us to.</p>
 
   <h2 id="outside">Information stored outside Kenya</h2>
-  <p>Account details and children's saved progress are stored on Supabase servers in the European Union. The EU has strong data protection laws, and we rely on our providers' safeguards for these transfers, as the Kenya Data Protection Act, 2019 allows.</p>
+  <p>Account details and children's saved progress are stored on Supabase servers in the European Union (Ireland). Emails are sent through Resend in the United States, app updates come from Expo in the United States, and Cloudflare runs a worldwide network. We chose providers that protect data under strong laws and contracts, and we rely on their safeguards for these transfers, as the Kenya Data Protection Act, 2019 allows.</p>
 
   <h2 id="keep">How long we keep it</h2>
   <ul>
@@ -98,7 +99,7 @@ const toc = [
   </ul>
 
   <h2 id="safe">Keeping information safe</h2>
-  <p>Information sent between the app and our sign-in service is encrypted. Passwords are stored only in hashed form. Codes expire quickly. No system is perfectly secure, so if we ever learn of a breach that affects you, we will tell you and the Data Protection Commissioner as the law requires.</p>
+  <p>Information sent between the app and our services is encrypted. On the phone, the sign-in is kept in the phone's encrypted storage. Passwords are stored only in hashed form, and codes expire quickly. Each family's saved data can be read only with that family's sign-in, and a check at sign-up and log-in keeps out automated attacks. No system is perfectly secure, so if we ever learn of a breach that affects you, we will tell you and the Data Protection Commissioner as the law requires.</p>
 
   <h2 id="website">This website and cookies</h2>
   {
