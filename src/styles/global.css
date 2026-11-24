@@ -338,7 +338,14 @@ p {
       animation-timing-function: ease-out;
       animation-fill-mode: both;
       animation-timeline: view();
-      animation-range: entry 0% entry 60%;
+      animation-range: entry 0% cover 35%;
+    }
+    /* Cards in a row arrive one after another. */
+    main > section:not(:first-child) :is(article, .move-card, .step):nth-child(2) {
+      animation-range: entry 10% cover 40%;
+    }
+    main > section:not(:first-child) :is(article, .move-card, .step):nth-child(3) {
+      animation-range: entry 20% cover 45%;
     }
   }
 }
@@ -346,18 +353,28 @@ p {
    marks the same elements, and they fade up once when they come into view. */
 .reveal-fallback main > section:not(:first-child) :is(.section-head, .copy, .mock, .animals, article, .step, .move-card, .faq-group) {
   opacity: 0;
-  translate: 0 24px;
+  translate: 0 60px;
+  scale: 0.94;
   transition:
-    opacity 0.6s ease-out,
-    translate 0.6s ease-out;
+    opacity 0.8s ease-out,
+    translate 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+    scale 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal-fallback main > section:not(:first-child) :nth-child(2).revealed {
+  transition-delay: 0.12s;
+}
+.reveal-fallback main > section:not(:first-child) :nth-child(3).revealed {
+  transition-delay: 0.24s;
 }
 .reveal-fallback main > section:not(:first-child) :is(.section-head, .copy, .mock, .animals, article, .step, .move-card, .faq-group).revealed {
   opacity: 1;
   translate: 0 0;
+  scale: 1;
 }
 @keyframes reveal {
   from {
     opacity: 0;
-    translate: 0 24px;
+    translate: 0 60px;
+    scale: 0.94;
   }
 }
