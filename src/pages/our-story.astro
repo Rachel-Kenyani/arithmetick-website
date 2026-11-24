@@ -4,6 +4,7 @@ import levels from "../data/levels.json";
 import { SUPPORT_EMAIL } from "../data/site";
 import Pictogram from "../components/Pictogram.astro";
 import StoryIcon from "../components/StoryIcon.astro";
+import AppArt from "../components/AppArt.astro";
 
 /**
  * Why ArithmeTick exists and the thinking behind it: for parents, schools and education organisations.
@@ -21,11 +22,11 @@ const principles = [
 ] as const;
 
 const kenya = [
-  { icon: "bottle-top", title: "Vifuniko", text: "Bottle tops are the counters." },
-  { icon: "mango", title: "Mangoes", text: "Grown, picked and shared." },
-  { icon: "chapati", title: "Chapati", text: "Cut into equal parts." },
-  { icon: "coin", title: "Shillings", text: "Paid and counted at the market." },
-  { icon: "phone", title: "Android first", text: "Light on data, plays offline." },
+  { icon: "bottle-top", art: "cap", title: "Vifuniko", text: "Bottle tops are the counters." },
+  { icon: "mango", art: "mango", title: "Mangoes", text: "Grown, picked and shared." },
+  { icon: "chapati", art: "chapati", title: "Chapati", text: "Cut into equal parts." },
+  { icon: "coin", art: "coins", title: "Shillings", text: "Paid and counted at the market." },
+  { icon: "phone", title: "Android first", text: "Light on data, keeps going in poor signal." },
   { icon: "shield", title: "Data Protection Act", text: "No ads, nothing sold." },
 ] as const;
 
@@ -76,7 +77,7 @@ const sources = [
           <p class="stat-row"><span class="stat-n">3</span><span>in Grade 4, a year later <span class="stat-exact">(33.8%)</span></span></p>
           <Pictogram value={0.338} label="About 3 in every 10 Grade 4 learners" />
         </div>
-        <p class="stat-source">Each figure is one in ten learners. Source: Usawa Agenda, FLANA 2025 report.</p>
+        <p class="stat-source">Each figure is one in ten learners, rounded to the nearest whole person. Source: Usawa Agenda, FLANA 2025 report.</p>
       </div>
     </div>
   </section>
@@ -90,27 +91,22 @@ const sources = [
       </div>
       <ol class="journey">
         <li class="j-step">
-          <svg viewBox="0 0 160 100" aria-hidden="true">
-            {[22, 50, 78, 106, 134].map((x) => <circle cx={x} cy="38" r="11" class="cap teal" />)}
-            {[22, 50].map((x) => <circle cx={x} cy="70" r="11" class="cap purple" />)}
-          </svg>
+          <div class="loose" aria-hidden="true">
+            {[0, 1, 2, 3, 4].map((n) => <AppArt item="cap" palette="teal" size={36} uid={`h${n}`} />)}
+            {[5, 6].map((n) => <AppArt item="cap" palette="purple" size={36} uid={`h${n}`} />)}
+          </div>
           <p class="j-label">Hold it</p>
           <p>Seven bottle tops on the table</p>
         </li>
         <li class="j-step">
-          <svg viewBox="0 0 160 100" aria-hidden="true">
-            <rect x="10" y="20" width="140" height="64" rx="8" class="frame" />
-            <path d="M38 20v64M66 20v64M94 20v64M122 20v64M10 52h140" class="frame-lines" />
-            {[24, 52, 80, 108, 136].map((x) => <circle cx={x} cy="36" r="9" class="cap teal" />)}
-            {[24, 52].map((x) => <circle cx={x} cy="68" r="9" class="cap purple" />)}
-          </svg>
+          <div class="board" aria-hidden="true">
+            {Array.from({ length: 10 }, (_, n) => <span class="slot">{n < 7 && <AppArt item="cap" palette={n < 5 ? "teal" : "purple"} size={28} uid={`s${n}`} />}</span>)}
+          </div>
           <p class="j-label">See it</p>
           <p>The same seven in a ten-frame</p>
         </li>
         <li class="j-step j-symbol">
-          <svg viewBox="0 0 160 100" aria-hidden="true">
-            <text x="80" y="62" class="eq">7 = 5 + 2</text>
-          </svg>
+          <p class="eq-text" aria-hidden="true">7 = 5 + 2</p>
           <p class="j-label">Write it <span class="j-flag">Where anxiety starts</span></p>
           <p>The jump ArithmeTick slows down</p>
         </li>
@@ -162,26 +158,23 @@ const sources = [
       </div>
       <div class="frames">
         <figure class="frame-card">
-          <svg viewBox="0 0 220 110" aria-hidden="true">
-            <rect x="10" y="10" width="200" height="90" rx="10" class="frame" />
-            <path d="M50 10v90M90 10v90M130 10v90M170 10v90M10 55h200" class="frame-lines" />
-            {[30, 70, 110].map((x) => <circle cx={x} cy="32" r="13" class="cap teal" />)}
-            <circle cx="30" cy="78" r="13" class="cap teal" />
-          </svg>
+          <div class="board big" aria-hidden="true">
+            {Array.from({ length: 10 }, (_, n) => <span class="slot">{[0, 1, 2, 5].includes(n) && <AppArt item="cap" palette="teal" size={44} uid={`p${n}`} />}</span>)}
+          </div>
           <figcaption><span class="tag">Playing</span>A plain frame. The child places every bottle top.</figcaption>
         </figure>
         <span class="frames-arrow" aria-hidden="true">
           <svg width="40" height="24" viewBox="0 0 40 24"><path d="M2 12h34M26 3l10 9-10 9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /></svg>
         </span>
         <figure class="frame-card helping">
-          <svg viewBox="0 0 220 110" aria-hidden="true">
-            <rect x="10" y="10" width="200" height="90" rx="10" class="frame" />
-            <path d="M11.5 20a8.5 8.5 0 0 1 8.5-8.5h180a8.5 8.5 0 0 1 8.5 8.5v35h-197Z" class="row-glow" />
-            <path d="M50 10v90M90 10v90M130 10v90M170 10v90M10 55h200" class="frame-lines" />
-            {[30, 70, 110, 150, 190].map((x) => <circle cx={x} cy="32" r="13" class="cap teal" />)}
-            <circle cx="30" cy="78" r="13" class="cap purple" />
-            <rect x="56" y="61" width="28" height="33" rx="6" class="next-slot" />
-          </svg>
+          <div class="board big helping" aria-hidden="true">
+            {Array.from({ length: 10 }, (_, n) => (
+              <span class:list={["slot", n < 5 && "glow", n === 6 && "next"]}>
+                {n < 5 && <AppArt item="cap" palette="teal" size={44} uid={`q${n}`} />}
+                {n === 5 && <AppArt item="cap" palette="purple" size={44} uid={`q${n}`} />}
+              </span>
+            ))}
+          </div>
           <figcaption><span class="tag mint">Stuck</span>The top five fill and glow, and the next space lights up: 7 is 5 and 2.</figcaption>
         </figure>
       </div>
@@ -200,7 +193,7 @@ const sources = [
         {
           kenya.map((k) => (
             <li class="tile center">
-              <StoryIcon name={k.icon} size={64} />
+              {"art" in k ? <AppArt item={k.art} size={64} uid="k" /> : <StoryIcon name={k.icon} size={64} />}
               <h3 class="heading-sm">{k.title}</h3>
               <p>{k.text}</p>
             </li>
@@ -620,6 +613,59 @@ const sources = [
     stroke: rgb(27 27 27 / 0.35);
     stroke-width: 2;
   }
+  .loose {
+    display: grid;
+    grid-template-columns: repeat(5, 36px);
+    gap: 6px;
+    padding: 18px 0;
+  }
+  /* The app's ten-frame: a white board, two rows of five rounded slots. */
+  .board {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 5px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 210px;
+    padding: 7px;
+    border-radius: 16px;
+    background: var(--white);
+    border: 2.5px solid #c9e4e0;
+  }
+  .board.big {
+    max-width: 340px;
+    gap: 7px;
+    padding: 10px;
+    border-radius: 24px;
+  }
+  .slot {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1;
+    border-radius: 10px;
+    background: #eef8f6;
+    border: 2px solid #d7ece8;
+  }
+  .slot :global(.app-art) {
+    width: 86%;
+    height: auto;
+  }
+  .slot.glow {
+    background: #c9efe9;
+    border-color: #7fd7c9;
+  }
+  .slot.next {
+    background: #fff6d6;
+    border: 2.5px dashed #e3b300;
+  }
+  .j-step .eq-text {
+    margin: 0;
+    padding: 22px 0;
+    color: var(--ink);
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 1;
+  }
   .eq {
     fill: var(--ink);
     font-size: 34px;
@@ -642,9 +688,8 @@ const sources = [
     background: var(--white);
     border: 1px solid var(--purple-100);
   }
-  .frame-card svg {
-    width: 100%;
-    height: auto;
+  .frame-card .board {
+    justify-self: center;
   }
   .frame-card figcaption {
     display: grid;

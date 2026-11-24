@@ -1,0 +1,156 @@
+---
+/**
+ * Art copied from the ArithmeTick app so the website shows the same objects children play with:
+ * the crimped bottle top (CapFace), the chapati (ChapatiArt), the mango (TreasureArt) and shilling coins (QuestTaskArt).
+ * Drawn as an inline SVG at `size` px.
+ */
+type Item = "cap" | "chapati" | "mango" | "coins";
+interface Props {
+  item: Item;
+  palette?: "teal" | "purple" | "gold";
+  size?: number;
+  /** Unique id suffix when the same item appears more than once on a page. */
+  uid?: string;
+}
+const { item, palette = "teal", size = 40, uid = "" } = Astro.props;
+
+const PALETTES = {
+  teal: { light: "#3DBDB2", base: "#0B867D", dark: "#00524D", stroke: "#003B37", discIn: "#2AAA9F", discOut: "#00736B" },
+  purple: { light: "#AD88DC", base: "#7A4EB5", dark: "#43246C", stroke: "#2E1850", discIn: "#9D73D3", discOut: "#6A3FA0" },
+  gold: { light: "#FFEDB0", base: "#FFC107", dark: "#C48A00", stroke: "#8A6100", discIn: "#FFE27F", discOut: "#FFB300" },
+} as const;
+
+function crimpPath(teeth = 21, rOuter = 48.5, rInner = 44, c = 50): string {
+  const n = teeth * 2;
+  const pts = Array.from({ length: n }, (_, i) => {
+    const a = (i / n) * Math.PI * 2 - Math.PI / 2;
+    const r = i % 2 === 0 ? rOuter : rInner;
+    return [c + r * Math.cos(a), c + r * Math.sin(a)] as const;
+  });
+  const f = (v: number) => v.toFixed(1);
+  const mid = (i: number) => {
+    const p = pts[i % n];
+    const q = pts[(i + 1) % n];
+    return `${f((p[0] + q[0]) / 2)} ${f((p[1] + q[1]) / 2)}`;
+  };
+  let d = `M ${mid(n - 1)}`;
+  for (let i = 0; i < n; i += 1) d += ` Q ${f(pts[i][0])} ${f(pts[i][1])} ${mid(i)}`;
+  return `${d} Z`;
+}
+
+function chapatiOutline(r: number): string {
+  const steps = 72;
+  const points = Array.from({ length: steps }, (_, i) => {
+    const a = (i / steps) * Math.PI * 2;
+    const k = 1 + 0.014 * Math.sin(3 * a + 0.6) + 0.008 * Math.sin(7 * a + 2.1) + 0.005 * Math.sin(11 * a);
+    return `${(Math.cos(a) * r * k).toFixed(2)} ${(Math.sin(a) * r * k).toFixed(2)}`;
+  });
+  return `M${points.join("L")}Z`;
+}
+function layerSpiral(r: number): string {
+  const steps = 90;
+  const points = Array.from({ length: steps + 1 }, (_, i) => {
+    const t = i / steps;
+    const a = t * 2.4 * Math.PI * 2;
+    const d = r * (0.12 + 0.62 * t);
+    return `${(Math.cos(a) * d).toFixed(2)} ${(Math.sin(a) * d).toFixed(2)}`;
+  });
+  return `M${points.join("L")}`;
+}
+const BLISTERS = [
+  [-0.48, -0.32, 0.13, 0.08, -20],
+  [0.34, -0.52, 0.1, 0.06, 15],
+  [0.52, 0.22, 0.14, 0.07, 40],
+  [-0.22, 0.55, 0.12, 0.07, -10],
+  [0.08, -0.12, 0.08, 0.05, 60],
+  [-0.62, 0.18, 0.07, 0.05, 0],
+  [0.2, 0.38, 0.07, 0.04, -35],
+] as const;
+
+const p = PALETTES[palette];
+const id = `${item}-${palette}-${uid}`;
+const R = 44;
+---
+
+{
+  item === "cap" && (
+    <svg class="app-art" width={size} height={size} viewBox="0 0 100 100" aria-hidden="true">
+      <defs>
+        <linearGradient id={`rim-${id}`} x1="0.15" y1="0.05" x2="0.85" y2="0.95">
+          <stop offset="0" stop-color={p.light} />
+          <stop offset="0.55" stop-color={p.base} />
+          <stop offset="1" stop-color={p.dark} />
+        </linearGradient>
+        <radialGradient id={`disc-${id}`} cx="0.4" cy="0.34" r="0.78">
+          <stop offset="0" stop-color={p.discIn} />
+          <stop offset="1" stop-color={p.discOut} />
+        </radialGradient>
+      </defs>
+      <path d={crimpPath()} fill={`url(#rim-${id})`} stroke={p.stroke} stroke-width="2.6" stroke-linejoin="round" />
+      <circle cx="50" cy="50" r="37.5" fill={p.dark} opacity="0.5" />
+      <circle cx="50" cy="51" r="34" fill={`url(#disc-${id})`} stroke={p.stroke} stroke-opacity="0.35" stroke-width="1.5" />
+      <circle cx="50" cy="51" r="24.5" fill="none" stroke="#fff" stroke-opacity="0.24" stroke-width="2.6" />
+      <path d="M26 42 A26 26 0 0 1 46 25" fill="none" stroke="#fff" stroke-opacity="0.62" stroke-width="5.5" stroke-linecap="round" />
+      <circle cx="57" cy="24.5" r="2.6" fill="#fff" fill-opacity="0.72" />
+    </svg>
+  )
+}
+{
+  item === "chapati" && (
+    <svg class="app-art" width={size} height={size} viewBox="-50 -50 100 100" aria-hidden="true">
+      <defs>
+        <radialGradient id={`chap-${id}`} cx="45%" cy="42%" r="60%">
+          <stop offset="0" stop-color="#f6dfa9" />
+          <stop offset="0.7" stop-color="#efcb8a" />
+          <stop offset="1" stop-color="#dcae6c" />
+        </radialGradient>
+      </defs>
+      <path d={chapatiOutline(R)} fill={`url(#chap-${id})`} stroke="#9c6a35" stroke-width="2.5" stroke-linejoin="round" />
+      <path d={layerSpiral(R)} fill="none" stroke="#c99256" stroke-width="1.2" stroke-linecap="round" opacity="0.45" />
+      {BLISTERS.map(([x, y, rx, ry, t]) => (
+        <ellipse cx={x * R} cy={y * R} rx={rx * R} ry={ry * R} fill="#b5733a" opacity="0.55" transform={`rotate(${t} ${x * R} ${y * R})`} />
+      ))}
+    </svg>
+  )
+}
+{
+  item === "mango" && (
+    <svg class="app-art" width={size} height={size} viewBox="0 0 64 64" aria-hidden="true">
+      <path d="M32 14c14 0 22 12 20 26-2 12-12 18-22 16S10 46 12 32 20 14 32 14z" fill="#ffb11b" stroke="#1b1b1b" stroke-width="3" />
+      <path d="M20 40c2 8 10 12 18 10" stroke="#e8771a" stroke-width="5" stroke-linecap="round" fill="none" />
+      <ellipse cx="24" cy="26" rx="4" ry="6" fill="#ffe08a" />
+      <path d="M32 15c0-5 2-8 6-9" stroke="#1b1b1b" stroke-width="3" stroke-linecap="round" fill="none" />
+      <path d="M37 8c6-3 12-1 15 3-6 3-12 2-15-3z" fill="#2fa79e" stroke="#1b1b1b" stroke-width="3" stroke-linejoin="round" />
+    </svg>
+  )
+}
+{
+  item === "coins" && (
+    <svg class="app-art" width={size} height={size} viewBox="0 0 64 64" aria-hidden="true">
+      <rect x="6" y="8" width="44" height="22" rx="3" fill="#8fd19e" stroke="#1b1b1b" stroke-width="2.4" stroke-linejoin="round" />
+      <ellipse cx="28" cy="19" rx="6" ry="7" fill="#5fae72" stroke="#1b1b1b" stroke-width="1.6" />
+      <text x="13" y="26" font-size="6" font-weight="bold" fill="#1b1b1b">50</text>
+      {[
+        [16, 46, 10, "20", "#e3c25a"],
+        [38, 48, 9, "10", "#d7a64a"],
+        [54, 42, 7, "5", "#c9c9c9"],
+      ].map(([x, y, r, label, fill]) => (
+        <g>
+          <circle cx={x} cy={y} r={r} fill={fill as string} stroke="#1b1b1b" stroke-width="2.4" />
+          <circle cx={x} cy={y} r={(r as number) - 3} fill="none" stroke="#1b1b1b" stroke-width="1" opacity="0.35" />
+          <text x={x} y={(y as number) + 3.5} font-size={(r as number) * 0.75} font-weight="bold" fill="#1b1b1b" text-anchor="middle">
+            {label}
+          </text>
+        </g>
+      ))}
+    </svg>
+  )
+}
+
+<style>
+  .app-art {
+    display: block;
+    flex: none;
+    overflow: visible;
+  }
+</style>

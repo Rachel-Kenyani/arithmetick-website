@@ -1,7 +1,6 @@
 ---
 /**
- * A row of ten people, one per 10% of learners. Figures fill in yellow up to `value` (a share from 0 to 1),
- * with the last one filled partway, so the exact figure is visible rather than rounded.
+ * A row of ten people, one per 10% of learners, with `value` (a share from 0 to 1) rounded to whole people in yellow.
  */
 interface Props {
   value: number;
@@ -9,7 +8,9 @@ interface Props {
   label: string;
 }
 const { value, label } = Astro.props;
-const filled = (i: number) => Math.max(0, Math.min(1, value * 10 - i));
+/* Whole people only: the share is rounded to the nearest one in ten, and the exact figure is printed beside it. */
+const whole = Math.round(value * 10);
+const filled = (i: number) => (i < whole ? 1 : 0);
 const id = `pg-${Math.round(value * 1000)}`;
 ---
 
