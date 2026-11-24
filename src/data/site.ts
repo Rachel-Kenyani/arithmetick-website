@@ -17,4 +17,4 @@ export const PLAY_STORE_LINK = `${PLAY_STORE_URL}&referrer=${encodeURIComponent(
  * Cloudflare Web Analytics site token (Cloudflare dashboard > Web Analytics > the site > Manage site).
  * Empty means analytics is off. It sets no cookies and keeps no personal data, so there is no consent banner.
  */
-export const CLOUDFLARE_ANALYTICS_TOKEN = "";
+export const CLOUDFLARE_ANALYTICS_TOKEN = "6e497d87cd4644d7b715df2e422ed457";

@@ -9,6 +9,6 @@ const beacon = JSON.stringify({ token: CLOUDFLARE_ANALYTICS_TOKEN });
 
 {
   CLOUDFLARE_ANALYTICS_TOKEN && (
-    <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={beacon} />
+    <script is:inline type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={beacon} />
   )
 }
