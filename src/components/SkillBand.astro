@@ -30,7 +30,7 @@ const line = [...skills, ...skills];
   .band {
     position: relative;
     overflow: clip;
-    padding: var(--space-6) 0;
+    padding: var(--space-4) 0;
     background: var(--purple-950);
     color: var(--white);
   }
@@ -41,16 +41,16 @@ const line = [...skills, ...skills];
     filter: invert(1);
   }
   .words-wrap {
-    padding: var(--space-6) 0;
+    padding: var(--space-3) 0;
   }
   .words {
     display: flex;
-    gap: var(--space-8);
+    gap: var(--space-6);
     width: max-content;
     margin: 0;
     /* Its own background, so contrast checkers can read the words that have slid off-screen. */
     background: var(--purple-950);
-    font-size: clamp(36px, 6vw, 72px);
+    font-size: clamp(28px, 4vw, 48px);
     font-weight: 800;
     line-height: 1.1;
     letter-spacing: -0.02em;
@@ -59,7 +59,7 @@ const line = [...skills, ...skills];
   .word {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-8);
+    gap: var(--space-6);
   }
   .word:nth-child(even) {
     color: var(--sun);
