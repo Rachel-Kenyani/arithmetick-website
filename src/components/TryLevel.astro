@@ -24,6 +24,7 @@ const levelCount = levels.reduce((sum, g) => sum + g.levels.length, 0);
         <img src="/images/figma/owl-head.svg" width="56" height="52" alt="" />
         <p>The wind blew away seven feathers. Help me collect them!</p>
       </div>
+      <div class="stage">
       <ul class="feathers" aria-label="Feathers">
         {
           Array.from({ length: FEATHERS }, (_, i) => (
@@ -38,10 +39,6 @@ const levelCount = levels.reduce((sum, g) => sum + g.levels.length, 0);
           ))
         }
       </ul>
-      <div class="nest">
-        <p class="count" aria-live="polite"><strong data-count-now>0</strong> of {TARGET} feathers</p>
-        <div class="dots" aria-hidden="true">{Array.from({ length: TARGET }, () => <span />)}</div>
-      </div>
       <div class="done" hidden>
         <p class="done-title">You counted 7 feathers!</p>
         <p>There are {levelCount} levels like this on the map, and Brijo reads every one aloud.</p>
@@ -49,6 +46,11 @@ const levelCount = levels.reduce((sum, g) => sum + g.levels.length, 0);
           <PlayButton />
           <button type="button" class="btn btn-outline again">Play again</button>
         </div>
+      </div>
+      </div>
+      <div class="nest">
+        <p class="count" aria-live="polite"><strong data-count-now>0</strong> of {TARGET} feathers</p>
+        <div class="dots" aria-hidden="true">{Array.from({ length: TARGET }, () => <span />)}</div>
       </div>
     </div>
   </div>
@@ -175,15 +177,16 @@ const levelCount = levels.reduce((sum, g) => sum + g.levels.length, 0);
   .feather:hover:not(:disabled) svg {
     rotate: -10deg;
   }
+  /* A collected feather leaves an empty dashed spot, so it's clear which ones are counted. */
   .feather[aria-pressed="true"] {
-    opacity: 0.25;
     background: transparent;
+    border: 2px dashed var(--purple-200);
     cursor: default;
   }
-  .finished .feather[aria-pressed="false"] {
-    opacity: 0.5;
-    cursor: default;
+  .feather[aria-pressed="true"] svg {
+    opacity: 0;
   }
+
   .nest {
     display: flex;
     flex-wrap: wrap;
@@ -220,14 +223,37 @@ const levelCount = levels.reduce((sum, g) => sum + g.levels.length, 0);
     border-color: var(--purple-600);
     scale: 1.15;
   }
+  /* The feathers and the win message share one cell, so finishing never changes the card's size. */
+  .stage {
+    display: grid;
+    align-items: center;
+  }
+  .stage > * {
+    grid-area: 1 / 1;
+  }
+  .finished .feathers {
+    visibility: hidden;
+  }
   .done {
     display: grid;
     gap: var(--space-3);
-    padding-top: var(--space-5);
-    border-top: 1px solid var(--purple-100);
+    align-content: center;
+    justify-items: start;
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    animation: pop-in 0.25s ease-out;
   }
+  @keyframes pop-in {
+    from {
+      opacity: 0;
+      scale: 0.97;
+    }
+  }
+  /* Kept in the layout while hidden, so the card is already the size the win message needs. */
   .done[hidden] {
-    display: none;
+    visibility: hidden;
+    animation: none;
   }
   .done p {
     margin: 0;
@@ -247,6 +273,9 @@ const levelCount = levels.reduce((sum, g) => sum + g.levels.length, 0);
     margin-top: var(--space-2);
   }
   @media (prefers-reduced-motion: reduce) {
+    .done {
+      animation: none;
+    }
     .feather,
     .feather svg,
     .dots span {
