@@ -234,7 +234,8 @@ const moveAndPlay = [
       linear-gradient(160deg, var(--purple-950) 0%, rgb(109 65 163 / 0) 80%),
       linear-gradient(160deg, var(--purple-600) 0%, var(--purple-950) 80%);
     color: var(--white);
-    padding: var(--section-y) 0;
+    /* The see-through nav sits on top of the hero, so make room for it. */
+    padding: calc(var(--section-y) + 72px) 0 var(--section-y);
   }
   .hero-pattern {
     position: absolute;

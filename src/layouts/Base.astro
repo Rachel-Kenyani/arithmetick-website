@@ -91,7 +91,7 @@ const siteSchema = [
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
-    <Nav current={current} />
+    <Nav current={current} overHero={current === "home"} />
     <main id="main">
       <slot />
     </main>

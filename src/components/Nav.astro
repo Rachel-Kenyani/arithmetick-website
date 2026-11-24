@@ -3,8 +3,10 @@ import PlayButton from "./PlayButton.astro";
 
 interface Props {
   current?: "home" | "how" | "privacy" | "contact";
+  /** Start see-through with a white logo, over a dark hero, and turn to frosted glass on scroll. */
+  overHero?: boolean;
 }
-const { current } = Astro.props;
+const { current, overHero = false } = Astro.props;
 const links = [
   { id: "home", label: "For families", href: "/" },
   { id: "how", label: "How it works", href: "/how-it-works" },
@@ -12,10 +14,11 @@ const links = [
 ] as const;
 ---
 
-<header class="nav">
+<header class:list={["nav", overHero && "over-hero"]}>
   <div class="container bar">
     <a class="logo" href="/" aria-label="ArithmeTick home">
-      <img src="/images/logo-horizontal.svg" width="154" height="32" alt="" />
+      <img class="logo-dark" src="/images/logo-horizontal.svg" width="154" height="32" alt="" />
+      {overHero && <img class="logo-light" src="/images/logo-horizontal-white.svg" width="154" height="32" alt="" />}
     </a>
     <nav aria-label="Main">
       <ul class="links">
@@ -51,6 +54,14 @@ const links = [
 </header>
 
 <script>
+  /* Frost the bar and tighten it once the page scrolls. */
+  const header = document.querySelector<HTMLElement>(".nav");
+  if (header) {
+    const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
   /* Close the mobile menu on a tap outside it, on Escape, or after choosing a link. */
   const menu = document.querySelector<HTMLDetailsElement>(".nav .menu");
   if (menu) {
@@ -73,20 +84,77 @@ const links = [
 </script>
 
 <style>
+  /* Frosted glass: the page shows through, blurred, under a light tint. */
   .nav {
+    --nav-h: 72px;
     position: sticky;
     top: 0;
     z-index: 30;
-    background: var(--white);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
     padding-top: env(safe-area-inset-top, 0px);
+    background: rgb(255 255 255 / 0.72);
+    -webkit-backdrop-filter: saturate(180%) blur(16px);
+    backdrop-filter: saturate(180%) blur(16px);
+    border-bottom: 1px solid transparent;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease;
+  }
+  .nav.scrolled {
+    border-bottom-color: rgb(0 79 74 / 0.1);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .nav {
+      background: var(--white);
+    }
   }
   .bar {
     display: flex;
     align-items: center;
     gap: 16px;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    min-height: var(--nav-h);
+    transition: min-height 0.2s ease;
+  }
+  .scrolled .bar {
+    min-height: 60px;
+  }
+
+  /* Over the home hero: see-through until the page scrolls. The hero slides up underneath. */
+  .nav.over-hero {
+    margin-bottom: calc(-1 * (var(--nav-h) + env(safe-area-inset-top, 0px)));
+  }
+  .nav.over-hero:not(.scrolled) {
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .logo-light {
+    display: none !important;
+  }
+  .over-hero:not(.scrolled) .logo-dark {
+    display: none !important;
+  }
+  .over-hero:not(.scrolled) .logo-light {
+    display: block !important;
+  }
+  .over-hero:not(.scrolled) .links a {
+    color: var(--white);
+  }
+  .over-hero:not(.scrolled) .links a:hover,
+  .over-hero:not(.scrolled) .links a[aria-current="page"] {
+    color: var(--white);
+    border-bottom-color: var(--white);
+  }
+  .over-hero:not(.scrolled) .menu summary span {
+    background: var(--white);
+  }
+  .over-hero :focus-visible {
+    outline-color: currentColor;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nav,
+    .bar {
+      transition: none;
+    }
   }
   nav {
     margin-left: auto;
@@ -118,6 +186,9 @@ const links = [
     font-weight: 600;
     text-decoration: none;
     white-space: nowrap;
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease;
   }
   .links a:hover,
   .links a[aria-current="page"],
@@ -163,7 +234,10 @@ const links = [
     margin: 0;
     padding: 18px;
     list-style: none;
-    background: var(--white);
+    background: rgb(255 255 255 / 0.92);
+    -webkit-backdrop-filter: saturate(180%) blur(16px);
+    backdrop-filter: saturate(180%) blur(16px);
+    border: 1px solid rgb(0 79 74 / 0.1);
     border-radius: var(--radius-md);
     box-shadow: 0 12px 30px rgba(0, 79, 74, 0.18);
   }
