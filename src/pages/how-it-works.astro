@@ -649,10 +649,12 @@ const skills = [
     .story .step {
       min-height: 70vh;
       align-content: center;
+    }
+    .story .step-copy {
       opacity: 0.3;
       transition: opacity 0.4s ease;
     }
-    .story .step.active {
+    .story .step.active .step-copy {
       opacity: 1;
     }
     .story .step .shot {
@@ -666,9 +668,97 @@ const skills = [
       font-size: clamp(28px, 3vw, 40px);
     }
   }
+  /* The map's dotted trail joins the three steps: a faint trail, a teal one that fills in as you
+     scroll (CSS only, so it moves smoothly), and a numbered stop at each step that lights up. */
+  @media (min-width: 900px) {
+    .story .steps {
+      position: relative;
+      padding-left: 72px;
+    }
+    .story .steps::before,
+    .story .steps::after {
+      content: "";
+      position: absolute;
+      left: 22px;
+      top: 35vh;
+      bottom: 35vh;
+      width: 6px;
+      border-radius: 3px;
+      background: radial-gradient(circle, currentColor 2.5px, transparent 3px) 50% 0 / 6px 16px repeat-y;
+    }
+    .story .steps::before {
+      color: rgb(0 111 104 / 0.2);
+    }
+    .story .steps::after {
+      color: var(--teal-600);
+      clip-path: inset(0 0 100% 0);
+    }
+    .story .step {
+      position: relative;
+      counter-increment: trail;
+    }
+    .story .steps {
+      counter-reset: trail;
+    }
+    .story .step::before {
+      content: counter(trail);
+      position: absolute;
+      z-index: 1;
+      left: -72px;
+      top: 50%;
+      display: grid;
+      place-items: center;
+      width: 50px;
+      height: 50px;
+      margin-top: -25px;
+      border: 3px solid rgb(0 111 104 / 0.25);
+      border-radius: 50%;
+      background: var(--white);
+      color: var(--muted);
+      font-size: 20px;
+      font-weight: 800;
+      transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease,
+        scale 0.3s ease;
+    }
+    .story .step.active::before {
+      border-color: var(--ink);
+      background: var(--sun);
+      color: var(--ink);
+      scale: 1.12;
+    }
+  }
+  @media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .story .steps::after {
+        animation-name: trail-fill;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: cover 25% cover 75%;
+      }
+    }
+  }
+  @media (min-width: 900px) and (prefers-reduced-motion: reduce) {
+    .story .steps::after {
+      clip-path: none;
+    }
+  }
+  @supports not (animation-timeline: view()) {
+    .story .steps::after {
+      clip-path: none;
+    }
+  }
+  @keyframes trail-fill {
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
   @media (min-width: 900px) and (prefers-reduced-motion: reduce) {
     .pinned-phone img,
-    .story .step {
+    .story .step-copy {
       transition: none;
     }
   }

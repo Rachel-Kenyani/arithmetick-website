@@ -9,7 +9,6 @@ import { FAQ, HOME_FAQ } from "../data/faq";
 import Faq from "../components/Faq.astro";
 import TryLevel from "../components/TryLevel.astro";
 import SkillBand from "../components/SkillBand.astro";
-import JourneyPath from "../components/JourneyPath.astro";
 import levels from "../data/levels.json";
 import { FEATHERS_LINE } from "../data/brijoLine";
 import { PLAY_STORE_URL, ANDROID_PACKAGE } from "../data/site";
@@ -72,8 +71,6 @@ const moveAndPlay = [
   current="home"
   schema={schema}
 >
-  <JourneyPath />
-
   <section class="hero">
     <div class="pattern hero-pattern" aria-hidden="true"></div>
     <div class="container hero-grid">

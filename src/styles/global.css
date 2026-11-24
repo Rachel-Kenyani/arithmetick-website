@@ -158,11 +158,6 @@ p {
   text-wrap: pretty;
 }
 
-/* The home page's journey path is drawn over the sections, measured from here. */
-main {
-  position: relative;
-}
-
 .container {
   width: 100%;
   max-width: calc(var(--max) + 2 * var(--pad-x));
