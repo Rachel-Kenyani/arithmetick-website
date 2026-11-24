@@ -31,6 +31,8 @@ const schema = [
     author: { "@type": "Person", name: "Rachel Kenyani" },
   },
 ];
+/** The four animals a child can choose, in the order the app shows them. */
+const animals = ["Owl", "Cheetah", "Bear", "Fox"];
 const moveAndPlay = [
   {
     grade: "Grade 1",
@@ -148,6 +150,22 @@ const moveAndPlay = [
             <li><span class="tick sun"><img src={F + "calculator.svg"} width="22" height="22" alt="" /></span><span><strong>Real things to count.</strong> Bottle tops, mangoes, seeds and chapati make numbers concrete.</span></li>
           </ul>
         </div>
+      </div>
+      <div class="animals">
+        <div class="animals-copy">
+          <h3 class="heading-sm">Choose your animal</h3>
+          <p>Each child picks an owl, cheetah, bear or fox for their profile, so they always know which map is theirs.</p>
+        </div>
+        <ul class="animal-row">
+          {
+            animals.map((a) => (
+              <li>
+                <img src={`/images/animals/${a.toLowerCase()}.webp`} width="400" height="413" loading="lazy" alt="" />
+                <span>{a}</span>
+              </li>
+            ))
+          }
+        </ul>
       </div>
     </div>
   </section>
@@ -379,6 +397,55 @@ const moveAndPlay = [
   }
   .kids-band {
     background: var(--mint-50);
+  }
+  .animals {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    gap: var(--space-8);
+    align-items: center;
+    margin-top: var(--space-16);
+    padding-top: var(--space-12);
+    border-top: 1px solid var(--line);
+  }
+  .animals-copy {
+    display: grid;
+    gap: var(--space-2);
+  }
+  .animals-copy p {
+    color: var(--muted);
+  }
+  .animal-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .animal-row li {
+    display: grid;
+    gap: var(--space-2);
+    justify-items: center;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .animal-row img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  @media (max-width: 900px) {
+    .animals {
+      grid-template-columns: 1fr;
+      margin-top: var(--space-12);
+      padding-top: var(--space-10);
+    }
+  }
+  @media (max-width: 480px) {
+    .animal-row {
+      gap: var(--space-2);
+      font-size: 15px;
+    }
   }
   .label {
     display: inline-flex;
