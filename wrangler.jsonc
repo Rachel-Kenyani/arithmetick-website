@@ -2,6 +2,8 @@
   // Cloudflare Worker that serves the built Astro site as static files.
   "name": "arithmetick-website",
   "compatibility_date": "2026-11-01",
+  // Served at the subdomain. Needs rachelkenyani.com's DNS on Cloudflare; deploy creates the DNS record and certificate.
+  "routes": [{ "pattern": "arithmetick.rachelkenyani.com", "custom_domain": true }],
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page"
