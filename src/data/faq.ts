@@ -33,7 +33,7 @@ export const FAQ: { question: string; answer: string }[] = [
       "We keep the grown-up's email to log in, and each child's progress so it is safe with your account. There are no ads, and we never sell or share your family's data. Weekly email reports are off until a grown-up turns them on. The Privacy Policy lists exactly what we keep.",
   },
   {
-    question: "Does it follow the CBC curriculum?",
+    question: "Does it follow the CBC?",
     answer:
       "Yes. Every level is built on the maths in Kenya's Competency-Based Curriculum (CBC) for Grades 1 to 3, using things children see at home and at the market.",
   },

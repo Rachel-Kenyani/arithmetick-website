@@ -15,7 +15,7 @@ export const GET: APIRoute = ({ site }) => {
     .join("\n\n");
   const body = `# ArithmeTick
 
-> Turn screen time into maths confidence. A maths app for Kenyan children in Grades 1 to 3 (ages 6 to 9) on Android, built on Kenya's CBC curriculum. Brijo the owl reads every instruction aloud, children count real things like bottle tops and mangoes, and a grown-up joins in for Move & Play activities. Free during the beta, no ads, made in Nairobi, Kenya.
+> Turn screen time into maths confidence. A maths app for Kenyan children in Grades 1 to 3 (ages 6 to 9) on Android, built on Kenya's Competency-Based Curriculum (CBC). Brijo the owl reads every instruction aloud, children count real things like bottle tops and mangoes, and a grown-up joins in for Move & Play activities. Free during the beta, no ads, made in Nairobi, Kenya.
 
 - Install: [Google Play](${PLAY_STORE_URL})
 - Support: ${SUPPORT_EMAIL}
