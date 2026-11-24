@@ -2,6 +2,7 @@
 import Base from "../layouts/Base.astro";
 import levels from "../data/levels.json";
 import { SUPPORT_EMAIL } from "../data/site";
+import Pictogram from "../components/Pictogram.astro";
 
 /**
  * Why ArithmeTick exists and the thinking behind it: for parents, schools and education organisations.
@@ -70,8 +71,8 @@ const sources = [
       <p class="overline">Our story</p>
       <h1 class="display">Maths confidence is built early, or not at all.</h1>
       <p class="lede">
-        ArithmeTick is a maths app for Kenyan children in Grades 1 to 3. It was designed, researched and built in Nairobi by product
-        designer Rachel Kenyani. This is why it exists, and why it works the way it does.
+        ArithmeTick is a maths app for Kenyan children in Grades 1 to 3. It was researched, designed and engineered in Nairobi by
+        Rachel Kenyani, a product designer and engineer. This is why it exists, and why it works the way it does.
       </p>
     </div>
   </section>
@@ -88,15 +89,16 @@ const sources = [
         </p>
       </div>
       <div class="stats-panel">
+        <p class="stat-intro">Out of every 10 learners, how many can solve a Grade 3 numeracy problem?</p>
         <div class="stat">
-          <p class="stat-n">1 in 5</p>
-          <p>Grade 3 learners in Kenyan public schools can solve a Grade 3 numeracy problem.</p>
+          <p class="stat-row"><span class="stat-n">2</span><span>in Grade 3 <span class="stat-exact">(20.8%, public schools)</span></span></p>
+          <Pictogram value={0.208} label="About 2 in every 10 Grade 3 learners" />
         </div>
         <div class="stat">
-          <p class="stat-n">1 in 3</p>
-          <p>Grade 4 learners can solve it a year later (33.8%).</p>
+          <p class="stat-row"><span class="stat-n">3</span><span>in Grade 4, a year later <span class="stat-exact">(33.8%)</span></span></p>
+          <Pictogram value={0.338} label="About 3 in every 10 Grade 4 learners" />
         </div>
-        <p class="stat-source">Source: Usawa Agenda, FLANA 2025 report.</p>
+        <p class="stat-source">Each figure is one in ten learners. Source: Usawa Agenda, FLANA 2025 report.</p>
       </div>
     </div>
   </section>
@@ -404,14 +406,32 @@ const sources = [
     padding-bottom: var(--space-5);
     border-bottom: 1px solid rgb(255 255 255 / 0.15);
   }
+  .stat {
+    gap: var(--space-3);
+  }
   .stat p {
     margin: 0;
   }
+  .stat-intro {
+    margin: 0;
+    color: var(--white);
+    font-weight: 700;
+  }
+  .stat-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    color: var(--mint-100);
+  }
   .stat-n {
-    color: var(--sun);
-    font-size: clamp(44px, 6vw, 64px);
+    color: var(--white);
+    font-size: clamp(40px, 5vw, 56px);
     font-weight: 800;
     line-height: 1;
+  }
+  .stat-exact {
+    color: rgb(255 255 255 / 0.7);
+    font-size: 15px;
   }
   .stat-source {
     margin: 0;

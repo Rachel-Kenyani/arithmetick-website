@@ -1,0 +1,53 @@
+---
+/**
+ * A row of ten people, one per 10% of learners. Figures fill in yellow up to `value` (a share from 0 to 1),
+ * with the last one filled partway, so the exact figure is visible rather than rounded.
+ */
+interface Props {
+  value: number;
+  /** Read out in place of the figures, for example "21 in every 100 learners". */
+  label: string;
+}
+const { value, label } = Astro.props;
+const filled = (i: number) => Math.max(0, Math.min(1, value * 10 - i));
+const id = `pg-${Math.round(value * 1000)}`;
+---
+
+<svg class="pictogram" viewBox="0 0 300 48" role="img" aria-label={label}>
+  <defs>
+    <symbol id={`${id}-person`} viewBox="0 0 24 48">
+      <circle cx="12" cy="7" r="6"></circle>
+      <path d="M4 18a8 8 0 0 1 16 0v12a3 3 0 0 1-3 3v11a3 3 0 0 1-6 0V33H11v11a3 3 0 0 1-6 0V33a3 3 0 0 1-1-3Z" transform="translate(0 0)"></path>
+    </symbol>
+    {
+      Array.from({ length: 10 }, (_, i) => (
+        <clipPath id={`${id}-c${i}`}>
+          <rect x="0" y="0" width={24 * filled(i)} height="48" />
+        </clipPath>
+      ))
+    }
+  </defs>
+  {
+    Array.from({ length: 10 }, (_, i) => (
+      <g>
+        <use href={`#${id}-person`} x={i * 30 + 3} y="0" width="24" height="48" class="empty" />
+        {filled(i) > 0 && <use href={`#${id}-person`} x={i * 30 + 3} y="0" width="24" height="48" class="full" clip-path={`url(#${id}-c${i})`} />}
+      </g>
+    ))
+  }
+</svg>
+
+<style>
+  .pictogram {
+    display: block;
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+  }
+  .empty {
+    fill: rgb(255 255 255 / 0.16);
+  }
+  .full {
+    fill: var(--sun);
+  }
+</style>
