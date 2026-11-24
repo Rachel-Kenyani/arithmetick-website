@@ -22,11 +22,11 @@ const levelCount = levels.reduce((sum, g) => sum + g.levels.length, 0);
 
     <div class="board" data-target={TARGET}>
       <div class="prompt">
-        <button type="button" class="listen" aria-label="Hear Brijo read this aloud">
-          <img src="/images/figma/owl-head.svg" width="56" height="52" alt="" />
-          <span class="listen-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M3 1.5v11l9-5.5z" fill="currentColor" /></svg></span>
+        <img class="prompt-owl" src="/images/figma/owl-head.svg" width="56" height="52" alt="" />
+        <button type="button" class="listen">
+          <span class="listen-play" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 14 14"><path d="M3 1.5v11l9-5.5z" fill="currentColor" /></svg></span>
+          <span><strong class="listen-label">Hear Brijo</strong> <span class="line">{FEATHERS_LINE.map(([w, t]) => <span data-t={t}>{w} </span>)}</span></span>
         </button>
-        <p class="line">{FEATHERS_LINE.map(([w, t]) => <span data-t={t}>{w} </span>)}</p>
       </div>
       <div class="stage">
       <ul class="feathers" aria-label="Feathers">
@@ -160,39 +160,52 @@ const levelCount = levels.reduce((sum, g) => sum + g.levels.length, 0);
     font-weight: 700;
     color: var(--ink);
   }
-  .listen {
-    position: relative;
+  .prompt-owl {
     flex: none;
-    padding: 0;
-    border: 0;
-    border-radius: 50%;
-    background: none;
+  }
+  /* The play button holds Brijo's line: tap it to hear her read it, word by word. */
+  .listen {
+    display: inline-flex;
+    flex: 1;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 8px 18px 8px 8px;
+    border: 1px solid var(--purple-200);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    color: var(--ink);
+    font: inherit;
+    font-weight: 700;
+    text-align: left;
     cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
   }
-  .listen img {
-    display: block;
+  .listen:hover {
+    border-color: var(--purple-500);
+    box-shadow: 0 4px 14px rgb(126 79 203 / 0.15);
   }
-  .listen-icon {
-    position: absolute;
-    right: -4px;
-    bottom: -2px;
+  .listen-play {
     display: grid;
+    flex: none;
     place-items: center;
-    width: 26px;
-    height: 26px;
-    border: 2px solid var(--white);
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background: var(--purple-600);
-    color: var(--white);
+    background: var(--sun);
+    color: var(--ink);
+  }
+  .listen-label {
+    color: var(--purple-700);
   }
   /* A soft pulse invites the first press; it stops once Brijo has spoken. */
-  .board:not(.voice-on) .listen-icon {
+  .board:not(.voice-on) .listen-play {
     animation: invite 1.8s ease-in-out infinite;
   }
   @keyframes invite {
     50% {
-      scale: 1.18;
-      box-shadow: 0 0 0 6px rgb(126 79 203 / 0.2);
+      box-shadow: 0 0 0 6px rgb(255 213 74 / 0.35);
     }
   }
   .line span {
@@ -339,7 +352,7 @@ const levelCount = levels.reduce((sum, g) => sum + g.levels.length, 0);
     margin-top: var(--space-2);
   }
   @media (prefers-reduced-motion: reduce) {
-    .board:not(.voice-on) .listen-icon {
+    .board:not(.voice-on) .listen-play {
       animation: none;
     }
     .done {

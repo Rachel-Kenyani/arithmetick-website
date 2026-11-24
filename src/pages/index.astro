@@ -10,7 +10,6 @@ import Faq from "../components/Faq.astro";
 import TryLevel from "../components/TryLevel.astro";
 import SkillBand from "../components/SkillBand.astro";
 import levels from "../data/levels.json";
-import { FEATHERS_LINE } from "../data/brijoLine";
 import { PLAY_STORE_URL, ANDROID_PACKAGE } from "../data/site";
 
 const F = "/images/figma/";
@@ -97,10 +96,6 @@ const moveAndPlay = [
             {hasTour ? "Watch the tour" : "See how it works"}
           </a>
         </div>
-        <button type="button" class="hear" data-line="hero-line">
-          <span class="hear-play" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 14 14"><path d="M3 1.5v11l9-5.5z" fill="currentColor" /></svg></span>
-          <span><strong>Hear Brijo</strong> <span class="hear-sub" id="hero-line">{FEATHERS_LINE.map(([w, t]) => <span data-t={t}>{w} </span>)}</span></span>
-        </button>
         <p class="trust">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.5 3.2 8.4 7.5 9.5 4.3-1.1 7.5-5 7.5-9.5V6z"></path><path d="m9 12 2 2 4-4"></path></svg>
           <span>No ads, and we never sell your family's data. Progress is saved with your account, for your eyes only. <a href="/privacy">Privacy</a></span>
@@ -257,16 +252,6 @@ const moveAndPlay = [
 </Base>
 
 <script>
-  import { say } from "../scripts/brijo-voice";
-
-  /* "Hear Brijo" in the hero plays her real recording, word by word. */
-  for (const button of document.querySelectorAll<HTMLButtonElement>(".hear")) {
-    button.addEventListener("click", () => {
-      button.classList.add("playing");
-      void say("feathers-ask", document.getElementById(button.dataset.line ?? "")).then(() => button.classList.remove("playing"));
-    });
-  }
-
   /* The kids-section numbers count up from zero the first time they come into view. */
   const counters = [...document.querySelectorAll<HTMLElement>("[data-count]")];
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -370,62 +355,8 @@ const moveAndPlay = [
       rotate: 0deg;
     }
   }
-  .hear {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-3);
-    align-self: flex-start;
-    padding: 8px 18px 8px 8px;
-    border: 1px solid rgb(255 255 255 / 0.25);
-    border-radius: var(--radius-pill);
-    background: rgb(255 255 255 / 0.08);
-    color: var(--white);
-    font: inherit;
-    font-size: 15px;
-    text-align: left;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  .hear:hover {
-    background: rgb(255 255 255 / 0.16);
-  }
-  .hear-play {
-    display: grid;
-    flex: none;
-    place-items: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: var(--sun);
-    color: var(--ink);
-  }
-  .hear.playing .hear-play {
-    animation: hear-pulse 1s ease-in-out infinite;
-  }
-  @keyframes hear-pulse {
-    50% {
-      box-shadow: 0 0 0 6px rgb(255 211 77 / 0.3);
-    }
-  }
-  .hear-sub {
-    color: #e4d6f7;
-  }
-  .hear-sub span {
-    border-radius: 4px;
-    transition: background-color 0.15s ease;
-  }
-  .hear-sub.speaking span.spoken-word {
-    background: rgb(255 255 255 / 0.22);
-    color: var(--white);
-  }
-  @media (max-width: 480px) {
-    .hear-sub {
-      display: none;
-    }
-  }
   @media (prefers-reduced-motion: reduce) {
-    .headline .word > span,
-    .hear.playing .hear-play {
+    .headline .word > span {
       animation: none !important;
     }
   }
