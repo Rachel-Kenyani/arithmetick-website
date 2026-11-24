@@ -1,0 +1,184 @@
+---
+/**
+ * Small illustrations for the Our story page, drawn in the app's chunky-outline style
+ * (dark 2.5px outlines, brand fills, rounded ends). Decorative: the text beside each one says the same thing.
+ */
+type Name =
+  | "no-timer"
+  | "hands"
+  | "speaker"
+  | "family"
+  | "hourglass"
+  | "fear"
+  | "grid"
+  | "steps"
+  | "together"
+  | "bottle-top"
+  | "mango"
+  | "chapati"
+  | "coin"
+  | "phone"
+  | "shield";
+interface Props {
+  name: Name;
+  size?: number;
+}
+const { name, size = 56 } = Astro.props;
+const K = "#1b1b1b";
+---
+
+<svg class="story-icon" width={size} height={size} viewBox="0 0 56 56" fill="none" stroke={K} stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  {
+    name === "no-timer" && (
+      <g>
+        <circle cx="28" cy="30" r="17" fill="#fff6d6" />
+        <path d="M28 30V20M28 30l7 4M23 8h10M28 8v5" />
+        <path d="M10 48 46 12" stroke="#d9534f" stroke-width="4" />
+      </g>
+    )
+  }
+  {
+    name === "hands" && (
+      <g>
+        <circle cx="16" cy="34" r="8" fill="#00968a" />
+        <circle cx="34" cy="34" r="8" fill="#7e4fcb" />
+        <circle cx="25" cy="18" r="8" fill="#ffd54a" />
+        <path d="M44 22c4 2 6 6 5 11" />
+      </g>
+    )
+  }
+  {
+    name === "speaker" && (
+      <g>
+        <path d="M10 22h8l10-8v28l-10-8h-8Z" fill="#ffd54a" />
+        <path d="M36 21a10 10 0 0 1 0 14M41 16a17 17 0 0 1 0 24" />
+      </g>
+    )
+  }
+  {
+    name === "family" && (
+      <g>
+        <circle cx="20" cy="15" r="7" fill="#7e4fcb" />
+        <path d="M8 46V35a12 12 0 0 1 24 0v11Z" fill="#7e4fcb" />
+        <circle cx="40" cy="25" r="5.5" fill="#00968a" />
+        <path d="M31 46v-6a9 9 0 0 1 18 0v6Z" fill="#00968a" />
+      </g>
+    )
+  }
+  {
+    name === "hourglass" && (
+      <g>
+        <path d="M16 8h24M16 48h24M19 8c0 10 18 12 18 20s-18 10-18 20M37 8c0 10-18 12-18 20s18 10 18 20" />
+        <path d="M22 44c2-4 10-4 12 0Z" fill="#ffd54a" />
+      </g>
+    )
+  }
+  {
+    name === "fear" && (
+      <g>
+        <circle cx="28" cy="28" r="18" fill="#fff6d6" />
+        <circle cx="22" cy="24" r="2" fill={K} />
+        <circle cx="34" cy="24" r="2" fill={K} />
+        <path d="M21 36c4-3 10-3 14 0" />
+        <path d="M43 9v7M47 12h-8" stroke="#d9534f" />
+      </g>
+    )
+  }
+  {
+    name === "grid" && (
+      <g>
+        <rect x="6" y="14" width="44" height="28" rx="4" fill="#fff" />
+        <path d="M14.8 14v28M23.6 14v28M32.4 14v28M41.2 14v28M6 28h44" />
+        <circle cx="10.4" cy="21" r="3" fill="#00968a" stroke="none" />
+        <circle cx="19.2" cy="21" r="3" fill="#00968a" stroke="none" />
+        <circle cx="28" cy="21" r="3" fill="#00968a" stroke="none" />
+        <circle cx="36.8" cy="21" r="3" fill="#00968a" stroke="none" />
+        <circle cx="45.6" cy="21" r="3" fill="#00968a" stroke="none" />
+        <circle cx="10.4" cy="35" r="3" fill="#7e4fcb" stroke="none" />
+        <circle cx="19.2" cy="35" r="3" fill="#7e4fcb" stroke="none" />
+      </g>
+    )
+  }
+  {
+    name === "steps" && (
+      <g>
+        <path d="M6 46h12V36h12V26h12V16h8v30Z" fill="#c9efe9" />
+        <path d="M12 30l8-8 4 4 10-10" stroke="#00968a" />
+        <path d="M30 16h4v4" stroke="#00968a" />
+      </g>
+    )
+  }
+  {
+    name === "together" && (
+      <g>
+        <rect x="16" y="8" width="24" height="40" rx="5" fill="#fff" />
+        <path d="M24 42h8" />
+        <circle cx="9" cy="20" r="5" fill="#7e4fcb" />
+        <path d="M3 40v-6a6 6 0 0 1 12 0v6" />
+        <circle cx="47" cy="22" r="4" fill="#00968a" />
+        <path d="M42 40v-5a5 5 0 0 1 10 0v5" />
+      </g>
+    )
+  }
+  {
+    name === "bottle-top" && (
+      <g>
+        <circle cx="28" cy="28" r="18" fill="#d9534f" />
+        <circle cx="28" cy="28" r="11" fill="#e8746f" />
+        <path d="M28 6v4M28 46v4M6 28h4M46 28h4M12.4 12.4l2.8 2.8M40.8 40.8l2.8 2.8M12.4 43.6l2.8-2.8M40.8 15.2l2.8-2.8" />
+      </g>
+    )
+  }
+  {
+    name === "mango" && (
+      <g>
+        <path d="M14 34c0-12 10-22 22-20 8 2 10 12 6 20-5 10-18 14-24 10-3-2-4-6-4-10Z" fill="#ffb627" />
+        <path d="M34 14c2-5 6-7 10-6-2 4-5 6-10 6Z" fill="#00968a" />
+      </g>
+    )
+  }
+  {
+    name === "chapati" && (
+      <g>
+        <ellipse cx="28" cy="30" rx="21" ry="16" fill="#e9c27c" />
+        <circle cx="20" cy="26" r="2.5" fill="#a86b2d" stroke="none" />
+        <circle cx="33" cy="24" r="2" fill="#a86b2d" stroke="none" />
+        <circle cx="29" cy="35" r="3" fill="#a86b2d" stroke="none" />
+        <circle cx="39" cy="32" r="2" fill="#a86b2d" stroke="none" />
+      </g>
+    )
+  }
+  {
+    name === "coin" && (
+      <g>
+        <circle cx="28" cy="28" r="19" fill="#ffd54a" />
+        <circle cx="28" cy="28" r="13" />
+        <text x="28" y="33" fill={K} stroke="none" font-size="13" font-weight="800" text-anchor="middle" font-family="inherit">Sh</text>
+      </g>
+    )
+  }
+  {
+    name === "phone" && (
+      <g>
+        <rect x="16" y="6" width="24" height="44" rx="5" fill="#c9efe9" />
+        <path d="M24 44h8" />
+        <path d="M22 22l5 5 9-9" stroke="#006f68" stroke-width="3" />
+      </g>
+    )
+  }
+  {
+    name === "shield" && (
+      <g>
+        <path d="M28 6 46 13v13c0 12-8 20-18 24-10-4-18-12-18-24V13Z" fill="#ecdefe" />
+        <path d="m20 28 6 6 11-12" stroke="#5a3596" stroke-width="3" />
+      </g>
+    )
+  }
+</svg>
+
+<style>
+  .story-icon {
+    display: block;
+    flex: none;
+  }
+</style>

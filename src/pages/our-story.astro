@@ -3,6 +3,7 @@ import Base from "../layouts/Base.astro";
 import levels from "../data/levels.json";
 import { SUPPORT_EMAIL } from "../data/site";
 import Pictogram from "../components/Pictogram.astro";
+import StoryIcon from "../components/StoryIcon.astro";
 
 /**
  * Why ArithmeTick exists and the thinking behind it: for parents, schools and education organisations.
@@ -12,44 +13,23 @@ const levelCount = levels.reduce((sum, g) => sum + g.levels.length, 0);
 const orgMail = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent("ArithmeTick for our school or programme")}`;
 
 const principles = [
-  {
-    title: "People first, screen second",
-    text: "Children learn maths best with someone beside them. Every few levels a Move & Play activity sends the child away from the phone to count, share or measure with a grown-up, and a level ends with a real high-five.",
-  },
-  {
-    title: "Slow maths",
-    text: "No countdown timers and no rapid multiple choice. Children move bottle tops, tomatoes and seeds with their fingers, the way Kenyan classrooms use real counters, so the answer is built, not guessed.",
-  },
-  {
-    title: "Help without the red cross",
-    text: "A wrong answer never shows a \"Wrong!\" message and never costs a star. When a child is stuck, the game quietly gives more help instead. We call it stealth adaptive learning.",
-  },
-  {
-    title: "Voice before text",
-    text: "Grade 1 children are still learning to read, so Brijo the owl reads every instruction aloud in a recorded voice, and the words light up as she speaks.",
-  },
-  {
-    title: "Short, then stop",
-    text: "A grown-up sets a daily limit, from 10 to 60 minutes and 15 to start. Only time inside a level counts, and when it's used up, play stops until tomorrow.",
-  },
-];
+  { icon: "family", title: "People first", text: "Move & Play sends children off the phone to count with a grown-up." },
+  { icon: "hands", title: "Slow maths", text: "Children move real-looking objects, never race a timer." },
+  { icon: "no-timer", title: "No red crosses", text: "Mistakes never show \"Wrong!\" and never cost a star." },
+  { icon: "speaker", title: "Voice before text", text: "Brijo reads every word aloud for children who can't read yet." },
+  { icon: "hourglass", title: "Short, then stop", text: "A daily limit the grown-up sets, 15 minutes to start." },
+] as const;
 
 const kenya = [
-  { title: "The CBC, grade by grade", text: "Every level practises a skill from Kenya's Competency-Based Curriculum for Grades 1 to 3, the foundational years." },
-  { title: "Things children already count", text: "Bottle tops (vifuniko), mangoes, chapati, seeds and shillings at the market, not apples and dollars." },
-  { title: "Any grown-up can help", text: "Parents, grandparents, tutors and house managers. The activities use fingers, pencils and bottle tops, which every home has." },
-  { title: "Brijo speaks like home", text: "She greets children with \"Jambo\" and celebrates with \"Hongera!\" and \"Asante sana\"." },
-  { title: "Built for the phones families have", text: "Android first, light on data, and the game keeps working when the connection drops, saving progress when it's back." },
-  { title: "Children's data stays protected", text: "Designed around Kenya's Data Protection Act 2019: no ads, nothing sold, progress kept with the parent's account and deletable at any time." },
-];
+  { icon: "bottle-top", title: "Vifuniko", text: "Bottle tops are the counters." },
+  { icon: "mango", title: "Mangoes", text: "Grown, picked and shared." },
+  { icon: "chapati", title: "Chapati", text: "Cut into equal parts." },
+  { icon: "coin", title: "Shillings", text: "Paid and counted at the market." },
+  { icon: "phone", title: "Android first", text: "Light on data, plays offline." },
+  { icon: "shield", title: "Data Protection Act", text: "No ads, nothing sold." },
+] as const;
 
-const notBuilt = [
-  { title: "Timed drills", text: "Speed pressure is where early maths anxiety starts." },
-  { title: "Losing stars for mistakes", text: "Children should never be punished for trying." },
-  { title: "Rankings against strangers", text: "Stars go towards a family goal instead of a public leaderboard." },
-  { title: "Photo or camera rewards", text: "They put children's privacy at risk and reward the picture, not the maths." },
-  { title: "Endless play loops", text: "The daily limit ends the session on purpose." },
-];
+const notBuilt = ["Timed drills", "Losing stars", "Public leaderboards", "Photo rewards", "Endless play"];
 
 const sources = [
   { label: "Usawa Agenda, Foundational Learning Assessment (FLANA) 2025 report, published January 2026", href: "https://www.usawaagenda.org" },
@@ -71,8 +51,8 @@ const sources = [
       <p class="overline">Our story</p>
       <h1 class="display">Maths confidence is built early, or not at all.</h1>
       <p class="lede">
-        ArithmeTick is a maths app for Kenyan children in Grades 1 to 3. It was researched, designed and engineered in Nairobi by
-        Rachel Kenyani, a product designer and engineer. This is why it exists, and why it works the way it does.
+        ArithmeTick is a maths app for Kenyan children in Grades 1 to 3. It was researched, designed and engineered by
+        Rachel Kenyani, a Product Designer and Developer. This is why it exists, and why it works the way it does.
       </p>
     </div>
   </section>
@@ -83,9 +63,7 @@ const sources = [
         <p class="overline teal">Why maths</p>
         <h2 class="heading-lg">Maths builds on itself</h2>
         <p class="lede">
-          A child can pick up reading from stories, conversation and the radio. Maths has fewer side doors: each idea rests on the one
-          before. Without confident adding and subtracting by Grade 3, multiplication, fractions and word problems in upper primary all
-          get harder, and the gap tends to widen year by year.
+          Each idea rests on the one before. Miss confident adding and subtracting by Grade 3, and everything after it gets harder.
         </p>
       </div>
       <div class="stats-panel">
@@ -103,118 +81,132 @@ const sources = [
     </div>
   </section>
 
-  <section class="why-grades">
+    <section class="why-grades">
     <div class="container stack">
       <div class="section-head">
         <p class="overline purple">Why Grades 1 to 3</p>
         <h2 class="heading-lg">The years when numbers become symbols</h2>
+        <p class="lede">Kenya's CBC calls these the foundational years. It's where maths moves from your hands to the page.</p>
       </div>
-      <div class="cards three">
-        <article class="card">
-          <h3 class="heading-sm">The foundational years</h3>
-          <p>Under Kenya's CBC, Grades 1 to 3 are the foundational level, and the curriculum asks for learning through play. ArithmeTick is play with a curriculum underneath.</p>
-        </article>
-        <article class="card">
-          <h3 class="heading-sm">Where anxiety starts</h3>
-          <p>Children aged 6 to 9 understand numbers best as things they can hold. Trouble tends to begin when bottle tops turn into "8 + __ = 14" on a page, and timed tests make it worse.</p>
-        </article>
-        <article class="card">
-          <h3 class="heading-sm">Before they can read</h3>
-          <p>Many children in Grade 1 can't read instructions yet. That shaped everything: Brijo speaks every line, and pictures do the work text would.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="research">
-    <div class="container two-col">
-      <div class="section-head left">
-        <p class="overline teal">What the research told us</p>
-        <h2 class="heading-lg">Four findings we designed around</h2>
-        <p class="lede">The work began with desk research: Kenya's national learning assessments, studies on maths anxiety, and evidence on what technology does and doesn't do for learning.</p>
-      </div>
-      <ol class="findings">
-        <li>
-          <strong>Fear blocks thinking.</strong> Timed drills and memorisation under pressure can trigger maths anxiety from Grade 1, and anxiety uses up the working memory a child needs to solve a problem (Boaler; Ashcraft).
+      <ol class="journey">
+        <li class="j-step">
+          <svg viewBox="0 0 160 100" aria-hidden="true">
+            {[22, 50, 78, 106, 134].map((x) => <circle cx={x} cy="38" r="11" class="cap teal" />)}
+            {[22, 50].map((x) => <circle cx={x} cy="70" r="11" class="cap purple" />)}
+          </svg>
+          <p class="j-label">Hold it</p>
+          <p>Seven bottle tops on the table</p>
         </li>
-        <li>
-          <strong>Seeing helps understanding.</strong> Visual, hands-on representations such as ten-frames and arrays help children grasp how numbers fit together, instead of memorising facts.
+        <li class="j-step">
+          <svg viewBox="0 0 160 100" aria-hidden="true">
+            <rect x="10" y="20" width="140" height="64" rx="8" class="frame" />
+            <path d="M38 20v64M66 20v64M94 20v64M122 20v64M10 52h140" class="frame-lines" />
+            {[24, 52, 80, 108, 136].map((x) => <circle cx={x} cy="36" r="9" class="cap teal" />)}
+            {[24, 52].map((x) => <circle cx={x} cy="68" r="9" class="cap purple" />)}
+          </svg>
+          <p class="j-label">See it</p>
+          <p>The same seven in a ten-frame</p>
         </li>
-        <li>
-          <strong>Adaptive practice suits maths.</strong> Studies from low- and middle-income countries show some of the most consistent gains from software that adapts foundational maths to each child, because the skills come in a clear order (EdTech Hub).
-        </li>
-        <li>
-          <strong>Screens don't teach on their own.</strong> UNESCO warns that technology rarely improves learning unless it's tied to good teaching, and that its costs are often underestimated. So ArithmeTick runs on phones families already own and keeps adults in the loop.
+        <li class="j-step j-symbol">
+          <svg viewBox="0 0 160 100" aria-hidden="true">
+            <text x="80" y="62" class="eq">7 = 5 + 2</text>
+          </svg>
+          <p class="j-label">Write it <span class="j-flag">Where anxiety starts</span></p>
+          <p>The jump ArithmeTick slows down</p>
         </li>
       </ol>
     </div>
   </section>
 
-  <section class="principles">
+    <section class="research">
+    <div class="container stack">
+      <div class="section-head">
+        <p class="overline teal">What the research told us</p>
+        <h2 class="heading-lg">Four findings we designed around</h2>
+      </div>
+      <ul class="tiles four">
+        <li class="tile"><span class="icon-disc mint"><StoryIcon name="fear" size={48} /></span><h3 class="heading-sm">Fear blocks thinking</h3><p>Timed tests trigger anxiety that eats working memory.</p><p class="cite">Boaler; Ashcraft</p></li>
+        <li class="tile"><span class="icon-disc mint"><StoryIcon name="grid" size={48} /></span><h3 class="heading-sm">Seeing helps</h3><p>Ten-frames and arrays build understanding, not memorising.</p><p class="cite">youcubed</p></li>
+        <li class="tile"><span class="icon-disc mint"><StoryIcon name="steps" size={48} /></span><h3 class="heading-sm">Maths suits adapting</h3><p>Skills come in order, so practice can match each child.</p><p class="cite">EdTech Hub</p></li>
+        <li class="tile"><span class="icon-disc mint"><StoryIcon name="together" size={48} /></span><h3 class="heading-sm">Screens need people</h3><p>Technology rarely helps unless it's tied to real teaching.</p><p class="cite">UNESCO</p></li>
+      </ul>
+    </div>
+  </section>
+
+    <section class="principles">
     <div class="container stack">
       <div class="section-head">
         <p class="overline">How it shaped the app</p>
         <h2 class="heading-lg">Five principles, built in</h2>
       </div>
-      <ol class="principle-list">
+      <ul class="tiles five">
         {
-          principles.map((p, i) => (
-            <li class="principle">
-              <span class="principle-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
-              <div>
-                <h3 class="heading-sm">{p.title}</h3>
-                <p>{p.text}</p>
-              </div>
+          principles.map((p) => (
+            <li class="tile dark">
+              <span class="icon-disc"><StoryIcon name={p.icon} size={48} /></span>
+              <h3 class="heading-sm">{p.title}</h3>
+              <p>{p.text}</p>
             </li>
           ))
         }
-      </ol>
+      </ul>
     </div>
   </section>
 
-  <section class="pal">
-    <div class="container two-col">
-      <div class="section-head left">
+    <section class="pal">
+    <div class="container stack">
+      <div class="section-head">
         <p class="overline purple">Stealth adaptive learning</p>
         <h2 class="heading-lg">The help a child never notices</h2>
-        <p class="lede">
-          Most learning apps tell a struggling child they're wrong, then show the answer. Both teach the child to stop trying. ArithmeTick
-          changes the game instead of stopping it.
-        </p>
+        <p class="lede">No "Wrong!", no pause. When a child is stuck, the board itself starts helping.</p>
       </div>
-      <div class="pal-steps">
-        <article class="pal-step">
-          <p class="tag">When a child is doing well</p>
-          <p>The ten-frame stays plain. They place each bottle top themselves and decide when they're done.</p>
-        </article>
-        <article class="pal-step">
-          <p class="tag mint">When a child gets stuck</p>
-          <p>The frame starts helping: the first row of five fills and glows, the next space is marked, and groups are coloured so 7 reads as 5 and 2. No message, no pause.</p>
-        </article>
-        <article class="pal-step">
-          <p class="tag sun">Either way</p>
-          <p>The level ends with the same celebration and the same stars. Every attempt is recorded quietly, so the weekly email can tell parents what's strong and what's still growing.</p>
-        </article>
+      <div class="frames">
+        <figure class="frame-card">
+          <svg viewBox="0 0 220 110" aria-hidden="true">
+            <rect x="10" y="10" width="200" height="90" rx="10" class="frame" />
+            <path d="M50 10v90M90 10v90M130 10v90M170 10v90M10 55h200" class="frame-lines" />
+            {[30, 70, 110].map((x) => <circle cx={x} cy="32" r="13" class="cap teal" />)}
+            <circle cx="30" cy="78" r="13" class="cap teal" />
+          </svg>
+          <figcaption><span class="tag">Playing</span>A plain frame. The child places every bottle top.</figcaption>
+        </figure>
+        <span class="frames-arrow" aria-hidden="true">
+          <svg width="40" height="24" viewBox="0 0 40 24"><path d="M2 12h34M26 3l10 9-10 9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        </span>
+        <figure class="frame-card helping">
+          <svg viewBox="0 0 220 110" aria-hidden="true">
+            <rect x="10" y="10" width="200" height="90" rx="10" class="frame" />
+            <path d="M11.5 20a8.5 8.5 0 0 1 8.5-8.5h180a8.5 8.5 0 0 1 8.5 8.5v35h-197Z" class="row-glow" />
+            <path d="M50 10v90M90 10v90M130 10v90M170 10v90M10 55h200" class="frame-lines" />
+            {[30, 70, 110, 150, 190].map((x) => <circle cx={x} cy="32" r="13" class="cap teal" />)}
+            <circle cx="30" cy="78" r="13" class="cap purple" />
+            <rect x="56" y="61" width="28" height="33" rx="6" class="next-slot" />
+          </svg>
+          <figcaption><span class="tag mint">Stuck</span>The top five fill and glow, and the next space lights up: 7 is 5 and 2.</figcaption>
+        </figure>
       </div>
+      <p class="pal-note">Same celebration, same stars either way. Each attempt quietly feeds the weekly email to parents.</p>
     </div>
   </section>
 
-  <section class="kenya">
+    <section class="kenya">
     <div class="container stack">
       <div class="section-head">
         <p class="overline">The Kenyan context</p>
         <h2 class="heading-lg">Made in Nairobi, for Kenyan homes</h2>
+        <p class="lede">Every level follows the CBC, and every story uses things children already know.</p>
       </div>
-      <div class="cards three">
+      <ul class="tiles six">
         {
           kenya.map((k) => (
-            <article class="card">
+            <li class="tile center">
+              <StoryIcon name={k.icon} size={64} />
               <h3 class="heading-sm">{k.title}</h3>
               <p>{k.text}</p>
-            </article>
+            </li>
           ))
         }
-      </div>
+      </ul>
     </div>
   </section>
 
@@ -238,23 +230,14 @@ const sources = [
     </div>
   </section>
 
-  <section class="not-built">
+    <section class="not-built">
     <div class="container stack">
       <div class="section-head">
         <p class="overline purple">What we chose not to build</p>
         <h2 class="heading-lg">Saying no was part of the design</h2>
-        <p class="lede">Each of these would have made the app stickier. None would have made children better at maths.</p>
+        <p class="lede">Each would make the app stickier. None would make a child better at maths.</p>
       </div>
-      <ul class="no-list">
-        {
-          notBuilt.map((n) => (
-            <li>
-              <strong>{n.title}</strong>
-              <span>{n.text}</span>
-            </li>
-          ))
-        }
-      </ul>
+      <ul class="no-list">{notBuilt.map((n) => <li>{n}</li>)}</ul>
     </div>
   </section>
 
@@ -438,60 +421,14 @@ const sources = [
     font-size: 14px;
     color: rgb(255 255 255 / 0.7);
   }
-  .cards {
-    display: grid;
-    gap: var(--space-6);
-  }
-  .cards.three {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .card {
-    display: grid;
-    gap: var(--space-2);
-    align-content: start;
-    padding: var(--space-6);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-    background: var(--white);
-  }
-  .card p {
-    margin: 0;
-    color: var(--muted);
-  }
-  .findings {
-    display: grid;
-    gap: var(--space-4);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    counter-reset: finding;
-  }
-  .findings li {
-    position: relative;
-    padding: var(--space-5) var(--space-5) var(--space-5) 64px;
-    border-radius: var(--radius-md);
-    background: var(--mint-50);
-    color: var(--muted);
-    counter-increment: finding;
-  }
-  .findings li::before {
-    content: counter(finding);
-    position: absolute;
-    left: var(--space-5);
-    top: var(--space-5);
-    display: grid;
-    place-items: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: var(--teal-700);
-    color: var(--white);
-    font-size: 14px;
-    font-weight: 800;
-  }
-  .findings strong {
-    color: var(--ink);
-  }
+
+
+
+
+
+
+
+
   .principles {
     background: var(--ink);
     color: var(--white);
@@ -502,54 +439,18 @@ const sources = [
   .principles .overline {
     color: var(--sun);
   }
-  .principle-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: var(--space-12);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  .principle {
-    display: grid;
-    grid-template-columns: 56px minmax(0, 1fr);
-    gap: var(--space-4);
-    padding: var(--space-6) 0;
-    border-top: 1px solid rgb(255 255 255 / 0.18);
-  }
-  .principle h3 {
-    color: var(--white);
-  }
-  .principle p {
-    margin: var(--space-2) 0 0;
-    color: var(--mint-100);
-  }
-  .principle-n {
-    color: var(--sun);
-    font-size: 28px;
-    font-weight: 800;
-    line-height: 1.1;
-  }
+
+
+
+
+
   .pal {
     background: var(--purple-50);
   }
-  .pal-steps {
-    display: grid;
-    gap: var(--space-6);
-  }
-  .pal-step {
-    display: grid;
-    gap: var(--space-2);
-    padding: var(--space-6);
-    border-radius: var(--radius-lg);
-    background: var(--white);
-    border: 1px solid var(--purple-100);
-  }
-  .pal-step p {
-    margin: 0;
-    color: var(--muted);
-  }
-  .pal-step .tag {
+
+
+
+  .frame-card .tag {
     justify-self: start;
     padding: 3px 12px;
     border-radius: var(--radius-pill);
@@ -558,13 +459,264 @@ const sources = [
     font-size: 13px;
     font-weight: 700;
   }
-  .pal-step .tag.mint {
+  .frame-card .tag.mint {
     background: var(--mint-100);
     color: var(--ink);
   }
-  .pal-step .tag.sun {
+  .frame-card .tag.sun {
     background: #fff1c2;
     color: var(--ink);
+  }
+  /* Tiles: an illustration, a short title and one line. */
+  .tiles {
+    display: grid;
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .tiles.four {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .tiles.five {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .tiles.six {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .tile {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    border: 1px solid var(--line);
+  }
+  .tile :global(.story-icon) {
+    margin-bottom: var(--space-2);
+  }
+  .tile p {
+    margin: 0;
+    color: var(--muted);
+  }
+  .tile .cite {
+    margin-top: auto;
+    padding-top: var(--space-2);
+    color: var(--teal-700);
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .tile.center {
+    justify-items: center;
+    text-align: center;
+    padding: var(--space-6) var(--space-4);
+  }
+  .tile.dark {
+    border-color: rgb(255 255 255 / 0.16);
+    background: rgb(255 255 255 / 0.06);
+  }
+  .tile.dark h3 {
+    color: var(--white);
+  }
+  .tile.dark p {
+    color: var(--mint-100);
+  }
+  .icon-disc {
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    margin-bottom: var(--space-2);
+    border-radius: 50%;
+    background: var(--white);
+  }
+  .icon-disc.mint {
+    background: var(--mint-50);
+  }
+  .icon-disc :global(.story-icon) {
+    margin: 0;
+  }
+  /* Hold it, see it, write it. */
+  .journey {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: none;
+  }
+  .j-step {
+    position: relative;
+    display: grid;
+    gap: var(--space-2);
+    justify-items: center;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    border: 1px solid var(--line);
+    text-align: center;
+  }
+  .j-step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: calc(-1 * var(--space-6) / 2 - 9px);
+    top: 72px;
+    z-index: 1;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--teal-700) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E") center / 12px no-repeat;
+  }
+  .j-step svg {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+  }
+  .j-step p {
+    margin: 0;
+    color: var(--muted);
+  }
+  .j-step .j-label {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--ink);
+    font-size: 20px;
+    font-weight: 800;
+  }
+  .j-symbol {
+    border-color: var(--sun);
+    box-shadow: 0 0 0 3px #fff1c2;
+  }
+  .j-flag {
+    padding: 2px 10px;
+    border-radius: var(--radius-pill);
+    background: #fff1c2;
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .cap {
+    stroke: #1b1b1b;
+    stroke-width: 2.5;
+  }
+  .cap.teal {
+    fill: var(--teal-600);
+  }
+  .cap.purple {
+    fill: var(--purple-500);
+  }
+  .frame {
+    fill: var(--white);
+    stroke: #1b1b1b;
+    stroke-width: 2.5;
+  }
+  .frame-lines {
+    fill: none;
+    stroke: rgb(27 27 27 / 0.35);
+    stroke-width: 2;
+  }
+  .eq {
+    fill: var(--ink);
+    font-size: 34px;
+    font-weight: 800;
+    text-anchor: middle;
+  }
+  /* Two ten-frames: playing, then helping. */
+  .frames {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-6);
+  }
+  .frame-card {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    border: 1px solid var(--purple-100);
+  }
+  .frame-card svg {
+    width: 100%;
+    height: auto;
+  }
+  .frame-card figcaption {
+    display: grid;
+    gap: var(--space-2);
+    justify-items: start;
+    color: var(--muted);
+  }
+  .frames-arrow {
+    color: var(--purple-500);
+  }
+  .row-glow {
+    fill: #c9efe9;
+  }
+  .next-slot {
+    fill: #fff6d6;
+    stroke: #e3b300;
+    stroke-width: 2.5;
+    stroke-dasharray: 5 4;
+  }
+  .pal-note {
+    margin: 0;
+    text-align: center;
+    color: var(--muted);
+  }
+  .no-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .no-list li {
+    padding: 10px 20px;
+    border: 1px dashed var(--purple-200);
+    border-radius: var(--radius-pill);
+    color: var(--purple-700);
+    font-weight: 700;
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+  }
+  @media (max-width: 1100px) {
+    .tiles.five,
+    .tiles.six {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .tiles.four {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 700px) {
+    .journey,
+    .frames {
+      grid-template-columns: 1fr;
+    }
+    .j-step:not(:last-child)::after {
+      right: 50%;
+      top: auto;
+      bottom: calc(-1 * var(--space-6) / 2 - 9px);
+      margin-right: -9px;
+      rotate: 90deg;
+    }
+    .frames-arrow {
+      justify-self: center;
+      rotate: 90deg;
+    }
+    .tiles.five,
+    .tiles.six,
+    .tiles.four {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
   .ticks-list {
     display: grid;
@@ -596,30 +748,10 @@ const sources = [
   .not-built {
     background: var(--white);
   }
-  .no-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--space-6);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  .no-list li {
-    display: grid;
-    gap: var(--space-2);
-    align-content: start;
-    padding: var(--space-6);
-    border-radius: var(--radius-lg);
-    border: 1px dashed var(--purple-200);
-  }
-  .no-list strong {
-    color: var(--purple-700);
-    text-decoration: line-through;
-    text-decoration-thickness: 2px;
-  }
-  .no-list span {
-    color: var(--muted);
-  }
+
+
+
+
   .honest-cols {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -696,8 +828,6 @@ const sources = [
   }
   @media (max-width: 900px) {
     .two-col,
-    .cards.three,
-    .principle-list,
     .honest-cols {
       grid-template-columns: 1fr;
     }
