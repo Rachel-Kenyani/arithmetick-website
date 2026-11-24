@@ -332,11 +332,11 @@ p {
    CSS only (scroll-driven animations); browsers without it show everything straight away. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
+    /* Written as longhands: the CSS minifier drops a separate animation-timeline rule. */
     main > section:not(:first-child) :is(.section-head, .copy, .mock, .animals, article, .step, .move-card, .faq-group) {
-      animation: reveal ease-out both;
-    }
-    /* Kept in its own rule: the CSS minifier would fold it into the shorthand above, which browsers ignore. */
-    html main > section:not(:first-child) :is(.section-head, .copy, .mock, .animals, article, .step, .move-card, .faq-group) {
+      animation-name: reveal;
+      animation-timing-function: ease-out;
+      animation-fill-mode: both;
       animation-timeline: view();
       animation-range: entry 0% entry 60%;
     }
