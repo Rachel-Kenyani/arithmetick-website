@@ -340,6 +340,10 @@ p {
       animation-timeline: view();
       animation-range: entry 0% cover 35%;
     }
+    main > section:not(:first-child) :is(.mock, .animals) {
+      animation-name: reveal-media;
+      animation-range: entry 0% cover 40%;
+    }
     /* Cards in a row arrive one after another. */
     main > section:not(:first-child) :is(article, .move-card, .step):nth-child(2) {
       animation-range: entry 10% cover 40%;
@@ -353,12 +357,14 @@ p {
    marks the same elements, and they fade up once when they come into view. */
 .reveal-fallback main > section:not(:first-child) :is(.section-head, .copy, .mock, .animals, article, .step, .move-card, .faq-group) {
   opacity: 0;
-  translate: 0 60px;
-  scale: 0.94;
+  translate: 0 80px;
+  scale: 0.92;
+  filter: blur(12px);
   transition:
-    opacity 0.8s ease-out,
-    translate 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
-    scale 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+    opacity 0.9s ease-out,
+    filter 0.9s ease-out,
+    translate 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    scale 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .reveal-fallback main > section:not(:first-child) :nth-child(2).revealed {
   transition-delay: 0.12s;
@@ -370,11 +376,23 @@ p {
   opacity: 1;
   translate: 0 0;
   scale: 1;
+  filter: none;
 }
+/* The look of modern site builders (Framer, Webflow): content rises out of a soft blur. */
 @keyframes reveal {
   from {
     opacity: 0;
-    translate: 0 60px;
-    scale: 0.94;
+    translate: 0 80px;
+    scale: 0.92;
+    filter: blur(12px);
+  }
+}
+/* Screenshots and mockups grow in from further away, so the page feels layered. */
+@keyframes reveal-media {
+  from {
+    opacity: 0;
+    translate: 0 120px;
+    scale: 0.85;
+    filter: blur(16px);
   }
 }
