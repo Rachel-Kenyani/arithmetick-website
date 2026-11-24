@@ -2,7 +2,7 @@
 # Scripts are the site's own files (none inline, see astro.config.mjs), plus Cloudflare Web Analytics.
 # Inline styles stay allowed: the owl is positioned with style attributes.
 /*
-  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  Strict-Transport-Security: max-age=31536000
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   X-Permitted-Cross-Domain-Policies: none

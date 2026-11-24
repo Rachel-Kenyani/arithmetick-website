@@ -25,7 +25,7 @@ export const FAQ: { question: string; answer: string }[] = [
   {
     question: "How long should my child play?",
     answer:
-      "Levels take a few minutes each. A grown-up sets a daily limit in the grown-up settings, starting at 15 minutes, and play stops when the time is up.",
+      "Levels take a few minutes each. A grown-up sets a daily limit in the grown-up settings, from 10 to 60 minutes, starting at 15. Only time inside a level counts, and play stops for the day when the time is up.",
   },
   {
     question: "What happens to my child's data?",
