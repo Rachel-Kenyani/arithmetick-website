@@ -102,6 +102,9 @@ const moveAndPlay = [
         </p>
       </div>
       <div class="hero-art" aria-label="Screens from the ArithmeTick app">
+        <figure class="tablet">
+          <img src="/images/app/grade3-tablet.webp" width="800" height="1280" alt="A Grade 3 level on a tablet: 352 − 125 worked in columns, borrowing a ten, with bottle tops to count" />
+        </figure>
         <figure class="phone back">
           <img src="/images/app/level.webp" width="390" height="844" alt="A level: Brijo asks the child to collect 7 feathers" />
         </figure>
@@ -477,7 +480,26 @@ const moveAndPlay = [
   }
   .hero-art {
     position: relative;
-    height: 500px;
+    height: 560px;
+  }
+  /* Hero: a Grade 3 tablet stands at the back, with the two Grade 1 phones in front of it. */
+  .tablet {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    z-index: 0;
+    width: 300px;
+    margin: 0 0 0 -150px;
+    padding: 10px;
+    border-radius: 30px;
+    background: var(--text);
+    box-shadow: 0 16px 40px rgb(0 0 0 / 0.28);
+  }
+  .tablet img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
   }
   .phone {
     position: absolute;
@@ -495,16 +517,20 @@ const moveAndPlay = [
     height: auto;
     border-radius: 26px;
   }
+  .hero-art .phone {
+    width: 170px;
+  }
   .phone.front {
-    left: 8%;
-    top: 30px;
-    rotate: -5deg;
+    left: 0;
+    top: 150px;
+    rotate: -6deg;
     z-index: 2;
   }
   .phone.back {
-    right: 6%;
-    top: 0;
-    rotate: 5deg;
+    right: 0;
+    top: 190px;
+    rotate: 6deg;
+    z-index: 1;
   }
 
 
@@ -783,7 +809,7 @@ const moveAndPlay = [
       order: -1;
     }
     .hero-art {
-      height: 440px;
+      height: 520px;
       max-width: 460px;
       width: 100%;
       margin: 0 auto;
@@ -802,8 +828,29 @@ const moveAndPlay = [
     .phone {
       width: 180px;
     }
+    .hero-art .phone {
+      width: 108px;
+    }
+    .hero-art .phone.front {
+      left: 10px;
+    }
+    .hero-art .phone.back {
+      right: 10px;
+    }
+    .tablet {
+      width: 210px;
+      margin-left: -105px;
+      padding: 7px;
+      border-radius: 22px;
+    }
+    .phone.front {
+      top: 120px;
+    }
+    .phone.back {
+      top: 150px;
+    }
     .hero-art {
-      height: 380px;
+      height: 400px;
     }
   }
 </style>
