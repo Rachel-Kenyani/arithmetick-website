@@ -105,9 +105,6 @@ const moveAndPlay = [
         <figure class="tablet">
           <img src="/images/app/grade3-tablet.webp" width="800" height="1280" alt="A Grade 3 level on a tablet: 352 − 125 worked in columns, borrowing a ten, with bottle tops to count" />
         </figure>
-        <figure class="phone back">
-          <img src="/images/app/level.webp" width="390" height="844" alt="A level: Brijo asks the child to collect 7 feathers" />
-        </figure>
         <figure class="phone front">
           <img src="/images/app/map.webp" width="390" height="844" alt="The jungle map of Grade 1 levels" />
         </figure>
@@ -364,33 +361,25 @@ const moveAndPlay = [
   /* Hero phones drift apart and tilt as the page scrolls away: depth without a script. */
   @media (prefers-reduced-motion: no-preference) {
     @supports (animation-timeline: scroll()) {
-      .hero-art .phone.back,
       .hero-art .phone.front {
         animation-timing-function: linear;
         animation-fill-mode: both;
         animation-timeline: scroll(root);
         animation-range: 0 90vh;
       }
-      .hero-art .phone.back {
-        animation-name: drift-back;
-      }
       .hero-art .phone.front {
         animation-name: drift-front;
       }
     }
   }
-  @keyframes drift-back {
-    to {
-      translate: 30px -90px;
-      rotate: 11deg;
-    }
-  }
+
+  /* The phone lifts a little faster than the tablet as the page scrolls: depth, no tilting. */
   @keyframes drift-front {
     to {
-      translate: -30px -30px;
-      rotate: -10deg;
+      translate: 0 -60px;
     }
   }
+
 
   .hero .lede {
     color: #e4d6f7;
@@ -485,11 +474,11 @@ const moveAndPlay = [
   /* Hero: a Grade 3 tablet stands at the back, with the two Grade 1 phones in front of it. */
   .tablet {
     position: absolute;
-    left: 50%;
+    left: 6%;
     top: 0;
     z-index: 0;
-    width: 300px;
-    margin: 0 0 0 -150px;
+    width: 320px;
+    margin: 0;
     padding: 10px;
     border-radius: 30px;
     background: var(--text);
@@ -518,19 +507,12 @@ const moveAndPlay = [
     border-radius: 26px;
   }
   .hero-art .phone {
-    width: 170px;
+    width: 190px;
   }
   .phone.front {
-    left: 0;
+    right: 4%;
     top: 150px;
-    rotate: -6deg;
     z-index: 2;
-  }
-  .phone.back {
-    right: 0;
-    top: 190px;
-    rotate: 6deg;
-    z-index: 1;
   }
 
 
@@ -829,25 +811,17 @@ const moveAndPlay = [
       width: 180px;
     }
     .hero-art .phone {
-      width: 108px;
-    }
-    .hero-art .phone.front {
-      left: 10px;
-    }
-    .hero-art .phone.back {
-      right: 10px;
+      width: 128px;
     }
     .tablet {
-      width: 210px;
-      margin-left: -105px;
+      left: 4%;
+      width: 230px;
       padding: 7px;
       border-radius: 22px;
     }
     .phone.front {
+      right: 2%;
       top: 120px;
-    }
-    .phone.back {
-      top: 150px;
     }
     .hero-art {
       height: 400px;
